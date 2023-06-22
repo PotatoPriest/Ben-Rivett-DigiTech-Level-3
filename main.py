@@ -1,31 +1,46 @@
 import tkinter as tk
 
 
-class Menu():
+class Menu: #Main menu class
     def __init__(self):
-        menu=tk.Tk()
-        menu.title("Main Menu")
-        menu.geometry("400x300")
+        self.menu=tk.Tk()
+        self.menu.title("Main Menu")
+        self.menu.geometry("400x300")
         
-        label = tk.Label(menu, text="MAIN MENU")
+        self.label = tk.Label(self.menu, text="MAIN MENU")
 
-        label.pack()
+        self.label.pack()
+    
+        self.menubts = tk.Frame(self.menu, bg="green")
+        self.menubts.place(relx = .5, rely = .5, anchor="center")
+        
+        self.bt1 = tk.Button(self.menubts, text="Play")
+        self.bt1.pack(pady=5)
+        
+        self.bt2 = tk.Button(self.menubts, text="Settings", command=Settings)
+        self.bt2.pack(pady=5)
+        
+        self.bt3 = tk.Button(self.menubts, text="Exit", command=self.menu.destroy)
+        self.bt3.pack(pady=5)
 
-        menubts = tk.Frame(menu, bg="green")
-        menubts.place(relx = .5, rely = .5, anchor="center")
+# Needs to be fixed        
+#    def exit(self):
+#        self.exit=tk.Tk()
+#        self.exit.title("Exit")
+#        self.label=tk.Label(self.exit, text="Are you sure?")
+#        self.label.pack()
+#        self.bt1=tk.Button(self.exit, text="Yes", command=close)
+#        self.bt1.pack(side="left")
+#        self.bt2=tk.Button(self.exit, text="No", command=self.exit.destroy)
+#        self.bt2.pack(side="right")
+#    def close(self):
+#        self.exit.destroy
+#        self.menu.destroy
         
-        bt1 = tk.Button(menubts, text="Play")
-        bt1.pack(pady=5)
+        self.menu.mainloop()
         
-        bt2 = tk.Button(menubts, text="Settings", command=Settings)
-        bt2.pack(pady=5)
         
-        bt3 = tk.Button(menubts, text="Exit", command=menu.destroy)
-        bt3.pack(pady=5)
-        
-        tk.mainloop()
-
-class Settings():
+class Settings:
     def __init__(self):
         option=tk.Tk()
         option.title("Settings")
