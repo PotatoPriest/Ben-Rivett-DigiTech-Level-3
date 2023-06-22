@@ -28,13 +28,23 @@ class Menu: #Main menu class
     def exit(self):
         if messagebox.askyesno(title="Exit", message="Are you sure?"):
             self.menu.destroy()
-        
+            
 class Settings:
     def __init__(self):
+        
         option=tk.Tk()
         option.title("Settings")
         option.geometry("200x200")
         obt1=tk.Button(option, text="Exit", command=option.destroy)
-        obt1.place(relx = .5, rely = .5, anchor="center")
-        
+        obt1.place(relx=0.5, rely=0.9, anchor="s")
+        obt2=tk.Button(option, text="Name change", command=User)
+        obt2.pack()
+        obt3=tk.Button(option, text="nill", command="nill")
+        obt3.pack()
+
+
+class User:
+    pass
+
+
 Menu()
