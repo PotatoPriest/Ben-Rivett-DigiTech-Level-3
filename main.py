@@ -1,5 +1,5 @@
 import tkinter as tk
-
+from tkinter import messagebox
 
 class Menu: #Main menu class
     def __init__(self):
@@ -23,21 +23,11 @@ class Menu: #Main menu class
         self.bt3 = tk.Button(self.menubts, text="Exit", command=self.exit)
         self.bt3.pack(pady=5)
 
-    def exit(self):
-        self.exit=tk.Tk()
-        self.exit.title("Exit")
-        self.label=tk.Label(self.exit, text="Are you sure?")
-        self.label.pack()
-        self.bt1=tk.Button(self.exit, text="Yes", command=self.close)
-        self.bt1.pack(side="left")
-        self.bt2=tk.Button(self.exit, text="No", command=self.exit.destroy)
-        self.bt2.pack(side="right")
-    def close(self): # this need fixing
-        self.exit.destroy
-        self.menu.destroy
-        
+        self.menu.protocol("WM_DELETE_WINDOW", self.exit)
         self.menu.mainloop()
-        
+    def exit(self):
+        if messagebox.askyesno(title="Exit", message="Are you sure?"):
+            self.menu.destroy()
         
 class Settings:
     def __init__(self):
