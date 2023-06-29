@@ -2,27 +2,28 @@ import tkinter as tk
 from tkinter import messagebox
 from tkinter import simpledialog
 
-Username = "none"
 
 class User:
     def __init__(self):
-        self.Uname = Username
         self.username_change()
+        self.Uname = "none"
         
     def username_change(self):
-        self.Uname = simpledialog.askstring("Username", "What is your name?")
+        self.Uname = simpledialog.askstring( "Username", "What is your name?")
 
-class Menu(): #Main menu class
-    def __init__(self):
-        #need to get the username into this class.
+    def __str__(self):
+        return self.Uname
         
+class Menu: #Main menu class
+    def __init__(self):
+        self.name = User() #bruh
         self.menu=tk.Tk()
         self.menu.title("Main Menu")
         self.menu.geometry("400x300")
         
         self.label = tk.Label(self.menu, text="MAIN MENU")
         self.label.pack()
-        self.namelabel = tk.Label(self.menu, text="Username: " + Username)
+        self.namelabel = tk.Label(self.menu, text="Username: {}".format(self.name))
         self.namelabel.pack()
         
         self.menubts = tk.Frame(self.menu, bg="green")
