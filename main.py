@@ -2,12 +2,13 @@ import tkinter as tk # These import tkinter
 from tkinter import messagebox # This imports the messagebox function in tkinter
 from tkinter import simpledialog # This imports the Simpledialog function from tkinter
 
-class Nill:
-    print("Does Nothing")
-
-class Error:
+class Nill: # This is for functions that does nothing (so I know they work)
     def __init__(self):
-        tk.messagebox(title="Error", message="There has been an error")
+        print("Does Nothing")
+
+class Error: # This class is for error catching
+    def __init__(self):
+        tk.messagebox.showerror(title="Error", message="There has been an error")
 
 class Window: # This class is for creating a basic window
     def __init__(self, title, size): # This is the definition that is called when the class is initilized
@@ -25,12 +26,11 @@ class Window: # This class is for creating a basic window
         self.command = command
         self.button = tk.Button(self.window, text=self.text, command=self.command) # Setting what the button does and says
         self.button.pack(pady=5)
-
+        self.window.mainloop()
     def exit(self):
         if messagebox.askyesno(title="Exit", message="Are you sure?"):
             self.window.destroy()
 
 
 
-menu = Window("Menu", "400x300").button("Play", "Nill")
-menu
+menu = Window("Menu", "400x300").button("Test Button", Error)
