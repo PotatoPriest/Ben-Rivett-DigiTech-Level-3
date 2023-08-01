@@ -53,7 +53,8 @@ class Settings:
     def __init__(self):
         self.settings = Window("Settings", "300x300", "blue")
         self.settings.button("Change Name", Nill)
-        self.settings.button2("Exit", self.settings.exit)
+        self.settings.button2("Colour change", Error)
+        self.settings.button3("Exit", self.settings.exit)
 
 menu = Window("Menu", "400x300", "white")
 menu.button("Play", Error)
