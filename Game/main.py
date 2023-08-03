@@ -44,6 +44,8 @@ class Window(User): # This class is for creating a basic window
         self.command = command
         self.button = tk.Button(self.window, text=self.text, command=self.command)
         self.button.pack(pady=5)
+
+    
     
     def exit(self):
         if messagebox.askyesno(title="Exit", message="Are you sure?"):
@@ -53,8 +55,16 @@ class Settings:
     def __init__(self):
         self.settings = Window("Settings", "300x300", "blue")
         self.settings.button("Change Name", Nill)
-        self.settings.button2("Colour change", Error)
+        self.settings.button2("Save Game", Save)
         self.settings.button3("Exit", self.settings.exit)
+
+class Save:
+    def __init__(self):
+        self.new_line = simpledialog.askstring("Text file line", "Please add a new line into the text file")
+        self.save_file = open("Game/save.txt", "a")
+        self.save_file.write(self.new_line)
+        self.save_file.close()
+        
 
 menu = Window("Menu", "400x300", "white")
 menu.button("Play", Error)
