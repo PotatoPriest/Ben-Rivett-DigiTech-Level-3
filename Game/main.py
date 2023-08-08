@@ -10,12 +10,24 @@ class Error: # This class is for error catching
     def __init__(self):
         tk.messagebox.showerror(title="Error", message="There has been an error")
 
-class User:
+class User():
     def __init__(self, username):
-        self.username = username
+        User.username = username
+        print(User.username)
+    def username_change(self):
+        User.username = simpledialog.askstring("Username Change", "What would you like to change your username to?")
+        self.save_file = open("Game/save.txt", "w")
+        self.save_file.writelines([User.username])
+        self.save_file.close()
+        print(User.username)
+
 
 class Window(User): # This class is for creating a basic window
     def __init__(self, title, size, colour): # This is the definition that is called when the class is initilized
+        self.save_file = open("Game/save.txt", "r")
+        self.name = self.save_file.readline()
+        self.save_file.close()
+        
         self.colour = colour
         self.title = title # This is the varable for the title bar of the window
         self.size = size # This is the variable for setting the size of the window
@@ -25,6 +37,8 @@ class Window(User): # This class is for creating a basic window
         self.window.config(bg=self.colour)
         self.label = tk.Label(self.window, text=self.title)
         self.label.pack(pady=5)
+        self.namelabel = tk.Label(self.window, text="Username:  {}".format(self.name))
+        self.namelabel.pack()
         self.window.protocol("WM_DELETE_WINDOW", self.exit)
         
     def button(self, text, command): # Definition for adding buttons to the window
@@ -53,8 +67,13 @@ class Window(User): # This class is for creating a basic window
 
 class Settings:
     def __init__(self):
+        self.save_file = open("Game/save.txt", "r")
+        self.name = self.save_file.readline()
+        self.save_file.close()
+        
+        user = User(self.name)
         self.settings = Window("Settings", "300x300", "blue")
-        self.settings.button("Change Name", Nill)
+        self.settings.button("Change Name", user.username_change)
         self.settings.button2("Save Game", Save)
         self.settings.button3("Exit", self.settings.exit)
 
