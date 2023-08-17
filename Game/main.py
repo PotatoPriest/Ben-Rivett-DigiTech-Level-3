@@ -21,13 +21,18 @@ class User():
         self.save_file.close()
         print(User.username)
 
-
-class Window(User): # This class is for creating a basic window
-    def __init__(self, title, size, colour): # This is the definition that is called when the class is initilized
+class update:
+    def __init__(self):
         self.save_file = open("Game/save.txt", "r")
         self.name = self.save_file.readline()
         self.save_file.close()
-        
+    def __str__(self):
+        return self.name
+
+class Window(User): # This class is for creating a basic window
+    
+    def __init__(self, title, size, colour): # This is the definition that is called when the class is initilized
+        self.name = update()
         self.colour = colour
         self.title = title # This is the varable for the title bar of the window
         self.size = size # This is the variable for setting the size of the window
@@ -41,6 +46,7 @@ class Window(User): # This class is for creating a basic window
         self.namelabel.pack()
         self.window.protocol("WM_DELETE_WINDOW", self.exit)
         
+
     def button(self, text, command): # Definition for adding buttons to the window
         self.text = text
         self.command = command
@@ -59,18 +65,18 @@ class Window(User): # This class is for creating a basic window
         self.button = tk.Button(self.window, text=self.text, command=self.command)
         self.button.pack(pady=5)
 
-    
-    
     def exit(self):
         if messagebox.askyesno(title="Exit", message="Are you sure?"):
             self.window.destroy()
+            
+    def instant_leave(self):
+        self.window.destroy()
 
 class Settings:
     def __init__(self):
         self.save_file = open("Game/save.txt", "r")
         self.name = self.save_file.readline()
         self.save_file.close()
-        
         user = User(self.name)
         self.settings = Window("Settings", "300x300", "blue")
         self.settings.button("Change Name", user.username_change)
