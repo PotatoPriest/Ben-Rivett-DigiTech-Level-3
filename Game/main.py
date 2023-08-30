@@ -24,6 +24,8 @@ class update: # used to read the save file
 
 class Window: # class for the main window
     def __init__(self):
+        self.name = update()
+        self.name
         self.window = tk.Tk()
         self.window.title("Game by: Benjamin Rivett")
         self.window.geometry("400x300")
@@ -33,20 +35,25 @@ class Window: # class for the main window
         button(self.menu_things, "Exit", self.exit)
         self.menu_things.pack(pady=5)
 
-    def exit(self):
+    def exit(self): # used when exiting the progam
         if messagebox.askyesno(title="Exit", message="Are you sure?"):
             self.window.destroy()
             
-    def start(self):
+    def start(self): # this starts the game
         self.menu_things.destroy()
         self.setting_things = tk.Frame(self.window)
-        label(self.setting_things, "Name: ")
+        self.label = tk.Label(self.setting_things, text="Name: {}".format(self.name)) # I want to use the function but I dont know how to edit the label when its in a function.
+        self.label.pack(pady=5)
         button(self.setting_things, "Set your name", self.set_name)
-        label(self.setting_things, "")
+        label(self.setting_things, "hmm")
         self.setting_things.pack(pady=5)
         
     def set_name(self):
         self.name = simpledialog.askstring("Pick your Name", "Name:")
+        self.save_file = open("Game/save.txt", "w")
+        self.save_file.writelines([self.name])
+        self.save_file.close()
+        self.label.config(text="Name: " + self.name)
 
 
 window = Window()
