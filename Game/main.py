@@ -26,6 +26,7 @@ class read: # used to read the save file
 
 class Window: # class for the main window
     def __init__(self):
+        self.score = 0
         self.name = read()
         self.name
         self.window = tk.Tk()
@@ -35,8 +36,12 @@ class Window: # class for the main window
         label(self.menu_things, "Hello this is the title screen!")
         button(self.menu_things, "Play", self.start)
         button(self.menu_things, "Exit", self.exit)
+        self.scoref = tk.Frame(self.window)
+        self.scoref.pack(anchor="ne")
+        self.scorel = tk.Label(self.scoref, text="Score: {}".format(self.score))
+        self.scorel.pack()
         self.menu_things.pack(pady=5)
-
+        
     def exit(self): # used when exiting the progam
         if messagebox.askyesno(title="Exit", message="Are you sure?"):
             self.window.destroy()
@@ -127,6 +132,12 @@ on random Trivia, this will include questions on anything.""".format(self.name))
         button(self.trivia_stuff, "Continue", Error)
         button(self.trivia_stuff, "Back", self.back)
         self.trivia_stuff.pack(pady=5)
+
+class math:
+    def __init__(self):
+        pass
+
+
 
 window = Window()
 window
