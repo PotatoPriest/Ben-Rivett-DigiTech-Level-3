@@ -2,6 +2,7 @@ import tkinter as tk #importing stuff
 from tkinter import messagebox
 from tkinter import simpledialog
 from tkinter import StringVar
+import random
 option_menu = ["Empty", "Math", "Geography", "Trivia", "Test"]
 
 def button(master, text, command): # definition for making a button
@@ -26,6 +27,7 @@ class read: # used to read the save file
 
 class Window: # class for the main window
     def __init__(self):
+        self.qnumber = 1
         self.score = 0
         self.name = read()
         self.name
@@ -103,6 +105,19 @@ class Window: # class for the main window
     
     def empty(self): # When the option is empty
         tk.messagebox.showerror(title="Empty", message="Please pick an option.")
+
+    def setting_question(self):
+        if self.option == "math":
+            pass
+            
+        elif self.option == "geography":
+            pass
+
+        elif self.option == "trivia":
+            pass
+
+        else:
+            Error()
     
     def math(self):
         self.setting_things.destroy()
@@ -110,7 +125,7 @@ class Window: # class for the main window
         label(self.math_stuff, """{}, This area of the game will test your knoledge
 on Mathmatics, starting with addition and subtraction
 then moving on to multiplication and divition.""".format(self.name))
-        button(self.math_stuff, "Continue", Error)
+        button(self.math_stuff, "Continue", self.math_questions)
         button(self.math_stuff, "Back", self.back)
         self.math_stuff.pack(pady=5)
         
@@ -132,12 +147,13 @@ on random Trivia, this will include questions on anything.""".format(self.name))
         button(self.trivia_stuff, "Continue", Error)
         button(self.trivia_stuff, "Back", self.back)
         self.trivia_stuff.pack(pady=5)
-
-class math:
-    def __init__(self):
-        pass
-
-
+        
+    def math_questions(self):
+        self.math_stuff.destroy()
+        self.math_qf = tk.Frame(self.window)
+        label(self.math_qf, "Question {}: {}".format(self.qnumber, question()))
+        
+        self.math_qf.pack(pady=5)
 
 window = Window()
 window
