@@ -27,6 +27,7 @@ class read: # used to read the save file
 
 class Window: # class for the main window
     def __init__(self):
+        self.question = "There is no question"
         self.qnumber = 1
         self.score = 0
         self.name = read()
@@ -79,8 +80,10 @@ class Window: # class for the main window
         self.name = simpledialog.askstring("Pick your Name", "Name:")
         if self.name == None:
             self.name = "None"
+
         else:
             self.name = self.name
+            
         self.save_file = open("Game/save.txt", "w")
         self.save_file.writelines([self.name])
         self.save_file.close()
@@ -107,13 +110,29 @@ class Window: # class for the main window
         tk.messagebox.showerror(title="Empty", message="Please pick an option.")
 
     def setting_question(self):
-        if self.option == "math":
-            pass
-            
-        elif self.option == "geography":
+        if self.option == "Math":
+            if self.qnumber < 3: # Addition
+                self.one = random.randint(0, 100)
+                self.two = random.randint(0, 100)
+                self.answer = self.one + self.two
+                self.question = "What is the sum of {} + {}?".format(self.one, self.two)
+            elif self.qnumber > 2: # Multiplication
+                self.one = random.randint(1, 20)
+                self.two = random.randint(1, 20)
+                
+            elif self.qnumber == 5: # Addition and Multiplication
+                self.one = random.randint(1, 25)
+                self.two = random.randint(1, 25)
+                self.three = random.randint(0, 1000)
+                self.four = random.randint(0, 1000)
+                
+            else:
+                Error()
+                
+        elif self.option == "Geography":
             pass
 
-        elif self.option == "trivia":
+        elif self.option == "Trivia":
             pass
 
         else:
@@ -151,9 +170,33 @@ on random Trivia, this will include questions on anything.""".format(self.name))
     def math_questions(self):
         self.math_stuff.destroy()
         self.math_qf = tk.Frame(self.window)
-        label(self.math_qf, "Question {}: {}".format(self.qnumber, question()))
-        
+        self.setting_question()
+        label(self.math_qf, "Question {}: {}".format(self.qnumber, self.question))
+        self.aentry = tk.Entry(self.math_qf)
+        self.aentry.pack()
+        button(self.math_qf, "Submit", self.submit)
         self.math_qf.pack(pady=5)
 
+    def submit(self):
+        self.player_answer = int(self.aentry.get())
+        self.qnumber = self.qnumber + 1
+        if self.player_answer == self.answer:
+            self.math_qf.destroy()
+            self.correct = tk.Frame(self.window)
+            label(self.correct, "Well done {} was the correct answer!".format(self.answer))
+            button(self.correct, "Next question", self.math_questions)
+            self.correct.pack(pady=5)
+            
+            
+        else:
+            self.math_qf.destroy()
+            self.incorrect = tk.Frame(self.window)
+            label(self.incorrect, """Im sorry but {} was not the correct answer.
+The correct answer was {}.""".format(self.player_answer, self.answer))
+            button(self.correct, "Next question", self.math_questions)
+            self.incorrect.pack(pady=5)
+
+
+        
 window = Window()
 window
