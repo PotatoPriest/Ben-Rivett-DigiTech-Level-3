@@ -26,6 +26,11 @@ class read: # used to read the save file
         return self.name
 
 class Window: # class for the main window
+    def menu_button(self):
+        self.menuf = tk.Frame(self.window)
+        button(self.menuf, "Menu", Error)
+        self.menuf.place(anchor="nw")
+        
     def __init__(self):
         self.question = "There is no question"
         self.qnumber = 1
@@ -38,6 +43,7 @@ class Window: # class for the main window
         self.menu_things = tk.Frame(self.window)
         label(self.menu_things, "Hello this is the title screen!")
         button(self.menu_things, "Play", self.start)
+        button(self.menu_things, "Load Save", Error)
         button(self.menu_things, "Exit", self.exit)
         self.scoref = tk.Frame(self.window)
         self.scoref.pack(anchor="ne")
@@ -109,7 +115,7 @@ class Window: # class for the main window
     def empty(self): # When the option is empty
         tk.messagebox.showerror(title="Empty", message="Please pick an option.")
 
-    def setting_question(self):
+    def setting_question(self): # This willm set the type of question
         if self.option == "Math":
             if self.qnumber < 3: # Addition
                 self.one = random.randint(0, 100)
@@ -178,25 +184,36 @@ on random Trivia, this will include questions on anything.""".format(self.name))
         self.math_qf.pack(pady=5)
 
     def submit(self):
-        self.player_answer = int(self.aentry.get())
+        try:
+            self.player_answer = int(self.aentry.get())
+        except ValueError:
+            tk.messagebox.showinfo("No Input", "PLease input something")
+            
         self.qnumber = self.qnumber + 1
         if self.player_answer == self.answer:
             self.math_qf.destroy()
             self.correct = tk.Frame(self.window)
             label(self.correct, "Well done {} was the correct answer!".format(self.answer))
-            button(self.correct, "Next question", self.math_questions)
+            button(self.correct, "Next question", self.intermission)
             self.correct.pack(pady=5)
-            
+            self.score = self.score + 1
+            self.scorel.config(text="Score: {}".format(self.score))
             
         else:
             self.math_qf.destroy()
             self.incorrect = tk.Frame(self.window)
             label(self.incorrect, """Im sorry but {} was not the correct answer.
 The correct answer was {}.""".format(self.player_answer, self.answer))
-            button(self.correct, "Next question", self.math_questions)
+            button(self.incorrect, "Next question", self.intermission)
             self.incorrect.pack(pady=5)
 
-
-        
+    def intermission(self):
+        if self.player_answer == self.answer:
+            self.correct.destroy()
+            self.math_questions()
+        else:
+            self.incorrect.destroy()
+            self.math_questions()
+            
 window = Window()
 window
