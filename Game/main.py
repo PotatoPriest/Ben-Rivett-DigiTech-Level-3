@@ -3,6 +3,7 @@ from tkinter import messagebox
 from tkinter import simpledialog
 from tkinter import StringVar
 import random
+true = True
 option_menu = ["Empty", "Math", "Geography", "Trivia", "Test"]
 
 def button(master, text, command): # definition for making a button
@@ -180,14 +181,20 @@ on random Trivia, this will include questions on anything.""".format(self.name))
         label(self.math_qf, "Question {}: {}".format(self.qnumber, self.question))
         self.aentry = tk.Entry(self.math_qf)
         self.aentry.pack()
-        button(self.math_qf, "Submit", self.submit)
+        self.mathsubmitbt = tk.Button(self.math_qf, text="Submit", command=self.submit)
+        self.mathsubmitbt.pack(pady=5)
         self.math_qf.pack(pady=5)
 
     def submit(self):
         try:
             self.player_answer = int(self.aentry.get())
+            self.answer_check()
         except ValueError:
-            tk.messagebox.showinfo("No Input", "PLease input something")
+            tk.messagebox.showinfo("No Input", "Please input a valid responce")
+
+        
+    
+    def answer_check(self):
             
         self.qnumber = self.qnumber + 1
         if self.player_answer == self.answer:
@@ -217,3 +224,4 @@ The correct answer was {}.""".format(self.player_answer, self.answer))
             
 window = Window()
 window
+window.window.mainloop()
