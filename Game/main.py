@@ -3,8 +3,7 @@ from tkinter import messagebox
 from tkinter import simpledialog
 from tkinter import StringVar
 import random
-true = True
-option_menu = ["Empty", "Math", "Geography", "Trivia", "Test"]
+option_menu = ["Empty", "Math", "Geography", "Trivia", "Test"] # list for options in the options menu
 
 def button(master, text, command): # definition for making a button
     bt = tk.Button(master, text=text, command=command)
@@ -119,19 +118,43 @@ class Window: # class for the main window
     def setting_question(self): # This willm set the type of question
         if self.option == "Math":
             if self.qnumber < 3: # Addition
-                self.one = random.randint(0, 100)
-                self.two = random.randint(0, 100)
+                self.one = random.randint(0, 10)
+                self.two = random.randint(0, 10)
                 self.answer = self.one + self.two
                 self.question = "What is the sum of {} + {}?".format(self.one, self.two)
-            elif self.qnumber > 2: # Multiplication
-                self.one = random.randint(1, 20)
-                self.two = random.randint(1, 20)
+            elif self.qnumber > 2 and self.qnumber < 5: # Multiplication
+                self.one = random.randint(1, 10)
+                self.two = random.randint(1, 10)
+                self.answer = self.one * self.two
+                self.question = "What is the sum of {} x {}?".format(self.one, self.two)
                 
             elif self.qnumber == 5: # Addition and Multiplication
-                self.one = random.randint(1, 25)
-                self.two = random.randint(1, 25)
-                self.three = random.randint(0, 1000)
-                self.four = random.randint(0, 1000)
+                self.one = random.randint(1, 10)
+                self.two = random.randint(1, 10)
+                self.three = random.randint(0, 10)
+                self.four = random.randint(0, 10)
+                self.answer = self.one * self.two + self.three + self.four
+                self.question = "What is the sum of {} x {} + {} + {}?".format(self.one, self.two, self.three, self.four)
+
+            elif self.qnumber > 5 and self.qnumber < 8: # subtraction
+                self.one = random.randint(10, 20)
+                self.two = random.randint(0, 10)
+                self.answer = self.one - self.two
+                self.question = "What is the sum of {} - {}?".format(self.one, self.two)
+
+            elif self.qnumber > 7 and self.qnumber < 10: # division
+                self.one = random.randrange(8, 22, 2) # fuck you ill see you tommorow (I have decimals) (Make bigger?!?!?!?!?!!?!, will it work?)
+                self.two = random.randint(1, 10)
+                self.answer = self.one / self.two
+                self.question = "What is the sum of {} / {}?".format(self.one, self.two)
+
+            elif self.qnumber == 10: # division and subtraction
+                self.one = random.randrange(8, 22, 2) # fuck you ill see you tommorow (I have decimals)
+                self.two = random.randint(1, 10)
+                self.three = random.randint(10, 20)
+                self.four = random.randint(0, 10)
+                self.answer = self.one / self.two + self.three - self.four
+                self.question = "What is the sum of {} / {} + {} - {}?".format(self.one, self.two, self.three, self.four)
                 
             else:
                 Error()
@@ -217,9 +240,11 @@ The correct answer was {}.""".format(self.player_answer, self.answer))
     def intermission(self):
         if self.player_answer == self.answer:
             self.correct.destroy()
+            self.setting_question()
             self.math_questions()
         else:
             self.incorrect.destroy()
+            self.setting_question()
             self.math_questions()
             
 window = Window()
