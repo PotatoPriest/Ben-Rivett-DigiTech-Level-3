@@ -143,14 +143,14 @@ class Window: # class for the main window
                 self.question = "What is the sum of {} - {}?".format(self.one, self.two)
 
             elif self.qnumber > 7 and self.qnumber < 10: # division
-                self.one = random.randrange(8, 22, 2) # fuck you ill see you tommorow (I have decimals) (Make bigger?!?!?!?!?!!?!, will it work?)
-                self.two = random.randint(1, 10)
+                self.one = random.randrange(8, 26, 2) # fuck you ill see you tommorow (I have decimals) (Make bigger?!?!?!?!?!!?!, will it work?)
+                self.two = random.randrange(2, 11, 2)
                 self.answer = self.one / self.two
                 self.question = "What is the sum of {} / {}?".format(self.one, self.two)
 
             elif self.qnumber == 10: # division and subtraction
-                self.one = random.randrange(8, 22, 2) # fuck you ill see you tommorow (I have decimals)
-                self.two = random.randint(1, 10)
+                self.one = random.randrange(8, 26, 2) # fuck you ill see you tommorow (I have decimals)
+                self.two = random.randrange(2, 11, 2)
                 self.three = random.randint(10, 20)
                 self.four = random.randint(0, 10)
                 self.answer = self.one / self.two + self.three - self.four
