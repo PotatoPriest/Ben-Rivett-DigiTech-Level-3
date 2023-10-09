@@ -31,7 +31,7 @@ class Window: # class for the main window
         button(self.menuf, "Menu", Error)
         self.menuf.place(anchor="nw")
         
-    def __init__(self):
+    def __init__(self): # This happens when the class is initilised
         self.question = "There is no question"
         self.qnumber = 1
         self.score = 0
@@ -60,7 +60,7 @@ class Window: # class for the main window
         self.menu.set("Empty")
         self.menu_things.destroy()
         self.setting_things = tk.Frame(self.window)
-        self.label = tk.Label(self.setting_things, text="Name: {}".format(self.name)) # I want to use the function but I dont know how to edit the label when its in a function.
+        self.label = tk.Label(self.setting_things, text="Name: {}".format(self.name))
         self.label.pack(pady=5)
         button(self.setting_things, "Set your name", self.set_name)
         label(self.setting_things, "What are you going to play?")
@@ -118,44 +118,56 @@ class Window: # class for the main window
     def setting_question(self): # This willm set the type of question
         if self.option == "Math":
             if self.qnumber < 3: # Addition
-                self.one = random.randint(0, 10)
-                self.two = random.randint(0, 10)
+                self.one = random.randint(0, 100)
+                self.two = random.randint(0, 100)
                 self.answer = self.one + self.two
                 self.question = "What is the sum of {} + {}?".format(self.one, self.two)
             elif self.qnumber > 2 and self.qnumber < 5: # Multiplication
-                self.one = random.randint(1, 10)
+                self.one = random.randint(1, 25)
                 self.two = random.randint(1, 10)
                 self.answer = self.one * self.two
                 self.question = "What is the sum of {} x {}?".format(self.one, self.two)
                 
             elif self.qnumber == 5: # Addition and Multiplication
-                self.one = random.randint(1, 10)
+                self.one = random.randint(1, 25)
                 self.two = random.randint(1, 10)
-                self.three = random.randint(0, 10)
-                self.four = random.randint(0, 10)
+                self.three = random.randint(0, 100)
+                self.four = random.randint(0, 100)
                 self.answer = self.one * self.two + self.three + self.four
                 self.question = "What is the sum of {} x {} + {} + {}?".format(self.one, self.two, self.three, self.four)
 
             elif self.qnumber > 5 and self.qnumber < 8: # subtraction
-                self.one = random.randint(10, 20)
-                self.two = random.randint(0, 10)
+                self.one = random.randint(10, 100)
+                self.two = random.randint(0, 75)
+                while self.one < self.two:
+                    self.one = random.randint(10, 100)
                 self.answer = self.one - self.two
                 self.question = "What is the sum of {} - {}?".format(self.one, self.two)
 
             elif self.qnumber > 7 and self.qnumber < 10: # division
-                self.one = random.randrange(8, 26, 2) # fuck you ill see you tommorow (I have decimals) (Make bigger?!?!?!?!?!!?!, will it work?)
-                self.two = random.randrange(2, 11, 2)
-                self.answer = self.one / self.two
-                self.question = "What is the sum of {} / {}?".format(self.one, self.two)
+                self.one = random.randint(1, 10)
+                self.two = random.randint(1, 5)
+                while self.one <= self.two:
+                    self.one = random.randint(1, 10)
+                self.answer = round(self.one / self.two)
+                self.question = """What is the sum of {} / {}?
+(Round to the nearest whole number.)""".format(self.one, self.two)
 
             elif self.qnumber == 10: # division and subtraction
-                self.one = random.randrange(8, 26, 2) # fuck you ill see you tommorow (I have decimals)
-                self.two = random.randrange(2, 11, 2)
-                self.three = random.randint(10, 20)
-                self.four = random.randint(0, 10)
-                self.answer = self.one / self.two + self.three - self.four
-                self.question = "What is the sum of {} / {} + {} - {}?".format(self.one, self.two, self.three, self.four)
-                
+                self.one = random.randint(10, 20)
+                self.two = random.randint(1, 5)
+                self.three = random.randint(10, 100)
+                self.four = random.randint(0, 75)
+                while self.three < self.four:
+                    self.three = random.randint(10, 100)
+                while self.one <= self.two:
+                    self.one = random.randint(1, 20)
+                self.answer = round(self.one // self.two + self.three - self.four)
+                self.question = """What is the sum of {} / {} + {} - {}?
+(Round to the nearist whole number.)""".format(self.one, self.two, self.three, self.four)
+            elif self.qnumber > 10: # This is so there is no error after the player has finnished answering questions
+                self.question = """Well done {}!
+You have completed the Math questions.""".format(self.name)   
             else:
                 Error()
                 
@@ -168,7 +180,7 @@ class Window: # class for the main window
         else:
             Error()
     
-    def math(self):
+    def math(self): # This starts the math questions
         self.setting_things.destroy()
         self.math_stuff = tk.Frame(self.window)
         label(self.math_stuff, """{}, This area of the game will test your knoledge
@@ -177,8 +189,13 @@ then moving on to multiplication and divition.""".format(self.name))
         button(self.math_stuff, "Continue", self.math_questions)
         button(self.math_stuff, "Back", self.back)
         self.math_stuff.pack(pady=5)
-        
-    def geography(self):
+
+    def done(self): # this is for when the player is done answering the questions
+        self.completef.destroy()
+        self.start()
+        self.qnumber = 1
+            
+    def geography(self): # This starts the geography questions
         self.setting_things.destroy()
         self.geography_stuff = tk.Frame(self.window)
         label(self.geography_stuff, """{}, This area of the game will test your knoledge
@@ -188,7 +205,7 @@ based on its siluete as well as its flag.""".format(self.name))
         button(self.geography_stuff, "Back", self.back)
         self.geography_stuff.pack(pady=5)
 
-    def trivia(self):
+    def trivia(self): # This starts the trivia questions
         self.setting_things.destroy()
         self.trivia_stuff = tk.Frame(self.window)
         label(self.trivia_stuff, """{}, This area of the game will test your knoledge
@@ -197,18 +214,24 @@ on random Trivia, this will include questions on anything.""".format(self.name))
         button(self.trivia_stuff, "Back", self.back)
         self.trivia_stuff.pack(pady=5)
         
-    def math_questions(self):
-        self.math_stuff.destroy()
-        self.math_qf = tk.Frame(self.window)
-        self.setting_question()
-        label(self.math_qf, "Question {}: {}".format(self.qnumber, self.question))
-        self.aentry = tk.Entry(self.math_qf)
-        self.aentry.pack()
-        self.mathsubmitbt = tk.Button(self.math_qf, text="Submit", command=self.submit)
-        self.mathsubmitbt.pack(pady=5)
-        self.math_qf.pack(pady=5)
+    def math_questions(self): # This is the math questions
+        if self.qnumber == 11:
+            self.completef = tk.Frame(self.window)
+            label(self.completef, self.question)
+            button(self.completef, "Continue", self.done)
+            self.completef.pack(pady=5)
+        else:
+            self.math_stuff.destroy()
+            self.math_qf = tk.Frame(self.window)
+            self.setting_question()
+            label(self.math_qf, "Question {}: {}".format(self.qnumber, self.question))
+            self.aentry = tk.Entry(self.math_qf)
+            self.aentry.pack()
+            button(self.math_qf, "Submit", self.submit)
+            self.math_qf.pack(pady=5)
+                
 
-    def submit(self):
+    def submit(self): # This is so that the player has to input an intiger when answering the math questions.
         try:
             self.player_answer = int(self.aentry.get())
             self.answer_check()
@@ -217,7 +240,7 @@ on random Trivia, this will include questions on anything.""".format(self.name))
 
         
     
-    def answer_check(self):
+    def answer_check(self):  # This checks the players answer
             
         self.qnumber = self.qnumber + 1
         if self.player_answer == self.answer:
@@ -237,7 +260,7 @@ The correct answer was {}.""".format(self.player_answer, self.answer))
             button(self.incorrect, "Next question", self.intermission)
             self.incorrect.pack(pady=5)
 
-    def intermission(self):
+    def intermission(self): # This is for in between questions
         if self.player_answer == self.answer:
             self.correct.destroy()
             self.setting_question()
