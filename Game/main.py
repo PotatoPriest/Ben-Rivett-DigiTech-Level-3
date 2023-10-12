@@ -3,7 +3,8 @@ from tkinter import messagebox
 from tkinter import simpledialog
 from tkinter import StringVar
 import random
-option_menu = ["Empty", "Math", "Geography", "Trivia", "Test"] # list for options in the options menu
+from PIL import ImageTk, Image
+option_menu = ["Empty", "Math", "Geography", "Trivia"] # list for options in the options menu
 
 def button(master, text, command): # definition for making a button
     bt = tk.Button(master, text=text, command=command)
@@ -12,6 +13,14 @@ def button(master, text, command): # definition for making a button
 def label(master, text): # definition for label
     la = tk.Label(master, text=text)
     la.pack(pady=5)
+
+def image(master, path, x, y):
+    imageframe = tk.Frame(master)
+    img = ImageTk.PhotoImage(Image.open(path).resize((x, y)))
+    image = tk.Label(imageframe, image=img)
+    image.image = img
+    image.pack()
+    imageframe.pack()
 
 class Error: # This class is for error catching, will probobly change it alot later
     def __init__(self):

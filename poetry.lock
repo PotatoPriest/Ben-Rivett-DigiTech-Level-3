@@ -241,6 +241,18 @@ qa = ["flake8 (==3.8.3)", "mypy (==0.782)"]
 testing = ["docopt", "pytest (<6.0.0)"]
 
 [[package]]
+name = "pillow"
+version = "10.0.1"
+description = "Python Imaging Library (Fork)"
+category = "main"
+optional = false
+python-versions = ">=3.8"
+
+[package.extras]
+docs = ["furo", "olefile", "sphinx (>=2.4)", "sphinx-copybutton", "sphinx-inline-tabs", "sphinx-removed-in", "sphinxext-opengraph"]
+tests = ["check-manifest", "coverage", "defusedxml", "markdown2", "olefile", "packaging", "pyroma", "pytest", "pytest-cov", "pytest-timeout"]
+
+[[package]]
 name = "pluggy"
 version = "1.0.0"
 description = "plugin and hook calling mechanisms for python"
@@ -254,11 +266,11 @@ dev = ["tox", "pre-commit"]
 
 [[package]]
 name = "pyflakes"
-version = "3.0.1"
+version = "3.1.0"
 description = "passive checker of Python programs"
 category = "dev"
 optional = false
-python-versions = ">=3.6"
+python-versions = ">=3.8"
 
 [[package]]
 name = "pyparsing"
@@ -273,50 +285,51 @@ diagrams = ["railroad-diagrams", "jinja2"]
 
 [[package]]
 name = "python-lsp-jsonrpc"
-version = "1.0.0"
+version = "1.1.2"
 description = "JSON RPC 2.0 server library"
 category = "dev"
 optional = false
-python-versions = "*"
+python-versions = ">=3.8"
 
 [package.dependencies]
 ujson = ">=3.0.0"
 
 [package.extras]
-test = ["coverage", "pytest-cov", "pytest", "pyflakes", "pycodestyle", "pylint"]
+test = ["pylint", "pycodestyle", "pyflakes", "pytest", "pytest-cov", "coverage"]
 
 [[package]]
 name = "python-lsp-server"
-version = "1.7.1"
+version = "1.8.2"
 description = "Python Language Server for the Language Server Protocol"
 category = "dev"
 optional = false
-python-versions = ">=3.7"
+python-versions = ">=3.8"
 
 [package.dependencies]
 docstring-to-markdown = "*"
-jedi = ">=0.17.2,<0.19.0"
+importlib-metadata = {version = ">=4.8.3", markers = "python_version < \"3.10\""}
+jedi = ">=0.17.2,<0.20.0"
 pluggy = ">=1.0.0"
-pyflakes = {version = ">=2.5.0,<3.1.0", optional = true, markers = "extra == \"pyflakes\""}
-python-lsp-jsonrpc = ">=1.0.0"
+pyflakes = {version = ">=3.1.0,<3.2.0", optional = true, markers = "extra == \"pyflakes\""}
+python-lsp-jsonrpc = ">=1.1.0,<2.0.0"
 rope = {version = ">1.2.0", optional = true, markers = "extra == \"rope\""}
 ujson = ">=3.0.0"
 whatthepatch = {version = ">=1.0.2,<2.0.0", optional = true, markers = "extra == \"yapf\""}
-yapf = {version = "*", optional = true, markers = "extra == \"yapf\""}
+yapf = {version = ">=0.33.0", optional = true, markers = "extra == \"yapf\""}
 
 [package.extras]
-all = ["autopep8 (>=1.6.0,<1.7.0)", "flake8 (>=5.0.0,<7)", "mccabe (>=0.7.0,<0.8.0)", "pycodestyle (>=2.9.0,<2.11.0)", "pydocstyle (>=6.2.0,<6.3.0)", "pyflakes (>=2.5.0,<3.1.0)", "pylint (>=2.5.0,<3)", "rope (>1.2.0)", "yapf", "whatthepatch (>=1.0.2,<2.0.0)"]
-autopep8 = ["autopep8 (>=1.6.0,<1.7.0)"]
-flake8 = ["flake8 (>=5.0.0,<7)"]
+all = ["autopep8 (>=2.0.4,<2.1.0)", "flake8 (>=6.1.0,<7)", "mccabe (>=0.7.0,<0.8.0)", "pycodestyle (>=2.11.0,<2.12.0)", "pydocstyle (>=6.3.0,<6.4.0)", "pyflakes (>=3.1.0,<3.2.0)", "pylint (>=2.5.0,<3)", "rope (>1.2.0)", "yapf (>=0.33.0)", "whatthepatch (>=1.0.2,<2.0.0)"]
+autopep8 = ["autopep8 (>=1.6.0,<2.1.0)"]
+flake8 = ["flake8 (>=6.1.0,<7)"]
 mccabe = ["mccabe (>=0.7.0,<0.8.0)"]
-pycodestyle = ["pycodestyle (>=2.9.0,<2.11.0)"]
-pydocstyle = ["pydocstyle (>=6.2.0,<6.3.0)"]
-pyflakes = ["pyflakes (>=2.5.0,<3.1.0)"]
+pycodestyle = ["pycodestyle (>=2.11.0,<2.12.0)"]
+pydocstyle = ["pydocstyle (>=6.3.0,<6.4.0)"]
+pyflakes = ["pyflakes (>=3.1.0,<3.2.0)"]
 pylint = ["pylint (>=2.5.0,<3)"]
 rope = ["rope (>1.2.0)"]
 test = ["pylint (>=2.5.0,<3)", "pytest", "pytest-cov", "coverage", "numpy", "pandas", "matplotlib", "pyqt5", "flaky"]
 websockets = ["websockets (>=10.3)"]
-yapf = ["yapf", "whatthepatch (>=1.0.2,<2.0.0)"]
+yapf = ["yapf (>=0.33.0)", "whatthepatch (>=1.0.2,<2.0.0)"]
 
 [[package]]
 name = "pytoolconfig"
@@ -453,11 +466,14 @@ python-versions = "*"
 
 [[package]]
 name = "yapf"
-version = "0.32.0"
+version = "0.33.0"
 description = "A formatter for Python code."
 category = "dev"
 optional = false
 python-versions = "*"
+
+[package.dependencies]
+tomli = ">=2.0.1"
 
 [[package]]
 name = "yarl"
@@ -486,7 +502,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.8.0,<3.9"
-content-hash = "4ceda468c6ce7d0b641f0c244f742d3a912100cd87f29fbe250fdc0a2528f740"
+content-hash = "c18d20425f0f799a8ff388a2603ceda5b38e01428ec787276fc36bd9212c47d8"
 
 [metadata.files]
 aiohttp = []
@@ -511,6 +527,7 @@ multidict = []
 numpy = []
 packaging = []
 parso = []
+pillow = []
 pluggy = []
 pyflakes = []
 pyparsing = []
