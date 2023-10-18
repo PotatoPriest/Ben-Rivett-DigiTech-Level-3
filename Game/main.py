@@ -30,9 +30,16 @@ class read: # used to read the save file
     def __init__(self):
         self.save_file = open("Game/save.txt", "r")
         self.name = self.save_file.readline()
+        self.score = self.save_file.readline()
+        self.correcr_answers = self.save_file.readline()
+        self.incorrec_answers = self.save_file.readline()
         self.save_file.close()
+        print(self.name, self.score, self.correcr_answers, self.incorrec_answers)
     def __str__(self):
         return self.name
+        return self.score
+        return self.correcr_answers
+        return self.incorrec_answers
 
 class Window: # class for the main window
     def menu_button(self):
@@ -41,6 +48,11 @@ class Window: # class for the main window
         self.menuf.place(anchor="nw")
         
     def __init__(self): # This happens when the class is initilised
+        self.math_done = 0
+        self.geography_done = 0
+        self.trivia_done = 0
+        self.correct_answers = 0
+        self.incorrect_answers = 0
         self.question = "There is no question"
         self.qnumber = 1
         self.score = 0
@@ -52,14 +64,19 @@ class Window: # class for the main window
         self.menu_things = tk.Frame(self.window)
         label(self.menu_things, "Hello this is the title screen!")
         button(self.menu_things, "Play", self.start)
-        button(self.menu_things, "Load Save", Error)
+        button(self.menu_things, "Load Save", read)
         button(self.menu_things, "Exit", self.exit)
         self.scoref = tk.Frame(self.window)
         self.scoref.pack(anchor="ne")
         self.scorel = tk.Label(self.scoref, text="Score: {}".format(self.score))
         self.scorel.pack()
         self.menu_things.pack(pady=5)
-        
+
+    def save_file(self): # Saves the players progress
+        self.save_file = open("Game/save.txt", "w")
+        self.save_file.writelines("{}\n{}\n{}\n{}".format(self.name, self.score, self.correct_answers, self.incorrect_answers))
+        self.save_file.close()
+    
     def exit(self): # used when exiting the progam
         if messagebox.askyesno(title="Exit", message="Are you sure?"):
             self.window.destroy()
@@ -91,17 +108,14 @@ class Window: # class for the main window
         else:
             Error()
     
-    def set_name(self): #sets name and saves name
+    def set_name(self): #sets name
         self.name = simpledialog.askstring("Pick your Name", "Name:")
         if self.name == None:
             self.name = "None"
 
         else:
             self.name = self.name
-            
-        self.save_file = open("Game/save.txt", "w")
-        self.save_file.writelines([self.name])
-        self.save_file.close()
+
         self.label.config(text="Name: " + self.name)
 
     def back(self): # This sends you back to the start
@@ -192,6 +206,12 @@ You have completed the Math questions.""".format(self.name)
     def math(self): # This starts the math questions
         self.setting_things.destroy()
         self.math_stuff = tk.Frame(self.window)
+        
+        if self.math_done == 0:
+            label(self.math_stuff, "You have NOT done the Math questions.")
+        else:
+            label(self.math_stuff, "You have done the Math questions.")
+            
         label(self.math_stuff, """{}, This area of the game will test your knoledge
 on Mathmatics, starting with addition and subtraction
 then moving on to multiplication and divition.""".format(self.name))
@@ -207,6 +227,12 @@ then moving on to multiplication and divition.""".format(self.name))
     def geography(self): # This starts the geography questions
         self.setting_things.destroy()
         self.geography_stuff = tk.Frame(self.window)
+        
+        if self.geography_done == 0:
+            label(self.geography_stuff, "You have NOT done the Geography questions.")
+        else:
+            label(self.geography_stuff, "You have done the Geography questions.")
+            
         label(self.geography_stuff, """{}, This area of the game will test your knoledge
 on Geography, this will incluce naming the country
 based on its siluete as well as its flag.""".format(self.name))
@@ -217,6 +243,12 @@ based on its siluete as well as its flag.""".format(self.name))
     def trivia(self): # This starts the trivia questions
         self.setting_things.destroy()
         self.trivia_stuff = tk.Frame(self.window)
+        
+        if self.trivia_done == 0:
+            label(self.trivia_stuff, "You have NOT done the Trivia questions.")
+        else:
+            label(self.trivia_stuff, "You have done the Trivia questions.")
+            
         label(self.trivia_stuff, """{}, This area of the game will test your knoledge
 on random Trivia, this will include questions on anything.""".format(self.name))
         button(self.trivia_stuff, "Continue", Error)
@@ -227,6 +259,10 @@ on random Trivia, this will include questions on anything.""".format(self.name))
         if self.qnumber == 11:
             self.completef = tk.Frame(self.window)
             label(self.completef, self.question)
+            label(self.completef, """Your score is {}.
+You have gotten {} correct answers,
+You have gotten {} incorrect answers.""".format(self.score, self.correct_answers, self.incorrect_answers))
+            self.math_done = 1
             button(self.completef, "Continue", self.done)
             self.completef.pack(pady=5)
         else:
@@ -255,6 +291,7 @@ on random Trivia, this will include questions on anything.""".format(self.name))
         if self.player_answer == self.answer:
             self.math_qf.destroy()
             self.correct = tk.Frame(self.window)
+            self.correct_answers = self.correct_answers + 1
             label(self.correct, "Well done {} was the correct answer!".format(self.answer))
             button(self.correct, "Next question", self.intermission)
             self.correct.pack(pady=5)
@@ -264,6 +301,7 @@ on random Trivia, this will include questions on anything.""".format(self.name))
         else:
             self.math_qf.destroy()
             self.incorrect = tk.Frame(self.window)
+            self.incorrect_answers = self.incorrect_answers + 1
             label(self.incorrect, """Im sorry but {} was not the correct answer.
 The correct answer was {}.""".format(self.player_answer, self.answer))
             button(self.incorrect, "Next question", self.intermission)
