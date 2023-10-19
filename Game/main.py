@@ -68,7 +68,7 @@ class Window: # class for the main window
 
     def save_file(self): # Saves the players progress
         self.save_file = open("Game/save.txt", "w")
-        self.save_file.writelines("{}\n{}\n{}\n{}".format(self.name, self.score, self.correct_answers, self.incorrect_answers))
+        self.save_file.writelines("{}\n{}\n{}\n{}\n{}\n{}\n{}".format(self.name, self.score, self.correct_answers, self.incorrect_answers, self.math_done, self.geography_done, self.trivia_done))
         self.save_file.close()
         
     def load_file(self): # loads the players progress
