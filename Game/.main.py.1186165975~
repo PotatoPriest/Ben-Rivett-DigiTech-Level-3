@@ -30,15 +30,21 @@ class read: # used to read the save file
     def __init__(self):
         self.save_file = open("Game/save.txt", "r")
         self.name = self.save_file.readline()
+        self.score = self.save_file.readline()
+        self.correcrt_answers = self.save_file.readline()
+        self.incorrect_answers = self.save_file.readline()
         self.save_file.close()
     def __str__(self):
         return self.name
+        return self.score
+        return self.correct_answers
+        return self.incorrect_answers
 
 class Window: # class for the main window
     def menu_button(self):
         self.menuf = tk.Frame(self.window)
         button(self.menuf, "Menu", Error)
-        self.menuf.place(x = 20, y = 10)
+        self.menuf.place(anchor="nw")
         
     def __init__(self): # This happens when the class is initilised
         self.math_done = 0
@@ -57,32 +63,19 @@ class Window: # class for the main window
         self.menu_things = tk.Frame(self.window)
         label(self.menu_things, "Hello this is the title screen!")
         button(self.menu_things, "Play", self.start)
-        button(self.menu_things, "Load Save", self.load_file)
+        button(self.menu_things, "Load Save", read)
         button(self.menu_things, "Exit", self.exit)
         self.scoref = tk.Frame(self.window)
         self.scoref.pack(anchor="ne")
         self.scorel = tk.Label(self.scoref, text="Score: {}".format(self.score))
         self.scorel.pack()
-        self.menu_button()
         self.menu_things.pack(pady=5)
 
     def save_file(self): # Saves the players progress
         self.save_file = open("Game/save.txt", "w")
         self.save_file.writelines("{}\n{}\n{}\n{}".format(self.name, self.score, self.correct_answers, self.incorrect_answers))
         self.save_file.close()
-        
-    def load_file(self): # loads the players progress
-        self.save_file = open("Game/save.txt", "r")
-        self.name = self.save_file.readline()
-        self.score = self.save_file.readline()
-        self.correct_answers = self.save_file.readline()
-        self.incorrect_answers = self.save_file.readline()
-        self.math_done = self.save_file.readline()
-        self.geograhpy_done = self.save_file.readline()
-        self.trivia_done = self.save_file.readline()
-        self.save_file.close()
-        self.scorel.config(text="Score: {}".format(self.score))
-        tk.messagebox.showinfo(title="Load Save", message="Your save has been loaded")
+    def load_file(self):
     
     def exit(self): # used when exiting the progam
         if messagebox.askyesno(title="Exit", message="Are you sure?"):
