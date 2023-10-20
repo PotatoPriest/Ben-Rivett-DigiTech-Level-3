@@ -63,7 +63,7 @@ class Window: # class for the main window
         button(self.menu_things, "Exit", self.exit)
         self.menu_things.pack(pady=5)
 
-    def save_menu(self):
+    def save_menu(self): # this menu does save stuff
         self.state = 0
         self.menu_things.destroy()
         self.savef = tk.Frame(self.window)
@@ -72,7 +72,7 @@ class Window: # class for the main window
         button(self.savef, "Back", self.back_menu)
         self.savef.pack(pady=5)
 
-    def back_menu(self):
+    def back_menu(self): # this is to go back to the main menu
         if self.state == 1:
             self.setting_things.destroy()
             self.main_menu()
@@ -219,13 +219,117 @@ You have completed the Math questions.""".format(self.name)
                 Error()
                 
         elif self.option == "Geography":
-            pass
+            self.question = "What country does this flag belong too?"
+            self.answer = self.flag_country
 
         elif self.option == "Trivia":
             pass
 
         else:
             Error()
+    
+    def flags_set(self): ###### HEAVY WORK IN PROGRESS
+        if self.img_path == "Game/Images/Flag_Argentina.png":
+            self.answer = "Argentina"
+        elif self.img_path == "Game/Images/Flag_Australia.png":
+            self.answer = "Australia"
+        elif self.img_path == "Game/Images/Flag_Austria.png":
+            self.answer = "Austria"
+        elif self.img_path == "Game/Images/Flag_Belgium.png":
+            self.answer = "Belgium"
+        elif self.img_path == "Game/Images/Flag_Brazil.png":
+            self.answer = "Brazil"
+        elif self.img_path == "Game/Images/Flag_Bulgaria.png":
+            self.answer = "Bulgaria"
+        elif self.img_path == "Game/Images/Flag_Canada.png":
+            self.answer = "Canada"
+        elif self.img_path == "Game/Images/Flag_China.png":
+            self.answer = "China"
+        elif self.img_path == "Game/Images/Flag_Croatia.png":
+            self.answer = "Croatia"
+        elif self.img_path == "Game/Images/Flag_Denmark.png":
+            self.answer = "Denmark"
+        elif self.img_path == "Game/Images/Flag_Dominican_Republic.png":
+            self.answer = "Dominican Republic"
+        elif self.img_path == "Game/Images/Flag_Egypt.png":
+            self.answer = "Egypt"
+        elif self.img_path == "Game/Images/Flag_France.png":
+            self.answer = "France"
+        elif self.img_path == "Game/Images/Flag_Germany.png":
+            self.answer = "Germany"
+        elif self.img_path == "Game/Images/Flag_Greece.png":
+            self.answer = "Greece"
+        elif self.img_path == "Game/Images/Flag_Hong_Kong.png":
+            self.answer = "Hong Kong"
+        elif self.img_path == "Game/Images/Flag_Hungary.png":
+            self.answer = "Hungary"
+        elif self.img_path == "Game/Images/Flag_Iceland.png":
+            self.answer = "Iceland"
+        elif self.img_path == "Game/Images/Flag_India.png":
+            self.answer = "India"
+        elif self.img_path == "Game/Images/Flag_Indonesia.png":
+            self.answer = "Indonesia"
+        elif self.img_path == "Game/Images/Flag_Ireland.png":
+            self.answer = "Ireland"
+        elif self.img_path == "Game/Images/Flag_Italy.png":
+            self.answer = "Italy"
+        elif self.img_path == "Game/Images/Flag_Japan.png":
+            self.answer = "Japan"
+        elif self.img_path == "Game/Images/Flag_Jordan.png":
+            self.answer = "Jordan"
+        elif self.img_path == "Game/Images/Flag_Malaysia.png":
+            self.answer = "Malaysia"
+        elif self.img_path == "Game/Images/Flag_Mexico.png":
+            self.answer = "Mexico"
+        elif self.img_path == "Game/Images/Flag_Morocco.png":
+            self.answer = "Morocco"
+        elif self.img_path == "Game/Images/Flag_Netherlands.png":
+            self.answer = "Netherlands"
+        elif self.img_path == "Game/Images/Flag_North_Korea.png":
+            self.answer = "North Korea"
+        elif self.img_path == "Game/Images/Flag_Norway.png":
+            self.answer = "Norway"
+        elif self.img_path == "Game/Images/Flag_NZ.png":
+            self.answer = "New Zealand"
+        elif self.img_path == "Game/Images/Flag_Philippines.png":
+            self.answer = "Philippines"
+        elif self.img_path == "Game/Images/Flag_Poland.png":
+            self.answer = "Poland"
+        elif self.img_path == "Game/Images/Flag_Portugal.png":
+            self.answer = "Portugal"
+        elif self.img_path == "Game/Images/Flag_Russia.png":
+            self.answer = "Russia"
+        elif self.img_path == "Game/Images/Flag_Saudi_Arabia.png":
+            self.answer = "Saudi Arabia"
+        elif self.img_path == "Game/Images/Flag_Singapore.png":
+            self.answer = "Singapore"
+        elif self.img_path == "Game/Images/Flag_South_Africa.png":
+            self.answer = "South Africa"
+        elif self.img_path == "Game/Images/Flag_South_Korea.png":
+            self.answer = "South Korea"
+        elif self.img_path == "Game/Images/Flag_Spain.png":
+            self.answer = "Spain"
+        elif self.img_path == "Game/Images/Flag_Sweden.png":
+            self.answer = "Sweden"
+        elif self.img_path == "Game/Images/Flag_Switzerland.png":
+            self.answer = "Switzerland"
+        elif self.img_path == "Game/Images/Flag_Thailand.png":
+            self.answer = "Thailand"
+        elif self.img_path == "Game/Images/Flag_Turkey.png":
+            self.answer = "Turkey"
+        elif self.img_path == "Game/Images/Flag_UAE.png":
+            self.answer = "United Arab Emirates"
+        elif self.img_path == "Game/Images/Flag_UK.png":
+            self.answer = "United Kingdom"
+        elif self.img_path == "Game/Images/Flag_Ukraine.png":
+            self.answer = "Ukrain"
+        elif self.img_path == "Game/Images/Flag_USA.png":
+            self.answer = "United States of America"
+        elif self.img_path == "Game/Images/Flag_Vietnam.png":
+            self.answer = "Vietnam"
+        else:
+            Error()
+        
     
     def math(self): # This starts the math questions
         self.setting_things.destroy()
@@ -260,7 +364,7 @@ then moving on to multiplication and divition.""".format(self.name))
         label(self.geography_stuff, """{}, This area of the game will test your knoledge
 on Geography, this will incluce naming the country
 based on its siluete as well as its flag.""".format(self.name))
-        button(self.geography_stuff, "Continue", Error)
+        button(self.geography_stuff, "Continue", self.geography_questions)
         button(self.geography_stuff, "Back", self.back)
         self.geography_stuff.pack(pady=5)
 
@@ -299,7 +403,26 @@ You have gotten {} incorrect answers.""".format(self.score, self.correct_answers
             button(self.math_qf, "Submit", self.submit)
             self.math_qf.pack(pady=5)
                 
-
+    def geography_questions(self): #!!!!!MAJOUR WORK IN PROGRESS!!!!!
+        if self.qnumber == 11:
+            self.completef = tk.Frame(self.window)
+            label(self.completef, self.question)
+            label(self.completef, """Your score is {}.
+        You have gotten {} correct answers,
+        You have gotten {} incorrect answers.""".format(self.score, self.correct_answers, self.incorrect_answers))
+            self.geography_done = 1
+            button(self.completef, "Continue", self.done)
+            self.completef.pack(pady=5)
+        else:
+            self.geography_stuff.destroy()
+            self.geography_qf = tk.Frame(self.window)
+            self.setting_question()
+            label(self.geography_qf, "Question {}: {}".format(self.qnumber, self.question))
+            self.aentry = tk.Entry(self.geography_qf)
+            self.aentry.pack()
+            button(self.geography_qf, "Submit", self.submit)
+            self.geography_qf.pack(pady=5)
+        
     def submit(self): # This is so that the player has to input an intiger when answering the math questions.
         try:
             self.player_answer = int(self.aentry.get())
