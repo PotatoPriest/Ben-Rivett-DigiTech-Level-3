@@ -14,7 +14,7 @@ def label(master, text): # definition for label
     la = tk.Label(master, text=text)
     la.pack(pady=5)
 
-def image(master, path, x, y):
+def image(master, path, x, y): # this imports an image to be used in code
     imageframe = tk.Frame(master)
     img = ImageTk.PhotoImage(Image.open(path).resize((x, y)))
     image = tk.Label(imageframe, image=img)
@@ -35,12 +35,8 @@ class read: # used to read the save file
         return self.name
 
 class Window: # class for the main window
-    def menu_button(self):
-        self.menuf = tk.Frame(self.window)
-        button(self.menuf, "Menu", Error)
-        self.menuf.place(x = 20, y = 10)
-        
     def __init__(self): # This happens when the class is initilised
+        self.state = 0
         self.math_done = 0
         self.geography_done = 0
         self.trivia_done = 0
@@ -49,27 +45,46 @@ class Window: # class for the main window
         self.question = "There is no question"
         self.qnumber = 1
         self.score = 0
-        self.name = read()
-        self.name
+        self.name = "None"
         self.window = tk.Tk()
         self.window.title("Game by: Benjamin Rivett")
         self.window.geometry("400x300")
-        self.menu_things = tk.Frame(self.window)
-        label(self.menu_things, "Hello this is the title screen!")
-        button(self.menu_things, "Play", self.start)
-        button(self.menu_things, "Load Save", self.load_file)
-        button(self.menu_things, "Exit", self.exit)
         self.scoref = tk.Frame(self.window)
         self.scoref.pack(anchor="ne")
         self.scorel = tk.Label(self.scoref, text="Score: {}".format(self.score))
         self.scorel.pack()
-        self.menu_button()
+        self.main_menu()
+
+    def main_menu(self): # This is the main menu
+        self.menu_things = tk.Frame(self.window)
+        label(self.menu_things, "Hello this is the title screen!")
+        button(self.menu_things, "Play", self.start)
+        button(self.menu_things, "Save Menu", self.save_menu)
+        button(self.menu_things, "Exit", self.exit)
         self.menu_things.pack(pady=5)
 
+    def save_menu(self):
+        self.state = 0
+        self.menu_things.destroy()
+        self.savef = tk.Frame(self.window)
+        button(self.savef, "Save Game", self.save_file)
+        button(self.savef, "Load Save", self.load_file)
+        button(self.savef, "Back", self.back_menu)
+        self.savef.pack(pady=5)
+
+    def back_menu(self):
+        if self.state == 1:
+            self.setting_things.destroy()
+            self.main_menu()
+        else:
+            self.savef.destroy()
+            self.main_menu()
+        
     def save_file(self): # Saves the players progress
         self.save_file = open("Game/save.txt", "w")
         self.save_file.writelines("{}\n{}\n{}\n{}\n{}\n{}\n{}".format(self.name, self.score, self.correct_answers, self.incorrect_answers, self.math_done, self.geography_done, self.trivia_done))
         self.save_file.close()
+        tk.messagebox.showinfo(title="Save Game", message="Your game has been saved!")
         
     def load_file(self): # loads the players progress
         self.save_file = open("Game/save.txt", "r")
@@ -89,6 +104,7 @@ class Window: # class for the main window
             self.window.destroy()
             
     def start(self): # this starts the game
+        self.state = 1
         self.menu = StringVar()
         self.menu.set("Empty")
         self.menu_things.destroy()
@@ -100,6 +116,7 @@ class Window: # class for the main window
         self.play_option = tk.OptionMenu(self.setting_things, self.menu, *option_menu)
         self.play_option.pack(pady=5)
         button(self.setting_things, "Continue", self.next)
+        button(self.setting_things, "Back", self.back_menu)
         self.setting_things.pack(pady=5)
 
     def next(self): # What happens when you pick something from the options menu
@@ -323,7 +340,7 @@ The correct answer was {}.""".format(self.player_answer, self.answer))
             self.incorrect.destroy()
             self.setting_question()
             self.math_questions()
-            
-window = Window()
+
+window = Window() # this starts the game
 window
 window.window.mainloop()
