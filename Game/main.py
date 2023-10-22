@@ -5,6 +5,7 @@ from tkinter import StringVar
 import random
 from PIL import ImageTk, Image
 option_menu = ["Empty", "Math", "Geography", "Trivia"] # list for options in the options menu
+flag_list = ["Game/Images/Flag_Argentina.png", "Game/Images/Flag_Australia.png", "Game/Images/Flag_Austria.png", "Game/Images/Flag_Belgium.png", "Game/Images/Flag_Brazil.png", "Game/Images/Flag_Bulgaria.png", "Game/Images/Flag_Canada.png", "Game/Images/Flag_China.png", "Game/Images/Flag_Croatia.png", "Game/Images/Flag_Denmark.png", "Game/Images/Flag_Dominican_Republic.png", "Game/Images/Flag_Egypt.png", "Game/Images/Flag_France.png", "Game/Images/Flag_Germany.png", "Game/Images/Flag_Greece.png", "Game/Images/Flag_Hong_Kong.png", "Game/Images/Flag_Hungary.png", "Game/Images/Flag_Iceland.png", "Game/Images/Flag_India.png", "Game/Images/Flag_Indonesia.png", "Game/Images/Flag_Ireland.png", "Game/Images/Flag_Italy.png", "Game/Images/Flag_Japan.png", "Game/Images/Flag_Jordan.png", "Game/Images/Flag_Malaysia.png", "Game/Images/Flag_Mexico.png", "Game/Images/Flag_Morocco.png", "Game/Images/Flag_Netherlands.png", "Game/Images/Flag_North_Korea.png", "Game/Images/Flag_Norway.png", "Game/Images/Flag_NZ.png", "Game/Images/Flag_Philippines.png", "Game/Images/Flag_Poland.png", "Game/Images/Flag_Portugal.png", "Game/Images/Flag_Russia.png", "Game/Images/Flag_Saudi_Arabia.png", "Game/Images/Flag_Singapore.png", "Game/Images/Flag_South_Africa.png", "Game/Images/Flag_South_Korea.png", "Game/Images/Flag_Spain.png", "Game/Images/Flag_Sweden.png", "Game/Images/Flag_Switzerland.png", "Game/Images/Flag_Thailand.png", "Game/Images/Flag_Turkey.png", "Game/Images/Flag_UAE.png", "Game/Images/Flag_UK.png", "Game/Images/Flag_Ukraine.png", "Game/Images/Flag_USA.png", "Game/Images/Flag_Vietnam.png"] # List of flag images
 
 def button(master, text, command): # definition for making a button
     bt = tk.Button(master, text=text, command=command)
@@ -36,6 +37,7 @@ class read: # used to read the save file
 
 class Window: # class for the main window
     def __init__(self): # This happens when the class is initilised
+        self.img_path = "No path"
         self.state = 0
         self.math_done = 0
         self.geography_done = 0
@@ -219,9 +221,12 @@ You have completed the Math questions.""".format(self.name)
                 Error()
                 
         elif self.option == "Geography":
+            self.img_path = random.choice(flag_list) # needs o be random
+            image(self.geography_qf, self.img_path, 200, 100)
             self.question = "What country does this flag belong too?"
-            self.answer = self.flag_country
-
+            self.flags_set()
+            print(self.answer)
+            
         elif self.option == "Trivia":
             pass
 
@@ -329,7 +334,6 @@ You have completed the Math questions.""".format(self.name)
             self.answer = "Vietnam"
         else:
             Error()
-        
     
     def math(self): # This starts the math questions
         self.setting_things.destroy()
@@ -424,46 +428,118 @@ You have gotten {} incorrect answers.""".format(self.score, self.correct_answers
             self.geography_qf.pack(pady=5)
         
     def submit(self): # This is so that the player has to input an intiger when answering the math questions.
-        try:
-            self.player_answer = int(self.aentry.get())
-            self.answer_check()
-        except ValueError:
-            tk.messagebox.showinfo("No Input", "Please input a valid responce")
-
+        if self.option == "Math":
+            try:
+                self.player_answer = int(self.aentry.get())
+                self.answer_check()
+            except ValueError:
+                tk.messagebox.showinfo("No Input", "Please input a valid responce")
+        else:
+            self.player_answer = self.aentry.get()
+            if self.player_answer == "":
+                tk.messagebox.showinfo("No Input", "Please input a valid responce")
+            else:
+                self.answer_check()
         
     
-    def answer_check(self):  # This checks the players answer
-            
+    def answer_check(self):  # This checks the players answer            
         self.qnumber = self.qnumber + 1
-        if self.player_answer == self.answer:
-            self.math_qf.destroy()
-            self.correct = tk.Frame(self.window)
-            self.correct_answers = self.correct_answers + 1
-            label(self.correct, "Well done {} was the correct answer!".format(self.answer))
-            button(self.correct, "Next question", self.intermission)
-            self.correct.pack(pady=5)
-            self.score = self.score + 1
-            self.scorel.config(text="Score: {}".format(self.score))
+        if self.option == "Math":
+            if self.player_answer == self.answer:
+                self.math_qf.destroy()
+                self.correct = tk.Frame(self.window)
+                self.correct_answers = self.correct_answers + 1
+                label(self.correct, "Well done {} was the correct answer!".format(self.answer))
+                button(self.correct, "Next question", self.intermission)
+                self.correct.pack(pady=5)
+                self.score = self.score + 1
+                self.scorel.config(text="Score: {}".format(self.score))
+                
+            else:
+                self.math_qf.destroy()
+                self.incorrect = tk.Frame(self.window)
+                self.incorrect_answers = self.incorrect_answers + 1
+                label(self.incorrect, """Im sorry but {} was not the correct answer.
+    The correct answer was {}.""".format(self.player_answer, self.answer))
+                button(self.incorrect, "Next question", self.intermission)
+                self.incorrect.pack(pady=5)
+                
+        elif self.option == "Geography":
+            if self.player_answer == self.answer:
+                self.geography_qf.destroy()
+                self.correct = tk.Frame(self.window)
+                self.correct_answers = self.correct_answers + 1
+                label(self.correct, "Well done {} was the correct answer!".format(self.answer))
+                button(self.correct, "Next question", self.intermission)
+                self.correct.pack(pady=5)
+                self.score = self.score + 1
+                self.scorel.config(text="Score: {}".format(self.score))
+
+            else:
+                self.geography_qf.destroy()
+                self.incorrect = tk.Frame(self.window)
+                self.incorrect_answers = self.incorrect_answers + 1
+                label(self.incorrect, """Im sorry but {} was not the correct answer.
+            The correct answer was {}.""".format(self.player_answer, self.answer))
+                button(self.incorrect, "Next question", self.intermission)
+                self.incorrect.pack(pady=5)
+                
+        elif self.option == "Trivia":
+            if self.player_answer == self.answer:
+                self.trivia_qf.destroy()
+                self.correct = tk.Frame(self.window)
+                self.correct_answers = self.correct_answers + 1
+                label(self.correct, "Well done {} was the correct answer!".format(self.answer))
+                button(self.correct, "Next question", self.intermission)
+                self.correct.pack(pady=5)
+                self.score = self.score + 1
+                self.scorel.config(text="Score: {}".format(self.score))
+
+            else:
+                self.trivia_stuff_qf.destroy()
+                self.incorrect = tk.Frame(self.window)
+                self.incorrect_answers = self.incorrect_answers + 1
+                label(self.incorrect, """Im sorry but {} was not the correct answer.
+            The correct answer was {}.""".format(self.player_answer, self.answer))
+                button(self.incorrect, "Next question", self.intermission)
+                self.incorrect.pack(pady=5)
+
+        else:
+            Error()
             
-        else:
-            self.math_qf.destroy()
-            self.incorrect = tk.Frame(self.window)
-            self.incorrect_answers = self.incorrect_answers + 1
-            label(self.incorrect, """Im sorry but {} was not the correct answer.
-The correct answer was {}.""".format(self.player_answer, self.answer))
-            button(self.incorrect, "Next question", self.intermission)
-            self.incorrect.pack(pady=5)
-
     def intermission(self): # This is for in between questions
-        if self.player_answer == self.answer:
-            self.correct.destroy()
-            self.setting_question()
-            self.math_questions()
-        else:
-            self.incorrect.destroy()
-            self.setting_question()
-            self.math_questions()
+        if self.option == "Math":
+            if self.player_answer == self.answer:
+                self.correct.destroy()
+                self.setting_question()
+                self.math_questions()
+            else:
+                self.incorrect.destroy()
+                self.setting_question()
+                self.math_questions()
+                
+        elif self.option == "Geography":
+            if self.player_answer == self.answer:
+                self.correct.destroy()
+                self.geography_questions()
+                self.setting_question()
+            else:
+                self.incorrect.destroy()
+                self.geography_questions()
+                self.setting_question()
 
+        elif self.option == "Trivia":
+            if self.player_answer == self.answer:
+                self.correct.destroy()
+                self.setting_question()
+                self.trivia_questions()
+            else:
+                self.incorrect.destroy()
+                self.setting_question()
+                self.trivia_questions()
+        else:
+            Error()
+            
 window = Window() # this starts the game
 window
 window.window.mainloop()
