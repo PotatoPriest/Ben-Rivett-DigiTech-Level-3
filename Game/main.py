@@ -5,7 +5,7 @@ from tkinter import StringVar
 import random
 from PIL import ImageTk, Image
 option_menu = ["Empty", "Math", "Geography", "Trivia"] # list for options in the options menu
-flag_list = ["Game/Images/Flag_Argentina.png", "Game/Images/Flag_Australia.png", "Game/Images/Flag_Austria.png", "Game/Images/Flag_Belgium.png", "Game/Images/Flag_Brazil.png", "Game/Images/Flag_Bulgaria.png", "Game/Images/Flag_Canada.png", "Game/Images/Flag_China.png", "Game/Images/Flag_Croatia.png", "Game/Images/Flag_Denmark.png", "Game/Images/Flag_Dominican_Republic.png", "Game/Images/Flag_Egypt.png", "Game/Images/Flag_France.png", "Game/Images/Flag_Germany.png", "Game/Images/Flag_Greece.png", "Game/Images/Flag_Hong_Kong.png", "Game/Images/Flag_Hungary.png", "Game/Images/Flag_Iceland.png", "Game/Images/Flag_India.png", "Game/Images/Flag_Indonesia.png", "Game/Images/Flag_Ireland.png", "Game/Images/Flag_Italy.png", "Game/Images/Flag_Japan.png", "Game/Images/Flag_Jordan.png", "Game/Images/Flag_Malaysia.png", "Game/Images/Flag_Mexico.png", "Game/Images/Flag_Morocco.png", "Game/Images/Flag_Netherlands.png", "Game/Images/Flag_North_Korea.png", "Game/Images/Flag_Norway.png", "Game/Images/Flag_NZ.png", "Game/Images/Flag_Philippines.png", "Game/Images/Flag_Poland.png", "Game/Images/Flag_Portugal.png", "Game/Images/Flag_Russia.png", "Game/Images/Flag_Saudi_Arabia.png", "Game/Images/Flag_Singapore.png", "Game/Images/Flag_South_Africa.png", "Game/Images/Flag_South_Korea.png", "Game/Images/Flag_Spain.png", "Game/Images/Flag_Sweden.png", "Game/Images/Flag_Switzerland.png", "Game/Images/Flag_Thailand.png", "Game/Images/Flag_Turkey.png", "Game/Images/Flag_UAE.png", "Game/Images/Flag_UK.png", "Game/Images/Flag_Ukraine.png", "Game/Images/Flag_USA.png", "Game/Images/Flag_Vietnam.png"] # List of flag images
+flag_dict = {"Game/Images/Flag_Argentina.png" : "Argintina", "Game/Images/Flag_Australia.png" : "Australia", "Game/Images/Flag_Austria.png" : "Austria", "Game/Images/Flag_Belgium.png" : "Belgium", "Game/Images/Flag_Brazil.png" : "Brazil", "Game/Images/Flag_Bulgaria.png" : "Bulgaria", "Game/Images/Flag_Canada.png" : "Canada", "Game/Images/Flag_China.png" : "China", "Game/Images/Flag_Croatia.png" : "Croatia", "Game/Images/Flag_Denmark.png" : "Denmark", "Game/Images/Flag_Dominican_Republic.png" : "Dominican Republic", "Game/Images/Flag_Egypt.png" : "Egypt", "Game/Images/Flag_France.png" : "France", "Game/Images/Flag_Germany.png" : "Germany", "Game/Images/Flag_Greece.png" : "Greece", "Game/Images/Flag_Hong_Kong.png" : "Hong Kong", "Game/Images/Flag_Hungary.png" : "Hungary", "Game/Images/Flag_Iceland.png" : "Iceland", "Game/Images/Flag_India.png" : "India", "Game/Images/Flag_Indonesia.png" : "Indonesia", "Game/Images/Flag_Ireland.png" : "Ireland", "Game/Images/Flag_Italy.png" : "Italy", "Game/Images/Flag_Japan.png" : "Japan", "Game/Images/Flag_Jordan.png" : "Jordan", "Game/Images/Flag_Malaysia.png" : "Malaysia", "Game/Images/Flag_Mexico.png" : "Mexico", "Game/Images/Flag_Morocco.png" : "Morocco", "Game/Images/Flag_Netherlands.png" : "Netherlands", "Game/Images/Flag_North_Korea.png" : "North Korea", "Game/Images/Flag_Norway.png" : "Norway", "Game/Images/Flag_NZ.png" : "New Zealand", "Game/Images/Flag_Philippines.png" : "Philippines", "Game/Images/Flag_Poland.png" : "Poland", "Game/Images/Flag_Portugal.png" : "Portugal", "Game/Images/Flag_Russia.png" : "Russia", "Game/Images/Flag_Saudi_Arabia.png" : "Saudi Arabia", "Game/Images/Flag_Singapore.png" : "Singapore", "Game/Images/Flag_South_Africa.png" : "South Africa", "Game/Images/Flag_South_Korea.png" : "South Korea", "Game/Images/Flag_Spain.png" : "Spain", "Game/Images/Flag_Sweden.png" : "Sweden", "Game/Images/Flag_Switzerland.png" : "Switzerland", "Game/Images/Flag_Thailand.png" : "Thailand", "Game/Images/Flag_Turkey.png" : "Turkey", "Game/Images/Flag_UAE.png" : "United Arab Emirates", "Game/Images/Flag_UK.png" : "United Kingdom", "Game/Images/Flag_Ukraine.png" : "Ukraine", "Game/Images/Flag_USA.png" : "United States of America", "Game/Images/Flag_Vietnam.png" : "Vietnam"} # Dictonairy of flag images
 
 def button(master, text, command): # definition for making a button
     bt = tk.Button(master, text=text, command=command)
@@ -221,119 +221,25 @@ You have completed the Math questions.""".format(self.name)
                 Error()
                 
         elif self.option == "Geography":
-            self.img_path = random.choice(flag_list) # needs o be random
-            image(self.geography_qf, self.img_path, 200, 100)
-            self.question = "What country does this flag belong too?"
-            self.flags_set()
-            print(self.answer)
-            
+            if self.qnumber < 10:
+                self.img_path, self.answer = random.choice(list(flag_dict.items())) # Needs to work
+                image(self.geography_qf, self.img_path, 200, 100)
+                self.question = "What country does this flag belong too?"
+                self.flags_set()
+                print(self.answer)
+
+            else:
+                self.question = """Well done {}!
+You have completed the Math questions.""".format(self.name)
+                
         elif self.option == "Trivia":
             pass
 
         else:
             Error()
     
-    def flags_set(self): ###### HEAVY WORK IN PROGRESS
-        if self.img_path == "Game/Images/Flag_Argentina.png":
-            self.answer = "Argentina"
-        elif self.img_path == "Game/Images/Flag_Australia.png":
-            self.answer = "Australia"
-        elif self.img_path == "Game/Images/Flag_Austria.png":
-            self.answer = "Austria"
-        elif self.img_path == "Game/Images/Flag_Belgium.png":
-            self.answer = "Belgium"
-        elif self.img_path == "Game/Images/Flag_Brazil.png":
-            self.answer = "Brazil"
-        elif self.img_path == "Game/Images/Flag_Bulgaria.png":
-            self.answer = "Bulgaria"
-        elif self.img_path == "Game/Images/Flag_Canada.png":
-            self.answer = "Canada"
-        elif self.img_path == "Game/Images/Flag_China.png":
-            self.answer = "China"
-        elif self.img_path == "Game/Images/Flag_Croatia.png":
-            self.answer = "Croatia"
-        elif self.img_path == "Game/Images/Flag_Denmark.png":
-            self.answer = "Denmark"
-        elif self.img_path == "Game/Images/Flag_Dominican_Republic.png":
-            self.answer = "Dominican Republic"
-        elif self.img_path == "Game/Images/Flag_Egypt.png":
-            self.answer = "Egypt"
-        elif self.img_path == "Game/Images/Flag_France.png":
-            self.answer = "France"
-        elif self.img_path == "Game/Images/Flag_Germany.png":
-            self.answer = "Germany"
-        elif self.img_path == "Game/Images/Flag_Greece.png":
-            self.answer = "Greece"
-        elif self.img_path == "Game/Images/Flag_Hong_Kong.png":
-            self.answer = "Hong Kong"
-        elif self.img_path == "Game/Images/Flag_Hungary.png":
-            self.answer = "Hungary"
-        elif self.img_path == "Game/Images/Flag_Iceland.png":
-            self.answer = "Iceland"
-        elif self.img_path == "Game/Images/Flag_India.png":
-            self.answer = "India"
-        elif self.img_path == "Game/Images/Flag_Indonesia.png":
-            self.answer = "Indonesia"
-        elif self.img_path == "Game/Images/Flag_Ireland.png":
-            self.answer = "Ireland"
-        elif self.img_path == "Game/Images/Flag_Italy.png":
-            self.answer = "Italy"
-        elif self.img_path == "Game/Images/Flag_Japan.png":
-            self.answer = "Japan"
-        elif self.img_path == "Game/Images/Flag_Jordan.png":
-            self.answer = "Jordan"
-        elif self.img_path == "Game/Images/Flag_Malaysia.png":
-            self.answer = "Malaysia"
-        elif self.img_path == "Game/Images/Flag_Mexico.png":
-            self.answer = "Mexico"
-        elif self.img_path == "Game/Images/Flag_Morocco.png":
-            self.answer = "Morocco"
-        elif self.img_path == "Game/Images/Flag_Netherlands.png":
-            self.answer = "Netherlands"
-        elif self.img_path == "Game/Images/Flag_North_Korea.png":
-            self.answer = "North Korea"
-        elif self.img_path == "Game/Images/Flag_Norway.png":
-            self.answer = "Norway"
-        elif self.img_path == "Game/Images/Flag_NZ.png":
-            self.answer = "New Zealand"
-        elif self.img_path == "Game/Images/Flag_Philippines.png":
-            self.answer = "Philippines"
-        elif self.img_path == "Game/Images/Flag_Poland.png":
-            self.answer = "Poland"
-        elif self.img_path == "Game/Images/Flag_Portugal.png":
-            self.answer = "Portugal"
-        elif self.img_path == "Game/Images/Flag_Russia.png":
-            self.answer = "Russia"
-        elif self.img_path == "Game/Images/Flag_Saudi_Arabia.png":
-            self.answer = "Saudi Arabia"
-        elif self.img_path == "Game/Images/Flag_Singapore.png":
-            self.answer = "Singapore"
-        elif self.img_path == "Game/Images/Flag_South_Africa.png":
-            self.answer = "South Africa"
-        elif self.img_path == "Game/Images/Flag_South_Korea.png":
-            self.answer = "South Korea"
-        elif self.img_path == "Game/Images/Flag_Spain.png":
-            self.answer = "Spain"
-        elif self.img_path == "Game/Images/Flag_Sweden.png":
-            self.answer = "Sweden"
-        elif self.img_path == "Game/Images/Flag_Switzerland.png":
-            self.answer = "Switzerland"
-        elif self.img_path == "Game/Images/Flag_Thailand.png":
-            self.answer = "Thailand"
-        elif self.img_path == "Game/Images/Flag_Turkey.png":
-            self.answer = "Turkey"
-        elif self.img_path == "Game/Images/Flag_UAE.png":
-            self.answer = "United Arab Emirates"
-        elif self.img_path == "Game/Images/Flag_UK.png":
-            self.answer = "United Kingdom"
-        elif self.img_path == "Game/Images/Flag_Ukraine.png":
-            self.answer = "Ukrain"
-        elif self.img_path == "Game/Images/Flag_USA.png":
-            self.answer = "United States of America"
-        elif self.img_path == "Game/Images/Flag_Vietnam.png":
-            self.answer = "Vietnam"
-        else:
-            Error()
+    def flags_set(self): ### HEAVY WORK IN PROGRESS!!!!
+        pass
     
     def math(self): # This starts the math questions
         self.setting_things.destroy()
@@ -412,8 +318,8 @@ You have gotten {} incorrect answers.""".format(self.score, self.correct_answers
             self.completef = tk.Frame(self.window)
             label(self.completef, self.question)
             label(self.completef, """Your score is {}.
-        You have gotten {} correct answers,
-        You have gotten {} incorrect answers.""".format(self.score, self.correct_answers, self.incorrect_answers))
+You have gotten {} correct answers,
+You have gotten {} incorrect answers.""".format(self.score, self.correct_answers, self.incorrect_answers))
             self.geography_done = 1
             button(self.completef, "Continue", self.done)
             self.completef.pack(pady=5)
@@ -422,10 +328,24 @@ You have gotten {} incorrect answers.""".format(self.score, self.correct_answers
             self.geography_qf = tk.Frame(self.window)
             self.setting_question()
             label(self.geography_qf, "Question {}: {}".format(self.qnumber, self.question))
-            self.aentry = tk.Entry(self.geography_qf)
-            self.aentry.pack()
-            button(self.geography_qf, "Submit", self.submit)
+            self.geo_choices()
             self.geography_qf.pack(pady=5)
+
+    def geo_choices(self):
+        self.rc_list = []
+        while self.answer not in self.rc_list:
+            while len(self.rc_list) !=4:
+                self.rc_list.append(random.choice(list(flag_dict.values())))
+            
+        self.choice_1 = tk.Button(self.geography_qf, text=self.rc_list[0], command=Error)
+        self.choice_1.pack()
+        self.choice_2 = tk.Button(self.geography_qf, text=self.rc_list[1], command=Error)
+        self.choice_2.pack()
+        self.choice_3 = tk.Button(self.geography_qf, text=self.rc_list[2], command=Error)
+        self.choice_3.pack()
+        self.choice_4 = tk.Button(self.geography_qf, text=self.rc_list[3], command=Error)
+        self.choice_4.pack()
+        print(self.rc_list)
         
     def submit(self): # This is so that the player has to input an intiger when answering the math questions.
         if self.option == "Math":
@@ -522,11 +442,9 @@ You have gotten {} incorrect answers.""".format(self.score, self.correct_answers
             if self.player_answer == self.answer:
                 self.correct.destroy()
                 self.geography_questions()
-                self.setting_question()
             else:
                 self.incorrect.destroy()
                 self.geography_questions()
-                self.setting_question()
 
         elif self.option == "Trivia":
             if self.player_answer == self.answer:
