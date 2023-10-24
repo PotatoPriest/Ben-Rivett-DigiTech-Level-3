@@ -221,25 +221,20 @@ You have completed the Math questions.""".format(self.name)
                 Error()
                 
         elif self.option == "Geography":
-            if self.qnumber < 10:
-                self.img_path, self.answer = random.choice(list(flag_dict.items())) # Needs to work
+            if self.qnumber < 11:
+                self.img_path, self.answer = random.choice(list(flag_dict.items()))
                 image(self.geography_qf, self.img_path, 200, 100)
                 self.question = "What country does this flag belong too?"
-                self.flags_set()
-                print(self.answer)
-
+                
             else:
                 self.question = """Well done {}!
 You have completed the Math questions.""".format(self.name)
                 
         elif self.option == "Trivia":
-            pass
+            Error()
 
         else:
             Error()
-    
-    def flags_set(self): ### HEAVY WORK IN PROGRESS!!!!
-        pass
     
     def math(self): # This starts the math questions
         self.setting_things.destroy()
@@ -326,26 +321,50 @@ You have gotten {} incorrect answers.""".format(self.score, self.correct_answers
         else:
             self.geography_stuff.destroy()
             self.geography_qf = tk.Frame(self.window)
+            self.geography_qf.pack(pady=5)
             self.setting_question()
             label(self.geography_qf, "Question {}: {}".format(self.qnumber, self.question))
             self.geo_choices()
-            self.geography_qf.pack(pady=5)
 
     def geo_choices(self):
         self.rc_list = []
+        self.ln = [0, 1, 2, 3]
         while self.answer not in self.rc_list:
+            if len(self.rc_list) == 4:
+                self.rc_list.pop(0)
             while len(self.rc_list) !=4:
+                random.shuffle(self.ln)
                 self.rc_list.append(random.choice(list(flag_dict.values())))
-            
-        self.choice_1 = tk.Button(self.geography_qf, text=self.rc_list[0], command=Error)
-        self.choice_1.pack()
-        self.choice_2 = tk.Button(self.geography_qf, text=self.rc_list[1], command=Error)
-        self.choice_2.pack()
-        self.choice_3 = tk.Button(self.geography_qf, text=self.rc_list[2], command=Error)
-        self.choice_3.pack()
-        self.choice_4 = tk.Button(self.geography_qf, text=self.rc_list[3], command=Error)
-        self.choice_4.pack()
-        print(self.rc_list)
+                                
+
+        self.button_frame1 = tk.Frame(self.geography_qf)
+        self.button_frame2 = tk.Frame(self.geography_qf)
+        self.choice_1 = tk.Button(self.button_frame1, text=self.rc_list[self.ln[0]], command=self.c1)
+        self.choice_1.pack(side="left")
+        self.choice_2 = tk.Button(self.button_frame1, text=self.rc_list[self.ln[1]], command=self.c2)
+        self.choice_2.pack(side="right")
+        self.choice_3 = tk.Button(self.button_frame2, text=self.rc_list[self.ln[2]], command=self.c3)
+        self.choice_3.pack(side="left")
+        self.choice_4 = tk.Button(self.button_frame2, text=self.rc_list[self.ln[3]], command=self.c4)
+        self.choice_4.pack(side="right")
+        self.button_frame1.pack()
+        self.button_frame2.pack()
+        
+    def c1(self):
+        self.player_answer = self.rc_list[self.ln[0]]
+        self.answer_check()
+                
+    def c2(self):
+        self.player_answer = self.rc_list[self.ln[1]]
+        self.answer_check()
+
+    def c3(self):
+        self.player_answer = self.rc_list[self.ln[2]]
+        self.answer_check()
+
+    def c4(self):
+        self.player_answer = self.rc_list[self.ln[3]]
+        self.answer_check()
         
     def submit(self): # This is so that the player has to input an intiger when answering the math questions.
         if self.option == "Math":
@@ -383,6 +402,9 @@ You have gotten {} incorrect answers.""".format(self.score, self.correct_answers
     The correct answer was {}.""".format(self.player_answer, self.answer))
                 button(self.incorrect, "Next question", self.intermission)
                 self.incorrect.pack(pady=5)
+                self.score = self.score - 1
+                self.scorel.config(text="Score: {}".format(self.score))
+                
                 
         elif self.option == "Geography":
             if self.player_answer == self.answer:
@@ -403,6 +425,8 @@ You have gotten {} incorrect answers.""".format(self.score, self.correct_answers
             The correct answer was {}.""".format(self.player_answer, self.answer))
                 button(self.incorrect, "Next question", self.intermission)
                 self.incorrect.pack(pady=5)
+                self.score = self.score - 1
+                self.scorel.config(text="Score: {}".format(self.score))
                 
         elif self.option == "Trivia":
             if self.player_answer == self.answer:
@@ -423,6 +447,8 @@ You have gotten {} incorrect answers.""".format(self.score, self.correct_answers
             The correct answer was {}.""".format(self.player_answer, self.answer))
                 button(self.incorrect, "Next question", self.intermission)
                 self.incorrect.pack(pady=5)
+                self.score = self.score - 1
+                self.scorel.config(text="Score: {}".format(self.score))
 
         else:
             Error()
