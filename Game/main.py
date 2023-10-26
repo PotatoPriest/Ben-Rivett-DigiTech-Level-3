@@ -8,13 +8,14 @@ option_menu = ["Empty", "Math", "Geography", "Trivia"] # list for options in the
 flag_dict = {"Game/Images/Flag_Argentina.png" : "Argintina", "Game/Images/Flag_Australia.png" : "Australia", "Game/Images/Flag_Austria.png" : "Austria", "Game/Images/Flag_Belgium.png" : "Belgium", "Game/Images/Flag_Brazil.png" : "Brazil", "Game/Images/Flag_Bulgaria.png" : "Bulgaria", "Game/Images/Flag_Canada.png" : "Canada", "Game/Images/Flag_China.png" : "China", "Game/Images/Flag_Croatia.png" : "Croatia", "Game/Images/Flag_Denmark.png" : "Denmark", "Game/Images/Flag_Dominican_Republic.png" : "Dominican Republic", "Game/Images/Flag_Egypt.png" : "Egypt", "Game/Images/Flag_France.png" : "France", "Game/Images/Flag_Germany.png" : "Germany", "Game/Images/Flag_Greece.png" : "Greece", "Game/Images/Flag_Hong_Kong.png" : "Hong Kong", "Game/Images/Flag_Hungary.png" : "Hungary", "Game/Images/Flag_Iceland.png" : "Iceland", "Game/Images/Flag_India.png" : "India", "Game/Images/Flag_Indonesia.png" : "Indonesia", "Game/Images/Flag_Ireland.png" : "Ireland", "Game/Images/Flag_Italy.png" : "Italy", "Game/Images/Flag_Japan.png" : "Japan", "Game/Images/Flag_Jordan.png" : "Jordan", "Game/Images/Flag_Malaysia.png" : "Malaysia", "Game/Images/Flag_Mexico.png" : "Mexico", "Game/Images/Flag_Morocco.png" : "Morocco", "Game/Images/Flag_Netherlands.png" : "Netherlands", "Game/Images/Flag_North_Korea.png" : "North Korea", "Game/Images/Flag_Norway.png" : "Norway", "Game/Images/Flag_NZ.png" : "New Zealand", "Game/Images/Flag_Philippines.png" : "Philippines", "Game/Images/Flag_Poland.png" : "Poland", "Game/Images/Flag_Portugal.png" : "Portugal", "Game/Images/Flag_Russia.png" : "Russia", "Game/Images/Flag_Saudi_Arabia.png" : "Saudi Arabia", "Game/Images/Flag_Singapore.png" : "Singapore", "Game/Images/Flag_South_Africa.png" : "South Africa", "Game/Images/Flag_South_Korea.png" : "South Korea", "Game/Images/Flag_Spain.png" : "Spain", "Game/Images/Flag_Sweden.png" : "Sweden", "Game/Images/Flag_Switzerland.png" : "Switzerland", "Game/Images/Flag_Thailand.png" : "Thailand", "Game/Images/Flag_Turkey.png" : "Turkey", "Game/Images/Flag_UAE.png" : "United Arab Emirates", "Game/Images/Flag_UK.png" : "United Kingdom", "Game/Images/Flag_Ukraine.png" : "Ukraine", "Game/Images/Flag_USA.png" : "United States of America", "Game/Images/Flag_Vietnam.png" : "Vietnam"} # Dictonairy of flag images
 
 trivia_dict = {"What is the world’s longest river called?" : ["The Nile", "The Amazon", "D River", "Flumen River"], "Where is the Great Barrier Reef located?" : ["Australia", "New Zealand", "Indonesia", "Japan"], """In Greek Mythology,
-who is the Queen of the Underworld and wife of Hades?""" : ["Persephone", "Aphrodite", "Athena", "Demeter"], "Which house was Harry Potter ALMOST sorted into?" : ["Slytherin", "Grythindor", "Hufflpuf", "Ravenclaw"], "Which country gifted the Statue of Liberty to the US?" : ["France", "England", "Spain", "Germany"], """What was the name of the
-Robin Williams film where he dresses up as an elderly British nanny?""" : ["Mrs. Doubtfire", "Jumanji", "Dead Poets Society", "What Dreams May Come"], "What is the rarest blood type?" : ["AB-Negative", "AB-Positive", "O-Negative", "A-Positive"], "How many bones are there in the human body?" : ["206", "207", "179", "267"], """What is the name of the longest river in
+who is the Queen of the Underworld and wife of Hades?""" : ["Persephone", "Aphrodite", "Athena", "Demeter"], "Which house was Harry Potter ALMOST sorted into?" : ["Slytherin", "Grythindor", "Hufflpuf", "Ravenclaw"], "Which country gifted the Statue of Liberty to the US?" : ["France", "England", "Spain", "Germany"], """What was the name of the Robin Williams
+film where he dresses up as an elderly British nanny?""" : ["Mrs. Doubtfire", "Jumanji", "Dead Poets Society", "What Dreams May Come"], "What is the rarest blood type?" : ["AB-Negative", "AB-Positive", "O-Negative", "A-Positive"], "How many bones are there in the human body?" : ["206", "207", "179", "267"], """What is the name of the longest river in
 South America?""" : ["The Amazon River", "Orinoco", "pilcomayo", "Yellow River"], "What does Na stand for on the periodic table?" : ["Sodium", "Iron", "Gold", "Lithium"], "In which Disney movie is the villain Clayton from?" : ["Tarzan", "Aladin", "The Hunchback of Notre dame", "Brave"], "In which ocean is the Bermuda Triangle located?" : ["Atlantic Ocean", "Pasific Ocean", "Indian Ocean", "Arctic Ocean"], "What is the French name for Santa Claus?" : ["Pere Noel", "Pierre", "Louis", "Amélie"], "Which fictional city is the home of Batman?" : ["Gotham City", "New York City", "Springfield", "Emerald City"], "Which planet is closest to Earth?" : ["Venus", "Mars", "Jupiter", "Mercuary"], "What is the largest planet in the solar system?" : ["Jupiter", "Uranus", "Mercuary", "The Sun"], "What is Sodium Chloride referred to as?" : ["Salt", "Pepper", "Chilli", "Cinnamon"], "What is the capital of Australia?" : ["Canberra", "Sydney", "Melbourne", "Brisbane"], "Which fast food restaurant is known for its Big Macs?" : ["McDonalds", "Wendys", "Chick-fil-A", "Burger King"], "What are the 3 primary colors?" : ["Red, Yellow, Blue", "Green, Yellow, Blue", "Red, Yellow, Orange", "Red, Green, Blue"], """Who was the first American
 astronaut to step foot on the moon?""" : ["Neil Armstrong", "Buzz Aldrin", "Edwin E. Aldrin", "Michael Collins"], "Where is the world’s largest active volcano located?" : ["Hawaii", "California", "Japan", "Spain"], "What is the capital of France?" : ["Paris", "Berlin", "Madrid", "Rome"], "Who founded Microsoft?" : ["Bill Gates", "Mark Zuckerberg", "Steve Jobs", "Larry Page"], """In Greek mythology, who had snakes for hair
-and could turn people into stone if they looked at her?""" : ["Medusa", "Hera", "Aphrodite", "Athena"], "What kind of alcohol is Russia known for?" : ["Vodka", "Beer", "Wine", "Rum"], "What is the name of the city that Spongebob Squarepants lives in?" : ["Bikini Bottom", "Bikini Top", "Atlantas", "Seabed city"], """What’s the name of the company
+and could turn people into stone if they looked at her?""" : ["Medusa", "Hera", "Aphrodite", "Athena"], "What kind of alcohol is Russia known for?" : ["Vodka", "Beer", "Wine", "Rum"], """What is the name of the city
+that Spongebob Squarepants lives in?""" : ["Bikini Bottom", "Bikini Top", "Atlantas", "Seabed city"], """What’s the name of the company
 that published the Mario Kart video game?""" : ["Nintendo", "Sony", "Sega", "Microsoft"], "Which country hosted the first Olympic Games in 1896?" : ["Greece", "Italy", "China", "USA"], "What do you call a geometric space with 5 sides?" : ["Pentagon", "Octagon", "Hexagon", "Heptagon"], "Who built the Great Wall of China?" : ["The Qin Dynasty", "The Ming Dynasty", "The Han Dynasty", "The Qing Dynasty"], "What is 5 x 30?" : ["150", "200", "300", "450"], "What is the capital of Japan?" : ["Tokyo", "Kyoto", "Osaka", "Hiroshima"], "How many days are in a leap year?" : ["366", "365", "342", "372"], "What year was Jesus Christ born?" : ["Between 6-4 B.C", "Between 27-29 A.D", "0 B.C", "Between 6-4 A.D"], """What is the scientific name of the
-process where plants prepare their food?""" : ["Photosynthesis", "Respiration", "Fermentation", "Cell Biology"], "What date is Christmas?" : ["December 25th", "December 26th", "December 27th", "December 24th"], "Which U.S. State is the largest?" : ["Alaska", "Texas", "Florida", "California"], "What war took place during the years 1939-1945?" : ["World War II", "World War I", "The Vietnam War", "The Korean War"], "Which two planets in our solar system are known as “ice giants”?" : ["Neptune and Uranus", "Jupiter and Saturn", "Saturn and Uranus", "Jupiter and Neptune"], "What animal is Bambi?" : ["Deer", "Cow", "Boar", "Antelope"], "What year did the 9/11 terror attacks happen?" : ["2001", "2000", "2002", "1999"], "What is the day after christmas known as?" : ["Boxing day", "Wrapping day", "Feasting day", "After Christmas day"], "What is the name of the Earth’s largest ocean?" : ["The Pacific Ocean", "The Atlantic Ocean", "The Indian Ocean", "The Arctic Ocean"], "Which two countries share the longest international border?" : ["Canada and the USA", "Russia and China", "Russia and Kazakhstan", "Mongolia and China"], "What is the smallest country in the world?" : ["Vatican city", "San Marino", "Monaco", "Liechtenstein"]}
+process where plants prepare their food?""" : ["Photosynthesis", "Respiration", "Fermentation", "Cell Biology"], "What date is Christmas?" : ["December 25th", "December 26th", "December 27th", "December 24th"], "Which U.S. State is the largest?" : ["Alaska", "Texas", "Florida", "California"], "What war took place during the years 1939-1945?" : ["World War II", "World War I", "The Vietnam War", "The Korean War"], "Which two planets in our solar system are known as “ice giants”?" : ["Neptune and Uranus", "Jupiter and Saturn", "Saturn and Uranus", "Jupiter and Neptune"], "What animal is Bambi?" : ["Deer", "Cow", "Boar", "Antelope"], "What year did the 9/11 terror attacks happen?" : ["2001", "2000", "2002", "1999"], "What is the day after christmas known as?" : ["Boxing day", "Wrapping day", "Feasting day", "After Christmas day"], "What is the name of the Earth’s largest ocean?" : ["The Pacific Ocean", "The Atlantic Ocean", "The Indian Ocean", "The Arctic Ocean"], "Which two countries share the longest international border?" : ["Canada and the USA", "Russia and China", "Russia and Kazakhstan", "Mongolia and China"], "What is the smallest country in the world?" : ["Vatican city", "San Marino", "Monaco", "Liechtenstein"]} # Dictonairy for trivia questions and answers
 
 def button(master, text, command): # definition for making a button
     bt = tk.Button(master, text=text, command=command)
@@ -35,14 +36,6 @@ def image(master, path, x, y): # this imports an image to be used in code
 class Error: # This class is for error catching, will probobly change it alot later
     def __init__(self):
         tk.messagebox.showerror(title="Error", message="There has been an error")
-
-class read: # used to read the save file
-    def __init__(self):
-        self.save_file = open("Game/save.txt", "r")
-        self.name = self.save_file.readline()
-        self.save_file.close()
-    def __str__(self):
-        return self.name
 
 class Window: # class for the main window
     def __init__(self): # This happens when the class is initilised
@@ -93,7 +86,7 @@ class Window: # class for the main window
             self.savef.destroy()
             self.main_menu()
 
-    def read_file(self):
+    def read_file(self): # Definition for reading the save file
         self.save_file = open("Game/save.txt", "r")
         self.name = self.save_file.readline().strip()
         self.score = self.save_file.readline().strip()
@@ -115,7 +108,7 @@ class Window: # class for the main window
         self.scorel.config(text="Score: {}".format(self.score))
         tk.messagebox.showinfo(title="Load Save", message="Your save has been loaded")
 
-    def reset_file(self):
+    def reset_file(self): # Definition for reseting the save file !!!!! This is causing the save issue, I think!!!!!
         self.save_file = open("Game/save.txt", "w")
         self.save_file.writelines("None\n0\n0\n0\nNo\nNo\nNo")
         self.save_file.close()
@@ -123,7 +116,7 @@ class Window: # class for the main window
         self.scorel.config(text="Score: {}".format(self.score))
         tk.messagebox.showinfo(title="Reset Save", message="Your save has been reset!")
 
-    def check_file(self):
+    def check_file(self): # Definition for cheaking the save file
         self.read_file()
         tk.messagebox.showinfo(title="Check Save", message="""Name = {}
 Score = {}
@@ -167,7 +160,7 @@ Done Trivia questions = {}""".format(self.name, self.score, self.correct_answers
             Error()
     
     def set_name(self): #sets name
-        self.name = simpledialog.askstring("Pick your Name", "Name:")
+        self.name = simpledialog.askstring("Pick your Name", "Name:").strip()
         if self.name == None:
             self.name = "None"
 
@@ -466,7 +459,7 @@ You have gotten {} incorrect answers.""".format(self.score, self.correct_answers
             if self.player_answer == self.answer:
                 self.math_qf.destroy()
                 self.correct = tk.Frame(self.window)
-                self.correct_answers = self.correct_answers + 1
+                self.correct_answers = str(int(self.correct_answers) + 1)
                 label(self.correct, "Well done {} was the correct answer!".format(self.answer))
                 button(self.correct, "Next question", self.intermission)
                 self.correct.pack(pady=5)
@@ -476,7 +469,7 @@ You have gotten {} incorrect answers.""".format(self.score, self.correct_answers
             else:
                 self.math_qf.destroy()
                 self.incorrect = tk.Frame(self.window)
-                self.incorrect_answers = self.incorrect_answers + 1
+                self.incorrect_answers = str(int(self.incorrect_answers) + 1)
                 label(self.incorrect, """Im sorry but {} was not the correct answer.
     The correct answer was {}.""".format(self.player_answer, self.answer))
                 button(self.incorrect, "Next question", self.intermission)
@@ -489,7 +482,7 @@ You have gotten {} incorrect answers.""".format(self.score, self.correct_answers
             if self.player_answer == self.answer:
                 self.geography_qf.destroy()
                 self.correct = tk.Frame(self.window)
-                self.correct_answers = self.correct_answers + 1
+                self.correct_answers = str(int(self.correct_answers) + 1)
                 label(self.correct, "Well done {} was the correct answer!".format(self.answer))
                 button(self.correct, "Next question", self.intermission)
                 self.correct.pack(pady=5)
@@ -499,7 +492,7 @@ You have gotten {} incorrect answers.""".format(self.score, self.correct_answers
             else:
                 self.geography_qf.destroy()
                 self.incorrect = tk.Frame(self.window)
-                self.incorrect_answers = self.incorrect_answers + 1
+                self.incorrect_answers = str(int(self.incorrect_answers) + 1)
                 label(self.incorrect, """Im sorry but {} was not the correct answer.
             The correct answer was {}.""".format(self.player_answer, self.answer))
                 button(self.incorrect, "Next question", self.intermission)
@@ -511,7 +504,7 @@ You have gotten {} incorrect answers.""".format(self.score, self.correct_answers
             if self.player_answer == self.answer:
                 self.trivia_qf.destroy()
                 self.correct = tk.Frame(self.window)
-                self.correct_answers = self.correct_answers + 1
+                self.correct_answers = str(int(self.correct_answers) + 1)
                 label(self.correct, "Well done {} was the correct answer!".format(self.answer))
                 button(self.correct, "Next question", self.intermission)
                 self.correct.pack(pady=5)
@@ -521,7 +514,7 @@ You have gotten {} incorrect answers.""".format(self.score, self.correct_answers
             else:
                 self.trivia_qf.destroy()
                 self.incorrect = tk.Frame(self.window)
-                self.incorrect_answers = self.incorrect_answers + 1
+                self.incorrect_answers = str(int(self.incorrect_answers) + 1)
                 label(self.incorrect, """Im sorry but {} was not the correct answer.
             The correct answer was {}.""".format(self.player_answer, self.answer))
                 button(self.incorrect, "Next question", self.intermission)
