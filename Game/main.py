@@ -92,7 +92,18 @@ class Window: # class for the main window
         else:
             self.savef.destroy()
             self.main_menu()
-        
+
+    def read_file(self):
+        self.save_file = open("Game/save.txt", "r")
+        self.name = self.save_file.readline().strip()
+        self.score = self.save_file.readline().strip()
+        self.correct_answers = self.save_file.readline().strip()
+        self.incorrect_answers = self.save_file.readline().strip()
+        self.math_done = self.save_file.readline().strip()
+        self.geograhpy_done = self.save_file.readline().strip()
+        self.trivia_done = self.save_file.readline().strip()
+        self.save_file.close()
+    
     def save_file(self): # Saves the players progress
         self.save_file = open("Game/save.txt", "w")
         self.save_file.writelines("{}\n{}\n{}\n{}\n{}\n{}\n{}".format(self.name, self.score, self.correct_answers, self.incorrect_answers, self.math_done, self.geography_done, self.trivia_done))
@@ -100,15 +111,7 @@ class Window: # class for the main window
         tk.messagebox.showinfo(title="Save Game", message="Your game has been saved!")
         
     def load_file(self): # loads the players progress
-        self.save_file = open("Game/save.txt", "r")
-        self.name = self.save_file.readline()
-        self.score = self.save_file.readline()
-        self.correct_answers = self.save_file.readline()
-        self.incorrect_answers = self.save_file.readline()
-        self.math_done = self.save_file.readline()
-        self.geograhpy_done = self.save_file.readline()
-        self.trivia_done = self.save_file.readline()
-        self.save_file.close()
+        self.read_file()
         self.scorel.config(text="Score: {}".format(self.score))
         tk.messagebox.showinfo(title="Load Save", message="Your save has been loaded")
 
@@ -116,28 +119,12 @@ class Window: # class for the main window
         self.save_file = open("Game/save.txt", "w")
         self.save_file.writelines("None\n0\n0\n0\nNo\nNo\nNo")
         self.save_file.close()
-        self.save_file = open("Game/save.txt", "r")
-        self.name = self.save_file.readline()
-        self.score = self.save_file.readline()
-        self.correct_answers = self.save_file.readline()
-        self.incorrect_answers = self.save_file.readline()
-        self.math_done = self.save_file.readline()
-        self.geograhpy_done = self.save_file.readline()
-        self.trivia_done = self.save_file.readline()
-        self.save_file.close()
+        self.read_file()
         self.scorel.config(text="Score: {}".format(self.score))
         tk.messagebox.showinfo(title="Reset Save", message="Your save has been reset!")
 
     def check_file(self):
-        self.save_file = open("Game/save.txt", "r")
-        self.name = self.save_file.readline()
-        self.score = self.save_file.readline()
-        self.correct_answers = self.save_file.readline()
-        self.incorrect_answers = self.save_file.readline()
-        self.math_done = self.save_file.readline()
-        self.geograhpy_done = self.save_file.readline()
-        self.trivia_done = self.save_file.readline()
-        self.save_file.close()
+        self.read_file()
         tk.messagebox.showinfo(title="Check Save", message="""Name = {}
 Score = {}
 Correct Answers = {}
