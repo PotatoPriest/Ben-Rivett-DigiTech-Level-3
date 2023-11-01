@@ -23,7 +23,7 @@ def button(master, text, command): # definition for making a button
 
 def label(master, text, background): # definition for label
     la = tk.Label(master, text=text, background=background)
-    la.pack(pady=2)
+    la.pack(pady=3)
 
 def image(master, path, x, y): # this imports an image to be used in code
     imageframe = tk.Frame(master)
@@ -51,19 +51,19 @@ class Window: # class for the main window
         self.score = 0
         self.name = "None"
         self.bg_colour = "light gray"
-        self.white_get = False
+        self.white_get = "False"
         self.white_price = 1
-        self.red_get = False
+        self.red_get = "False"
         self.red_price = 5
-        self.blue_get = False
+        self.blue_get = "False"
         self.blue_price = 5
-        self.green_get = False
+        self.green_get = "False"
         self.green_price = 5
-        self.yellow_get = False
+        self.yellow_get = "False"
         self.yellow_price = 10
-        self.orange_get = False
+        self.orange_get = "False"
         self.orange_price = 10
-        self.puke_get = False
+        self.purple_get = "False"
         self.purple_price = 15
         self.window = tk.Tk()
         self.window.title("Game by: Benjamin Rivett")
@@ -88,7 +88,7 @@ class Window: # class for the main window
         self.state = 0
         self.menu_things.destroy()
         self.savef = tk.Frame(self.window, background=self.bg_colour)
-        button(self.savef, "Save Game", self.save_file)
+        button(self.savef, "Save Game", self.save_file_def)
         button(self.savef, "Load Save", self.load_file)
         button(self.savef, "Reset Save", self.reset_file)
         button(self.savef, "Check Save", self.check_file)
@@ -107,99 +107,84 @@ class Window: # class for the main window
         self.shopf.destroy()
         self.state = 3
         self.bg_change = tk.Frame(self.window, background=self.bg_colour)
-        self.bg_change_left = tk.Frame(self.bg_change, background=self.bg_colour) ##### need to add labels to this
-        self.bg_change_right = tk.Frame(self.bg_change, background=self.bg_colour) ###### need to uttons to this
-        label(self.bg_change, "Choose a background colour", self.bg_colour)
+        self.bg_change_left = tk.Frame(self.bg_change, background=self.bg_colour)
+        self.bg_change_right = tk.Frame(self.bg_change, background=self.bg_colour)
+        self.cl = tk.Label(self.bg_change, text="""Choose a background colour
+Colours are bought using score""", background=self.bg_colour)
+        self.cl.pack(pady=2)
         button(self.bg_change, "Default", self.bg_default)
         
-        if self.white_get == False:
-            label(self.bg_change, "Price: {}".format(self.white_price), self.bg_colour)
+        if self.white_get == "False":
+            self.wb = tk.Button(self.bg_change_left, text="White: {}".format(self.white_price), command=self.bg_white)
+            self.wb.pack(pady=2)
         else:
-            label(self.bg_change, "Bought: Yes", self.bg_colour)
-        button(self.bg_change, "White", self.bg_white)
+            self.wb = tk.Button(self.bg_change_left, text="White", command=self.bg_white)
+            self.wb.pack(pady=2)
         
-        if self.red_get == False:
-            label(self.bg_change, "Price: {}".format(self.red_price), self.bg_colour)
+        if self.red_get == "False":
+            self.rb = tk.Button(self.bg_change_left, text="Red: {}".format(self.red_price), command=self.bg_red)
+            self.rb.pack(pady=2)
         else:
-            label(self.bg_change, "Bought: Yes", self.bg_colour)
-        button(self.bg_change, "Red", self.bg_red)
+            self.rb = tk.Button(self.bg_change_left, text="Red", command=self.bg_red)
+            self.rb.pack(pady=2)
         
-        if self.blue_get == False:
-            label(self.bg_change, "Price: {}".format(self.blue_price), self.bg_colour)
+        if self.blue_get == "False":
+            self.bb = tk.Button(self.bg_change_left, text="Blue: {}".format(self.blue_price), command=self.bg_blue)
+            self.bb.pack(pady=2)
         else:
-            label(self.bg_change, "Bought: Yes", self.bg_colour)
-        button(self.bg_change, "Blue", self.bg_blue)
-        button(self.bg_change, "Back", self.back_menu)
+            self.bb = tk.Button(self.bg_change_left, text="Blue", command=self.bg_blue)
+            self.bb.pack(pady=2)
+            
+        self.bbt = tk.Button(self.bg_change, text="Back", command=self.back_menu)
+        self.bbt.pack(pady=3, side="bottom")
         self.bg_change.pack(pady=2)
-        self.bg_change_left.pack()
-        self.bg_change_right.pack()
+        self.bg_change_left.pack(side="left")
+        self.bg_change_right.pack(side="right")
+
+    def background_change(self):
+        self.window.config(background=self.bg_colour)
+        self.bg_change.config(background=self.bg_colour)
+        self.bg_change_left.config(background=self.bg_colour)
+        self.bg_change_right.config(background=self.bg_colour)
+        self.cl.config(background=self.bg_colour)
+        self.scorel.config(text="Score: {}".format(self.score), background=self.bg_colour)
 
     def bg_default(self):
         self.bg_colour = "light gray"
-        self.window.config(background=self.bg_colour)
-        self.bg_change.config(background=self.bg_colour)
-        self.scorel.config(background=self.bg_colour)
+        self.background_change()
         simpledialog.messagebox._show("Success", "Background colour changed to the default colour")
-        
+
+    def colour(self, colour, colour_price, colour_get, bt):
+        if colour_get == "False":
+            if int(self.score) >= colour_price:
+                self.bg_colour = colour
+                self.score = int(self.score) - colour_price
+                if colour == "white":
+                    self.white_get = "True"
+                elif colour == "red":
+                    self.red_get = "True"
+                elif colour == "blue":
+                    self.blue_get = "True"
+                
+                bt.config(text=colour.capitalize())
+                self.background_change()
+                simpledialog.messagebox.showinfo("Success", "You have bought the {} background colour".format(colour))
+            else:
+                simpledialog.messagebox.showinfo("Failure", "You don't have enough score for this item")
+
+        else:
+            self.bg_colour = colour
+            self.background_change()
+            simpledialog.messagebox.showinfo("Success", "You have changed the background to {}".format(colour))
+            
     def bg_white(self):
-        if self.white_get == False:
-            if int(self.score) >= self.white_price:
-                self.score = int(self.score) - self.white_price
-                self.white_get = True
-                self.bg_colour = "white"
-                self.window.config(background=self.bg_colour)
-                self.bg_change.config(background=self.bg_colour)
-                self.scorel.config(text="Score: {}".format(self.score), background=self.bg_colour)
-                simpledialog.messagebox.showinfo("Success", "You have bought the white background colour")
-            else:
-                simpledialog.messagebox.showinfo("Failure", "You don't have enough score for this item")
-
-        else:
-            self.bg_colour = "white"
-            self.window.config(background=self.bg_colour)
-            self.bg_change.config(background=self.bg_colour)
-            self.scorel.config(background=self.bg_colour)
-            simpledialog.messagebox.showinfo("Success", "You have changed the background to White")
-
+        self.colour("white", self.white_price, self.white_get, self.wb)
+                
     def bg_red(self):
-        if self.red_get == False:
-            if int(self.score) >= self.red_price:
-                self.score = int(self.score) - self.red_price
-                self.red_get = True
-                self.bg_colour = "red"
-                self.window.config(background=self.bg_colour)
-                self.bg_change.config(background=self.bg_colour)
-                self.scorel.config(text="Score: {}".format(self.score), background=self.bg_colour)
-                simpledialog.messagebox.showinfo("Success", "You have bought the red background colour")
-            else:
-                simpledialog.messagebox.showinfo("Failure", "You don't have enough score for this item")
-
-        else:
-            self.bg_colour = "red"
-            self.window.config(background=self.bg_colour)
-            self.bg_change.config(background=self.bg_colour)
-            self.scorel.config(background=self.bg_colour)
-            simpledialog.messagebox.showinfo("Success", "You have changed the background to Red")
+        self.colour("red", self.red_price, self.red_get, self.rb)
 
     def bg_blue(self):
-        if self.blue_get == False:
-            if int(self.score) >= self.blue_price:
-                self.score = int(self.score) - self.blue_price
-                self.blue_get = True
-                self.bg_colour = "blue"
-                self.window.config(background=self.bg_colour)
-                self.bg_change.config(background=self.bg_colour)
-                self.scorel.config(text="Score: {}".format(self.score), background=self.bg_colour)
-                simpledialog.messagebox.showinfo("Success", "You have bought the blue background colour")
-            else:
-                simpledialog.messagebox.showinfo("Failure", "You don't have enough score for this item")
-
-        else:
-            self.bg_colour = "blue"
-            self.window.config(background=self.bg_colour)
-            self.bg_change.config(background=self.bg_colour)
-            self.scorel.config(background=self.bg_colour)
-            simpledialog.messagebox.showinfo("Success", "You have changed the background to Blue")
+        self.colour("blue", self.blue_price, self.blue_get, self.bb)
 
     def back_menu(self): # this is to go back to the main menu
         if self.state == 1:
@@ -227,11 +212,14 @@ class Window: # class for the main window
         self.math_done = self.save_file.readline().strip()
         self.geograhpy_done = self.save_file.readline().strip()
         self.trivia_done = self.save_file.readline().strip()
+        self.white_get = self.save_file.readline().strip()
+        self.red_get = self.save_file.readline().strip()
+        self.blue_get = self.save_file.readline().strip()
         self.save_file.close()
     
-    def save_file(self): # Saves the players progress
+    def save_file_def(self): # Saves the players progress !!!For some reason doesn't work sometimes
         self.save_file = open("Game/save.txt", "w")
-        self.save_file.writelines("{}\n{}\n{}\n{}\n{}\n{}\n{}".format(self.name, self.score, self.correct_answers, self.incorrect_answers, self.math_done, self.geography_done, self.trivia_done))
+        self.save_file.writelines("{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}".format(self.name, self.score, self.correct_answers, self.incorrect_answers, self.math_done, self.geography_done, self.trivia_done, self.white_get, self.red_get, self.blue_get))
         self.save_file.close()
         tk.messagebox.showinfo(title="Save Game", message="Your game has been saved!")
         
@@ -242,7 +230,11 @@ class Window: # class for the main window
 
     def reset_file(self): # Definition for reseting the save file
         self.save_file = open("Game/save.txt", "w")
-        self.save_file.writelines("None\n0\n0\n0\nNo\nNo\nNo")
+        self.save_file.writelines("None\n0\n0\n0\nNo\nNo\nNo\nFalse\nFalse\nFalse")
+        self.bg_colour = "light gray"
+        self.window.config(bg=self.bg_colour)
+        self.scorel.config(bg=self.bg_colour)
+        self.savef.config(bg=self.bg_colour)
         self.save_file.close()
         self.read_file()
         self.scorel.config(text="Score: {}".format(self.score))
@@ -256,7 +248,10 @@ Correct Answers = {}
 Incorrect Answers = {}
 Done Math questions = {}
 Done Geography questions = {}
-Done Trivia questions = {}""".format(self.name, self.score, self.correct_answers, self.incorrect_answers, self.math_done, self.geograhpy_done, self.trivia_done))
+Done Trivia questions = {}
+White = {} 
+Red = {} 
+Blue = {}""".format(self.name, self.score, self.correct_answers, self.incorrect_answers, self.math_done, self.geograhpy_done, self.trivia_done, self.white_get, self.red_get, self.blue_get))
     
     def exit(self): # used when exiting the progam
         if messagebox.askyesno(title="Exit", message="Are you sure?"):
