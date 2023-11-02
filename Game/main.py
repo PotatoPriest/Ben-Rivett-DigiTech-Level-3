@@ -33,6 +33,9 @@ def image(master, path, x, y): # this imports an image to be used in code
     image.pack()
     imageframe.pack()
 
+def key_press(master, command):
+    master.bind("<Return>", command)
+
 class Error: # This class is for error catching, will probobly change it alot later
     def __init__(self):
         tk.messagebox.showerror(title="Error", message="There has been an error")
@@ -134,6 +137,13 @@ Colours are bought using score""", background=self.bg_colour)
         else:
             self.bb = tk.Button(self.bg_change_left, text="Blue", command=self.bg_blue)
             self.bb.pack(pady=2)
+
+        if self.green_get == "False":
+            self.gb = tk.Button(self.bg_change_right, text="Green: {}".format(self.green_price), command=self.bg_green)
+            self.gb.pack(pady=2)
+        else:
+            self.gb = tk.Button(self.bg_change_right, text="Green", command=self.bg_green)
+            self.gb.pack(pady=2)
             
         self.bbt = tk.Button(self.bg_change, text="Back", command=self.back_menu)
         self.bbt.pack(pady=3, side="bottom")
@@ -185,6 +195,9 @@ Colours are bought using score""", background=self.bg_colour)
 
     def bg_blue(self):
         self.colour("blue", self.blue_price, self.blue_get, self.bb)
+
+    def bg_green(self):
+        self.colour("green", self.green_price, self.green_get, self.gb)
 
     def back_menu(self): # this is to go back to the main menu
         if self.state == 1:
@@ -463,6 +476,7 @@ You have gotten {} incorrect answers.""".format(self.score, self.correct_answers
             self.aentry = tk.Entry(self.math_qf)
             self.aentry.pack()
             button(self.math_qf, "Submit", self.submit)
+            key_press(self.aentry, self.submit)
             self.math_qf.pack(pady=2)
                 
     def geography_questions(self): # this sets the geography questions 
@@ -562,7 +576,7 @@ You have gotten {} incorrect answers.""".format(self.score, self.correct_answers
 {}""".format(self.qnumber, self.question), self.bg_colour)
             self.trivia_choices()
             
-    def submit(self): # This is so that the player has to input an intiger when answering the math questions.
+    def submit(self, event): # This is so that the player has to input an intiger when answering the math questions.
         if self.option == "Math":
             try:
                 self.player_answer = int(self.aentry.get())
@@ -586,6 +600,7 @@ You have gotten {} incorrect answers.""".format(self.score, self.correct_answers
                 self.correct_answers = str(int(self.correct_answers) + 1)
                 label(self.correct, "Well done {} was the correct answer!".format(self.answer), self.bg_colour)
                 button(self.correct, "Next question", self.intermission)
+                key_press(self.window, self.intermission)
                 self.correct.pack(pady=2)
                 self.score = self.score + 1
                 self.scorel.config(text="Score: {}".format(self.score))
@@ -597,6 +612,7 @@ You have gotten {} incorrect answers.""".format(self.score, self.correct_answers
                 label(self.incorrect, """Im sorry but {} was not the correct answer.
 The correct answer was {}.""".format(self.player_answer, self.answer), self.bg_colour)
                 button(self.incorrect, "Next question", self.intermission)
+                key_press(self.window, self.intermission)
                 self.incorrect.pack(pady=2)
                 self.score = self.score - 1
                 self.scorel.config(text="Score: {}".format(self.score))
@@ -649,16 +665,18 @@ The correct answer was {}.""".format(self.player_answer, self.answer), self.bg_c
         else:
             Error()
             
-    def intermission(self): # This is for in between questions
+    def intermission(self, event): # This is for in between questions
         if self.option == "Math":
             if self.player_answer == self.answer:
                 self.correct.destroy()
                 self.setting_question()
                 self.math_questions()
+                self.window.unbind(self.intermission, "<Return>")
             else:
                 self.incorrect.destroy()
                 self.setting_question()
                 self.math_questions()
+                self.window.unbind(self.intermission, "<Return>")
                 
         elif self.option == "Geography":
             if self.player_answer == self.answer:
