@@ -33,7 +33,7 @@ def image(master, path, x, y): # this imports an image to be used in code
     image.pack()
     imageframe.pack()
 
-def key_press(master, command):
+def key_press(master, command): # for being able to press the enter key when you have entered you answer
     master.bind("<Return>", command)
 
 class Error: # This class is for error catching, will probobly change it alot later
@@ -100,7 +100,7 @@ class Window: # class for the main window
         button(self.savef, "Back", self.back_menu)
         self.savef.pack(pady=2)
 
-    def shop_menu(self):
+    def shop_menu(self): # A shop menu
         self.state = 2
         self.menu_things.destroy()
         self.shopf = tk.Frame(self.window, background=self.bg_colour)
@@ -109,7 +109,7 @@ class Window: # class for the main window
         self.shopf.pack(pady=2)
 
 
-    def colour_button(self, colour, colour_get, colour_price, side, command):
+    def colour_button(self, colour, colour_get, colour_price, side, command): # For seting the button for picking a colour
         if colour_get == "False":
             button = tk.Button(side, text="{}: {}".format(colour.capitalize(), colour_price), command=command)
             button.pack(pady=2)
@@ -118,7 +118,7 @@ class Window: # class for the main window
             button.pack(pady=2)
         return button
         
-    def background_colours(self):
+    def background_colours(self): # Set the background colours tab
         self.shopf.destroy()
         self.state = 3
         self.bg_change = tk.Frame(self.window, background=self.bg_colour)
@@ -145,7 +145,7 @@ Colours are bought using score""", background=self.bg_colour)
         self.bg_change_left.pack(side="left")
         self.bg_change_right.pack(side="right")
 
-    def background_change(self):
+    def background_change(self): # changing the background
         self.window.config(background=self.bg_colour)
         self.bg_change.config(background=self.bg_colour)
         self.bg_change_left.config(background=self.bg_colour)
@@ -153,12 +153,12 @@ Colours are bought using score""", background=self.bg_colour)
         self.cl.config(background=self.bg_colour)
         self.scorel.config(text="Score: {}".format(self.score), background=self.bg_colour)
 
-    def bg_default(self):
+    def bg_default(self): # Default background colour
         self.bg_colour = "light gray"
         self.background_change()
         simpledialog.messagebox._show("Success", "Background colour changed to the default colour")
 
-    def colour(self, colour, colour_price, colour_get, bt):
+    def colour(self, colour, colour_price, colour_get, bt): #Buying the colour or setting the colour
         if colour_get == "False":
             if int(self.score) >= colour_price:
                 self.bg_colour = colour
@@ -193,28 +193,28 @@ Colours are bought using score""", background=self.bg_colour)
             self.background_change()
             simpledialog.messagebox.showinfo("Success", "You have changed the background to {}".format(colour))
 
-    def bg_white(self):
+    def bg_white(self): # White background
         self.colour("white", self.white_price, self.white_get, self.wb)
                 
-    def bg_red(self):
+    def bg_red(self): # Red background
         self.colour("red", self.red_price, self.red_get, self.rb)
 
-    def bg_blue(self):
+    def bg_blue(self): # Blue background
         self.colour("blue", self.blue_price, self.blue_get, self.bb)
 
-    def bg_green(self):
+    def bg_green(self): # Green background
         self.colour("green", self.green_price, self.green_get, self.gb)
 
-    def bg_yellow(self):
+    def bg_yellow(self): # Yellow background
         self.colour("yellow", self.yellow_price, self.yellow_get, self.yb)
 
-    def bg_orange(self):
+    def bg_orange(self): # Orange background
         self.colour("orange", self.orange_price, self.orange_get, self.ob)
 
-    def bg_purple(self):
+    def bg_purple(self): # Purple background
         self.colour("purple", self.purple_price, self.purple_get, self.pb)
 
-    def bg_pink(self):
+    def bg_pink(self): # Pink background
         self.colour("pink", self.pink_price, self.pink_get, self.pp)
 
     def back_menu(self): # this is to go back to the main menu
@@ -521,7 +521,7 @@ You have gotten {} incorrect answers.""".format(self.score, self.correct_answers
 {}""".format(self.qnumber, self.question), self.bg_colour)
             self.geo_choices()
 
-    def geo_choices(self):
+    def geo_choices(self): # Sets the choices for the geography questions
         self.rc_list = []
         self.ln = [0, 1, 2, 3]
         while self.answer not in self.rc_list:
@@ -545,7 +545,7 @@ You have gotten {} incorrect answers.""".format(self.score, self.correct_answers
         self.button_frame1.pack(pady=2)
         self.button_frame2.pack(pady=2)
 
-    def trivia_choices(self):
+    def trivia_choices(self): # sets the choices for the trivia questions
         self.ln = [0, 1, 2, 3]
         self.answer = self.rc_list[0]
         random.shuffle(self.ln)
@@ -563,24 +563,24 @@ You have gotten {} incorrect answers.""".format(self.score, self.correct_answers
         self.button_frame1.pack(pady=10)
         self.button_frame2.pack()
         
-    def c1(self):
+    def c1(self): # choice 1
         self.player_answer = self.rc_list[self.ln[0]]
         self.answer_check()
                 
-    def c2(self):
+    def c2(self): # choice 2
         self.player_answer = self.rc_list[self.ln[1]]
         self.answer_check()
 
-    def c3(self):
+    def c3(self): # choice 3
         self.player_answer = self.rc_list[self.ln[2]]
         self.answer_check()
 
-    def c4(self):
+    def c4(self): # choice 4
         self.player_answer = self.rc_list[self.ln[3]]
         self.answer_check()
 
 
-    def trivia_questions(self):
+    def trivia_questions(self): # setting the trivia question
         if self.qnumber == 11:
             self.completef = tk.Frame(self.window, background=self.bg_colour)
             label(self.completef, self.question, self.bg_colour)
