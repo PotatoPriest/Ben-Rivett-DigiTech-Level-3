@@ -191,6 +191,7 @@ Colours are bought using score""", background=self.bg_colour)
     def bg_default(self): # Default background colour
         self.bg_colour = "light gray"
         self.background_change()
+        self.back_menu()
         simpledialog.messagebox._show("Success", "Background colour changed to the default colour")
 
     def colour(self, colour, colour_price, colour_get, bt): #Buying the colour or setting the colour
@@ -346,11 +347,19 @@ Colours are bought using score""", background=self.bg_colour)
         self.orange_get = self.save_file.readline().strip()
         self.purple_get = self.save_file.readline().strip()
         self.pink_get = self.save_file.readline().strip()
+        self.bt_white_get = self.save_file.readline().strip()
+        self.bt_red_get = self.save_file.readline().strip()
+        self.bt_blue_get = self.save_file.readline().strip()
+        self.bt_green_get = self.save_file.readline().strip()
+        self.bt_yellow_get = self.save_file.readline().strip()
+        self.bt_orange_get = self.save_file.readline().strip()
+        self.bt_purple_get = self.save_file.readline().strip()
+        self.bt_pink_get = self.save_file.readline().strip()
         self.save_file.close()
     
     def save_file_def(self): # Saves the players progress !!!For some reason doesn't work sometimes
         self.save_file = open("Game/save.txt", "w")
-        self.save_file.writelines("{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}".format(self.name, self.score, self.correct_answers, self.incorrect_answers, self.math_done, self.geography_done, self.trivia_done, self.white_get, self.red_get, self.blue_get, self.green_get, self.yellow_get, self.orange_get, self.purple_get, self.pink_get))
+        self.save_file.writelines("{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}".format(self.name, self.score, self.correct_answers, self.incorrect_answers, self.math_done, self.geography_done, self.trivia_done, self.white_get, self.red_get, self.blue_get, self.green_get, self.yellow_get, self.orange_get, self.purple_get, self.pink_get, self.bt_white_get, self.bt_red_get, self.bt_blue_get, self.bt_green_get, self.bt_yellow_get, self.bt_orange_get, self.bt_purple_get, self.bt_pink_get))
         self.save_file.close()
         tk.messagebox.showinfo(title="Save Game", message="Your game has been saved!")
         
@@ -361,7 +370,7 @@ Colours are bought using score""", background=self.bg_colour)
 
     def reset_file(self): # Definition for reseting the save file
         self.save_file = open("Game/save.txt", "w")
-        self.save_file.writelines("None\n0\n0\n0\nNo\nNo\nNo\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse")
+        self.save_file.writelines("None\n0\n0\n0\nNo\nNo\nNo\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse")
         self.bg_colour = "light gray"
         self.window.config(bg=self.bg_colour)
         self.scorel.config(bg=self.bg_colour)
@@ -380,9 +389,15 @@ Incorrect Answers = {}
 Done Math questions = {}
 Done Geography questions = {}
 Done Trivia questions = {}
-White = {} 
-Red = {} 
-Blue = {}""".format(self.name, self.score, self.correct_answers, self.incorrect_answers, self.math_done, self.geograhpy_done, self.trivia_done, self.white_get, self.red_get, self.blue_get))
+*bg = Background : *bt = Button
+White = bg:{} bt:{} 
+Red = bg:{} : bt:{}
+Blue = bg:{} : bt:{}
+Green = bg:{} : bt:{} 
+Yellow = bg:{} : bt:{}
+Orange = bg:{} : bt:{}
+Purple = bg:{} : bt:{}
+Pink = bg:{} : bt:{}""".format(self.name, self.score, self.correct_answers, self.incorrect_answers, self.math_done, self.geograhpy_done, self.trivia_done, self.white_get, self.bt_white_get, self.red_get, self.bt_red_get, self.blue_get, self.bt_blue_get, self.green_get, self.bt_green_get, self.yellow_get, self.bt_yellow_get, self.orange_get, self.bt_orange_get, self.purple_get, self.bt_purple_get, self.pink_get, self.bt_pink_get))
     
     def exit(self): # used when exiting the progam
         if messagebox.askyesno(title="Exit", message="Are you sure?"):
@@ -399,6 +414,7 @@ Blue = {}""".format(self.name, self.score, self.correct_answers, self.incorrect_
         button(self.setting_things, "Set your name", self.bt_bg_colour, self.set_name)
         label(self.setting_things, "What are you going to play?", self.bg_colour)
         self.play_option = tk.OptionMenu(self.setting_things, self.menu, *option_menu)
+        self.play_option.config(background=self.bt_bg_colour)
         self.play_option.pack(pady=2)
         button(self.setting_things, "Continue", self.bt_bg_colour, self.next)
         button(self.setting_things, "Back", self.bt_bg_colour, self.back_menu)
