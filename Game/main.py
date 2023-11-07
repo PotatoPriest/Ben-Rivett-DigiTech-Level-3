@@ -42,6 +42,7 @@ class Error: # This class is for error catching, will probobly change it alot la
 
 class Window: # class for the main window
     def __init__(self): # This happens when the class is initilised
+        self.secret_bt_show = False
         self.img_path = "No path"
         self.state = 0
         self.math_done = "No"
@@ -90,17 +91,67 @@ class Window: # class for the main window
         self.scorel.pack()
         self.main_menu()
 
+    def secret_menu(self):
+        self.secret_bt_show = False
+        self.state = 4
+        self.menu_things.destroy()
+        self.secret_things = tk.Frame(self.window, background=self.bg_colour)
+        label(self.secret_things, """This is the secret menu where you can bet your score!
+There is a 50% chance to double or lose the score you bet.""", self.bg_colour)
+        label(self.secret_things, "How much score would you like to bet?", self.bg_colour)
+        self.sentry = tk.Entry(self.secret_things)
+        self.sentry.pack(pady=2)
+        button(self.secret_things, "Bet", self.bt_bg_colour, self.score_bet)
+        button(self.secret_things, "Back", self.bt_bg_colour, self.back_menu)
+        self.secret_things.pack()
+
+    def score_bet(self):
+        try:
+            self.bet_amount = int(self.sentry.get())
+            self.won = random.randint(1, 2)
+            if int(self.bet_amount) > int(self.score):
+                tk.messagebox.showinfo("Score", "You don't have enough score to bet that much!")
+
+            elif int(self.bet_amount) == 0:
+                tk.messagebox.showinfo("Score", "You can't bet nothing!")
+                
+            else:
+                if self.won == 2:
+                    self.score = int(self.score) + int(self.bet_amount)
+                    self.scorel.config(text="Score: {}".format(self.score))
+                    tk.messagebox.showinfo("Score", "You won! Your score is now {}".format(self.score))
+                else:
+                    self.score = int(self.score) - int(self.bet_amount)
+                    self.scorel.config(text="Score: {}".format(self.score))
+                    tk.messagebox.showinfo("Score", "You lost! Your score is now {}".format(self.score))
+                
+        except ValueError:
+            tk.messagebox.showinfo("Wrong input", "Please input a number")
+    
+    def secret(self, event):
+        self.secret_bt_show = True
+    
     def main_menu(self): # This is the main menu
+        self.window.unbind("<Return>")
         self.menu_things = tk.Frame(self.window, background=self.bg_colour)
         label(self.menu_things, "Hello this is the title screen!", self.bg_colour)
+        self.secret_bt = tk.Button(self.menu_things, text="Secret Menu", background="gold", command=self.secret_menu)
         button(self.menu_things, "Play", self.bt_bg_colour, self.start)
         button(self.menu_things, "Save Menu", self.bt_bg_colour, self.save_menu)
         button(self.menu_things, "Shop", self.bt_bg_colour, self.shop_menu)
         button(self.menu_things, "Exit", self.bt_bg_colour, self.exit)
         self.menu_things.pack(pady=2)
-
+        if self.secret_bt_show == True:
+            self.secret_bt.pack()
+        elif self.secret_bt_show == False:
+            try:
+                self.secret_bt.destroy()
+            except:
+                pass
+    
     def save_menu(self): # this menu does save stuff
         self.state = 0
+        self.secret_bt_show = False
         self.menu_things.destroy()
         self.savef = tk.Frame(self.window, background=self.bg_colour)
         button(self.savef, "Save Game", self.bt_bg_colour, self.save_file_def)
@@ -112,14 +163,17 @@ class Window: # class for the main window
 
     def shop_menu(self): # A shop menu
         self.state = 2
+        self.secret_bt_show = False
         self.menu_things.destroy()
         self.shopf = tk.Frame(self.window, background=self.bg_colour)
         button(self.shopf, "Backgrounds", self.bt_bg_colour, self.background_colours)
         button(self.shopf, "Button Backgrounds", self.bt_bg_colour, self.button_background_colours)
         button(self.shopf, "Back", self.bt_bg_colour, self.back_menu)
         self.shopf.pack(pady=2)
+        key_press(self.window, self.secret)
 
     def button_background_colours(self): # Set the background colours tab
+        self.window.unbind("<Return>")
         self.bt_or_background = "bt"
         self.shopf.destroy()
         self.state = 3
@@ -225,7 +279,13 @@ Colours are bought using score""", background=self.bg_colour)
                     simpledialog.messagebox.showinfo("Success", "You have bought the {} background colour".format(colour))
                 else:
                     simpledialog.messagebox.showinfo("Failure", "You don't have enough score for this item")
-                    
+            elif colour_get == "True":
+                self.bg_colour = colour
+                self.background_change()
+                self.back_menu()
+                simpledialog.messagebox.showinfo("Success", "You have changed the background colour")
+
+        
         elif self.bt_or_background == "bt":
             if colour_get == "False":
                 if int(self.score) >= colour_price:
@@ -325,6 +385,10 @@ Colours are bought using score""", background=self.bg_colour)
         elif self.state == 3:
             self.bg_change.destroy()
             self.shop_menu()
+
+        elif self. state == 4:
+            self.secret_things.destroy()
+            self.main_menu()
             
         else:
             self.savef.destroy()
@@ -405,6 +469,7 @@ Pink = bg:{} : bt:{}""".format(self.name, self.score, self.correct_answers, self
             
     def start(self): # this starts the game
         self.state = 1
+        self.secret_bt_show = False
         self.menu = StringVar()
         self.menu.set("Empty")
         self.menu_things.destroy()
