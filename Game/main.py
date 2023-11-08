@@ -17,12 +17,12 @@ that Spongebob Squarepants lives in?""" : ["Bikini Bottom", "Bikini Top", "Atlan
 that published the Mario Kart video game?""" : ["Nintendo", "Sony", "Sega", "Microsoft"], "Which country hosted the first Olympic Games in 1896?" : ["Greece", "Italy", "China", "USA"], "What do you call a geometric space with 5 sides?" : ["Pentagon", "Octagon", "Hexagon", "Heptagon"], "Who built the Great Wall of China?" : ["The Qin Dynasty", "The Ming Dynasty", "The Han Dynasty", "The Qing Dynasty"], "What is 5 x 30?" : ["150", "200", "300", "450"], "What is the capital of Japan?" : ["Tokyo", "Kyoto", "Osaka", "Hiroshima"], "How many days are in a leap year?" : ["366", "365", "342", "372"], "What year was Jesus Christ born?" : ["Between 6-4 B.C", "Between 27-29 A.D", "0 B.C", "Between 6-4 A.D"], """What is the scientific name of the
 process where plants prepare their food?""" : ["Photosynthesis", "Respiration", "Fermentation", "Cell Biology"], "What date is Christmas?" : ["December 25th", "December 26th", "December 27th", "December 24th"], "Which U.S. State is the largest?" : ["Alaska", "Texas", "Florida", "California"], "What war took place during the years 1939-1945?" : ["World War II", "World War I", "The Vietnam War", "The Korean War"], "Which two planets in our solar system are known as “ice giants”?" : ["Neptune and Uranus", "Jupiter and Saturn", "Saturn and Uranus", "Jupiter and Neptune"], "What animal is Bambi?" : ["Deer", "Cow", "Boar", "Antelope"], "What year did the 9/11 terror attacks happen?" : ["2001", "2000", "2002", "1999"], "What is the day after christmas known as?" : ["Boxing day", "Wrapping day", "Feasting day", "After Christmas day"], "What is the name of the Earth’s largest ocean?" : ["The Pacific Ocean", "The Atlantic Ocean", "The Indian Ocean", "The Arctic Ocean"], "Which two countries share the longest international border?" : ["Canada and the USA", "Russia and China", "Russia and Kazakhstan", "Mongolia and China"], "What is the smallest country in the world?" : ["Vatican city", "San Marino", "Monaco", "Liechtenstein"]} # Dictonairy for trivia questions and answers
 
-def button(master, text, background, command): # definition for making a button
-    bt = tk.Button(master, text=text, command=command, background=background)
+def button(master, text, background, text_colour, command): # definition for making a button
+    bt = tk.Button(master, text=text, command=command, background=background, foreground=text_colour)
     bt.pack(pady=2)
 
-def label(master, text, background): # definition for label
-    la = tk.Label(master, text=text, background=background)
+def label(master, text, background, text_colour): # definition for label
+    la = tk.Label(master, text=text, background=background, foreground=text_colour)
     la.pack(pady=3)
 
 def image(master, path, x, y): # this imports an image to be used in code
@@ -54,30 +54,39 @@ class Window: # class for the main window
         self.qnumber = 1
         self.score = 0
         self.name = "None"
-        self.bt_or_background = "None"
+        self.bt_or_bg_or_text = "None"
         self.bg_colour = "light gray"
         self.bt_bg_colour = "light gray"
+        self.text_colour = "black"
+        self.text_white_get = "False"
         self.bt_white_get = "False"
         self.white_get = "False"
         self.white_price = 1
+        self.text_red_get = "False"
         self.bt_red_get = "False"
         self.red_get = "False"
         self.red_price = 5
+        self.text_blue_get = "False"
         self.bt_blue_get = "False"
         self.blue_get = "False"
         self.blue_price = 5
+        self.text_green_get = "False"
         self.bt_green_get = "False"
         self.green_get = "False"
         self.green_price = 5
+        self.text_yellow_get = "False"
         self.bt_yellow_get = "False"
         self.yellow_get = "False"
         self.yellow_price = 10
+        self.text_orange_get = "False"
         self.bt_orange_get = "False"
         self.orange_get = "False"
         self.orange_price = 10
+        self.text_purple_get = "False"
         self.bt_purple_get = "False"
         self.purple_get = "False"
         self.purple_price = 15
+        self.text_pink_get = "False"
         self.bt_pink_get = "False"
         self.pink_get = "False"
         self.pink_price = 25
@@ -87,7 +96,7 @@ class Window: # class for the main window
         self.window.config(background=self.bg_colour)
         self.scoref = tk.Frame(self.window, background=self.bg_colour)
         self.scoref.pack(anchor="ne")
-        self.scorel = tk.Label(self.scoref, text="Score: {}".format(self.score), background=self.bg_colour)
+        self.scorel = tk.Label(self.scoref, text="Score: {}".format(self.score), background=self.bg_colour, foreground=self.text_colour)
         self.scorel.pack()
         self.main_menu()
 
@@ -97,12 +106,12 @@ class Window: # class for the main window
         self.menu_things.destroy()
         self.secret_things = tk.Frame(self.window, background=self.bg_colour)
         label(self.secret_things, """This is the secret menu where you can bet your score!
-There is a 50% chance to double or lose the score you bet.""", self.bg_colour)
-        label(self.secret_things, "How much score would you like to bet?", self.bg_colour)
+There is a 50% chance to double or lose the score you bet.""", self.bg_colour, self.text_colour)
+        label(self.secret_things, "How much score would you like to bet?", self.bg_colour, self.text_colour)
         self.sentry = tk.Entry(self.secret_things)
         self.sentry.pack(pady=2)
-        button(self.secret_things, "Bet", self.bt_bg_colour, self.score_bet)
-        button(self.secret_things, "Back", self.bt_bg_colour, self.back_menu)
+        button(self.secret_things, "Bet", self.bt_bg_colour, self.text_colour, self.score_bet)
+        button(self.secret_things, "Back", self.bt_bg_colour, self.text_colour, self.back_menu)
         self.secret_things.pack()
 
     def score_bet(self):
@@ -134,12 +143,12 @@ There is a 50% chance to double or lose the score you bet.""", self.bg_colour)
     def main_menu(self): # This is the main menu
         self.window.unbind("<Return>")
         self.menu_things = tk.Frame(self.window, background=self.bg_colour)
-        label(self.menu_things, "Hello this is the title screen!", self.bg_colour)
-        self.secret_bt = tk.Button(self.menu_things, text="Secret Menu", background="gold", command=self.secret_menu)
-        button(self.menu_things, "Play", self.bt_bg_colour, self.start)
-        button(self.menu_things, "Save Menu", self.bt_bg_colour, self.save_menu)
-        button(self.menu_things, "Shop", self.bt_bg_colour, self.shop_menu)
-        button(self.menu_things, "Exit", self.bt_bg_colour, self.exit)
+        label(self.menu_things, "Hello this is the title screen!", self.bg_colour, self.text_colour)
+        self.secret_bt = tk.Button(self.menu_things, text="Secret Menu", background="gold", foreground="black", command=self.secret_menu)
+        button(self.menu_things, "Play", self.bt_bg_colour, self.text_colour, self.start)
+        button(self.menu_things, "Save Menu", self.bt_bg_colour, self.text_colour, self.save_menu)
+        button(self.menu_things, "Shop", self.bt_bg_colour, self.text_colour, self.shop_menu)
+        button(self.menu_things, "Exit", self.bt_bg_colour, self.text_colour, self.exit)
         self.menu_things.pack(pady=2)
         if self.secret_bt_show == True:
             self.secret_bt.pack()
@@ -154,11 +163,11 @@ There is a 50% chance to double or lose the score you bet.""", self.bg_colour)
         self.secret_bt_show = False
         self.menu_things.destroy()
         self.savef = tk.Frame(self.window, background=self.bg_colour)
-        button(self.savef, "Save Game", self.bt_bg_colour, self.save_file_def)
-        button(self.savef, "Load Save", self.bt_bg_colour, self.load_file)
-        button(self.savef, "Reset Save", self.bt_bg_colour, self.reset_file)
-        button(self.savef, "Check Save", self.bt_bg_colour, self.check_file)
-        button(self.savef, "Back", self.bt_bg_colour, self.back_menu)
+        button(self.savef, "Save Game", self.bt_bg_colour, self.text_colour, self.save_file_def)
+        button(self.savef, "Load Save", self.bt_bg_colour, self.text_colour, self.load_file)
+        button(self.savef, "Reset Save", self.bt_bg_colour, self.text_colour, self.reset_file)
+        button(self.savef, "Check Save", self.bt_bg_colour, self.text_colour, self.check_file)
+        button(self.savef, "Back", self.bt_bg_colour, self.text_colour, self.back_menu)
         self.savef.pack(pady=2)
 
     def shop_menu(self): # A shop menu
@@ -166,24 +175,53 @@ There is a 50% chance to double or lose the score you bet.""", self.bg_colour)
         self.secret_bt_show = False
         self.menu_things.destroy()
         self.shopf = tk.Frame(self.window, background=self.bg_colour)
-        button(self.shopf, "Backgrounds", self.bt_bg_colour, self.background_colours)
-        button(self.shopf, "Button Backgrounds", self.bt_bg_colour, self.button_background_colours)
-        button(self.shopf, "Back", self.bt_bg_colour, self.back_menu)
+        button(self.shopf, "Text colour", self.bt_bg_colour, self.text_colour, self.text_colour_pick)
+        button(self.shopf, "Backgrounds", self.bt_bg_colour, self.text_colour, self.background_colours)
+        button(self.shopf, "Button Backgrounds", self.bt_bg_colour, self.text_colour, self.button_background_colours)
+        button(self.shopf, "Back", self.bt_bg_colour, self.text_colour, self.back_menu)
         self.shopf.pack(pady=2)
         key_press(self.window, self.secret)
 
+    def text_colour_pick(self):
+        self.window.unbind("<Return>")
+        self.bt_or_bg_or_text = "text"
+        self.shopf.destroy()
+        self.state = 3
+        self.bg_change = tk.Frame(self.window, background=self.bg_colour)
+        self.bg_change_left = tk.Frame(self.bg_change, background=self.bg_colour)
+        self.bg_change_right = tk.Frame(self.bg_change, background=self.bg_colour)
+        self.cl = tk.Label(self.bg_change, text="""Choose a colour for the text:
+Colours are bought using score""""", background=self.bg_colour, foreground=self.text_colour)
+        self.cl.pack(pady=2)
+        button(self.bg_change, "Default", self.bt_bg_colour, self.text_colour, self.text_default)
+
+        self.wb = self.colour_button("white", self.text_white_get, self.white_price, self.bg_change_left, self.text_white)
+        self.rb = self.colour_button("red", self.text_red_get, self.red_price, self.bg_change_left, self.text_red)
+        self.bb = self.colour_button("blue", self.text_blue_get, self.blue_price, self.bg_change_left, self.text_blue)
+        self.gb = self.colour_button("green", self.text_green_get, self.green_price, self.bg_change_left, self.text_green)
+        self.yb = self.colour_button("yellow", self.text_yellow_get, self.yellow_price, self.bg_change_right, self.text_yellow)
+        self.ob = self.colour_button("orange", self.text_orange_get, self.orange_price, self.bg_change_right, self.text_orange)
+        self.pb = self.colour_button("purple", self.text_purple_get, self.purple_price, self.bg_change_right, self.text_purple)
+        self.pp = self.colour_button("pink", self.text_pink_get, self.pink_price, self.bg_change_right, self.text_pink)
+        
+        self.bbt = tk.Button(self.bg_change, text="Back", command=self.back_menu, background = self.bt_bg_colour, foreground=self.text_colour)
+        self.bbt.pack(pady=3, side="bottom")
+        self.bg_change.pack(pady=2)
+        self.bg_change_left.pack(side="left")
+        self.bg_change_right.pack(side="right")
+        
     def button_background_colours(self): # Set the background colours tab
         self.window.unbind("<Return>")
-        self.bt_or_background = "bt"
+        self.bt_or_bg_or_text = "bt"
         self.shopf.destroy()
         self.state = 3
         self.bg_change = tk.Frame(self.window, background=self.bg_colour)
         self.bg_change_left = tk.Frame(self.bg_change, background=self.bg_colour)
         self.bg_change_right = tk.Frame(self.bg_change, background=self.bg_colour)
         self.cl = tk.Label(self.bg_change, text="""Choose a background colour for the buttons:
-Colours are bought using score""""", background=self.bg_colour)
+Colours are bought using score""""", background=self.bg_colour, foreground=self.text_colour)
         self.cl.pack(pady=2)
-        button(self.bg_change, "Default", self.bt_bg_colour, self.bg_default)
+        button(self.bg_change, "Default", self.bt_bg_colour, self.text_colour, self.bt_default)
 
         self.wb = self.colour_button("white", self.bt_white_get, self.white_price, self.bg_change_left, self.bt_bg_white)
         self.rb = self.colour_button("red", self.bt_red_get, self.red_price, self.bg_change_left, self.bt_bg_red)
@@ -195,7 +233,7 @@ Colours are bought using score""""", background=self.bg_colour)
         self.pp = self.colour_button("pink", self.bt_pink_get, self.pink_price, self.bg_change_right, self.bt_bg_pink)
 
 
-        self.bbt = tk.Button(self.bg_change, text="Back", command=self.back_menu, background = self.bt_bg_colour)
+        self.bbt = tk.Button(self.bg_change, text="Back", command=self.back_menu, background = self.bt_bg_colour, foreground=self.text_colour)
         self.bbt.pack(pady=3, side="bottom")
         self.bg_change.pack(pady=2)
         self.bg_change_left.pack(side="left")
@@ -203,24 +241,24 @@ Colours are bought using score""""", background=self.bg_colour)
         
     def colour_button(self, colour, colour_get, colour_price, side, command): # For seting the button for picking a colour
         if colour_get == "False":
-            button = tk.Button(side, text="{}: {}".format(colour.capitalize(), colour_price), command=command, background = self.bt_bg_colour)
+            button = tk.Button(side, text="{}: {}".format(colour.capitalize(), colour_price), command=command, background=self.bt_bg_colour, foreground=self.text_colour)
             button.pack(pady=2)
         else:
-            button = tk.Button(side, text=colour.capitalize(), command=command, background = self.bt_bg_colour)
+            button = tk.Button(side, text=colour.capitalize(), command=command, background=self.bt_bg_colour, foreground=self.text_colour)
             button.pack(pady=2)
         return button
         
     def background_colours(self): # Set the background colours tab
-        self.bt_or_background = "background"
+        self.bt_or_bg_or_text = "background"
         self.shopf.destroy()
         self.state = 3
         self.bg_change = tk.Frame(self.window, background=self.bg_colour)
         self.bg_change_left = tk.Frame(self.bg_change, background=self.bg_colour)
         self.bg_change_right = tk.Frame(self.bg_change, background=self.bg_colour)
         self.cl = tk.Label(self.bg_change, text="""Choose a background colour
-Colours are bought using score""", background=self.bg_colour)
+Colours are bought using score""", background=self.bg_colour, foreground=self.text_colour)
         self.cl.pack(pady=2)
-        button(self.bg_change, "Default", self.bt_bg_colour, self.bg_default)
+        button(self.bg_change, "Default", self.bt_bg_colour, self.text_colour, self.bg_default)
         
         self.wb = self.colour_button("white", self.white_get, self.white_price, self.bg_change_left, self.bg_white)
         self.rb = self.colour_button("red", self.red_get, self.red_price, self.bg_change_left, self.bg_red)
@@ -232,7 +270,7 @@ Colours are bought using score""", background=self.bg_colour)
         self.pp = self.colour_button("pink", self.pink_get, self.pink_price, self.bg_change_right, self.bg_pink)
         
             
-        self.bbt = tk.Button(self.bg_change, text="Back", command=self.back_menu, background = self.bt_bg_colour)
+        self.bbt = tk.Button(self.bg_change, text="Back", command=self.back_menu, background=self.bt_bg_colour, foreground=self.text_colour)
         self.bbt.pack(pady=3, side="bottom")
         self.bg_change.pack(pady=2)
         self.bg_change_left.pack(side="left")
@@ -248,8 +286,18 @@ Colours are bought using score""", background=self.bg_colour)
         self.back_menu()
         simpledialog.messagebox._show("Success", "Background colour changed to the default colour")
 
+    def bt_default(self): # Default background colour
+        self.bt_colour = "light gray"
+        self.back_menu()
+        simpledialog.messagebox._show("Success", "Button Background colour changed to the default colour")
+
+    def text_default(self):
+        self.text_colour = "black"
+        self.back_menu()
+        simpledialog.messagebox._show("Success", "Text colour changed to the default colour")
+        
     def colour(self, colour, colour_price, colour_get, bt): #Buying the colour or setting the colour
-        if self.bt_or_background == "background":
+        if self.bt_or_bg_or_text == "background":
             if colour_get == "False":
                 if int(self.score) >= colour_price:
                     self.bg_colour = colour
@@ -286,7 +334,7 @@ Colours are bought using score""", background=self.bg_colour)
                 simpledialog.messagebox.showinfo("Success", "You have changed the background colour")
 
         
-        elif self.bt_or_background == "bt":
+        elif self.bt_or_bg_or_text == "bt":
             if colour_get == "False":
                 if int(self.score) >= colour_price:
                     self.bt_bg_colour = colour
@@ -322,6 +370,42 @@ Colours are bought using score""", background=self.bg_colour)
                 self.back_menu()
                 simpledialog.messagebox.showinfo("Success", "You have changed the buttons background to {}".format(colour))
 
+        elif self.bt_or_bg_or_text == "text":
+            if colour_get == "False":
+                if int(self.score) >= colour_price:
+                    self.text_colour = colour
+                    self.score = int(self.score) - colour_price
+                    if colour == "white":
+                        self.text_white_get = "True"
+                    elif colour == "red":
+                        self.text_red_get = "True"
+                    elif colour == "blue":
+                        self.text_blue_get = "True"
+                    elif colour == "green":
+                        self.text_green_get = "True"
+                    elif colour == "yellow":
+                        self.text_yellow_get = "True"
+                    elif colour == "orange":
+                        self.text_orange_get = "True"
+                    elif colour == "purple":
+                        self.text_purple_get = "True"
+                    elif colour == "pink":
+                        self.text_pink_get = "True"
+                    else:
+                        Error()
+                        
+                    bt.config(text=colour.capitalize())
+                    self.back_menu()
+                    simpledialog.messagebox.showinfo("Success", "You have bought the {} text colour".format(colour))
+                    
+                else:
+                    self.back_menu()
+                    simpledialog.messagebox.showinfo("Failure", "You don't have enough score for this item")
+                    
+            else:
+                self.text_colour = colour
+                self.back_menu()
+                simpledialog.messagebox.showinfo("Success", "You have changed the text colour to {}".format(colour))
         else:
             Error()
 
@@ -330,6 +414,9 @@ Colours are bought using score""", background=self.bg_colour)
 
     def bt_bg_white(self):
         self.colour("white", self.white_price, self.bt_white_get, self.wb)
+
+    def text_white(self):
+        self.colour("white", self.white_price, self.text_white_get, self.wb)
                 
     def bg_red(self): # Red background
         self.colour("red", self.red_price, self.red_get, self.rb)
@@ -337,11 +424,17 @@ Colours are bought using score""", background=self.bg_colour)
     def bt_bg_red(self):
         self.colour("red", self.red_price, self.bt_red_get, self.rb)
 
+    def text_red(self):
+        self.colour("red", self.red_price, self.text_red_get, self.rb)
+
     def bg_blue(self): # Blue background
         self.colour("blue", self.blue_price, self.blue_get, self.bb)
 
     def bt_bg_blue(self):
         self.colour("blue", self.blue_price, self.bt_blue_get, self.bb)
+
+    def text_blue(self):
+        self.colour("blue", self.blue_price, self.text_blue_get, self.bb)
 
     def bg_green(self): # Green background
         self.colour("green", self.green_price, self.green_get, self.gb)
@@ -349,11 +442,17 @@ Colours are bought using score""", background=self.bg_colour)
     def bt_bg_green(self):
         self.colour("green", self.green_price, self.bt_green_get, self.gb)
 
+    def text_green(self):
+        self.colour("green", self.green_price, self.text_green_get, self.gb)
+
     def bg_yellow(self): # Yellow background
         self.colour("yellow", self.yellow_price, self.yellow_get, self.yb)
 
     def bt_bg_yellow(self):
         self.colour("yellow", self.yellow_price, self.bt_yellow_get, self.yb)
+
+    def text_yellow(self):
+        self.colour("yellow", self.yellow_price, self.text_yellow_get, self.yb)
     
     def bg_orange(self): # Orange background
         self.colour("orange", self.orange_price, self.orange_get, self.ob)
@@ -361,17 +460,26 @@ Colours are bought using score""", background=self.bg_colour)
     def bt_bg_orange(self):
         self.colour("orange", self.orange_price, self.bt_orange_get, self.ob)
 
+    def text_orange(self):
+        self.colour("orange", self.orange_price, self.text_orange_get, self.ob)
+
     def bg_purple(self): # Purple background
         self.colour("purple", self.purple_price, self.purple_get, self.pb)
 
     def bt_bg_purple(self):
         self.colour("purple", self.purple_price, self.bt_purple_get, self.pb)
 
+    def text_purple(self):
+        self.colour("purple", self.purple_price, self.text_purple_get, self.pb)
+
     def bg_pink(self): # Pink background
         self.colour("pink", self.pink_price, self.pink_get, self.pp)
 
     def bt_bg_pink(self):
         self.colour("pink", self.pink_price, self.bt_pink_get, self.pp)
+
+    def text_pink(self):
+        self.colour("pink", self.pink_price, self.text_pink_get, self.pp)
 
     def back_menu(self): # this is to go back to the main menu
         if self.state == 1:
@@ -419,11 +527,19 @@ Colours are bought using score""", background=self.bg_colour)
         self.bt_orange_get = self.save_file.readline().strip()
         self.bt_purple_get = self.save_file.readline().strip()
         self.bt_pink_get = self.save_file.readline().strip()
+        self.text_white_get = self.save_file.readline().strip()
+        self.text_red_get = self.save_file.readline().strip()
+        self.text_blue_get = self.save_file.readline().strip()
+        self.text_green_get = self.save_file.readline().strip()
+        self.text_yellow_get = self.save_file.readline().strip()
+        self.text_orange_get = self.save_file.readline().strip()
+        self.text_purple_get = self.save_file.readline().strip()
+        self.text_pink_get = self.save_file.readline().strip()
         self.save_file.close()
     
     def save_file_def(self): # Saves the players progress !!!For some reason doesn't work sometimes
         self.save_file = open("Game/save.txt", "w")
-        self.save_file.writelines("{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}".format(self.name, self.score, self.correct_answers, self.incorrect_answers, self.math_done, self.geography_done, self.trivia_done, self.white_get, self.red_get, self.blue_get, self.green_get, self.yellow_get, self.orange_get, self.purple_get, self.pink_get, self.bt_white_get, self.bt_red_get, self.bt_blue_get, self.bt_green_get, self.bt_yellow_get, self.bt_orange_get, self.bt_purple_get, self.bt_pink_get))
+        self.save_file.writelines("{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}".format(self.name, self.score, self.correct_answers, self.incorrect_answers, self.math_done, self.geography_done, self.trivia_done, self.white_get, self.red_get, self.blue_get, self.green_get, self.yellow_get, self.orange_get, self.purple_get, self.pink_get, self.bt_white_get, self.bt_red_get, self.bt_blue_get, self.bt_green_get, self.bt_yellow_get, self.bt_orange_get, self.bt_purple_get, self.bt_pink_get, self.text_white_get, self.text_red_get, self.text_blue_get, self.text_green_get, self.text_yellow_get, self.text_orange_get, self.text_purple_get, self.text_pink_get))
         self.save_file.close()
         tk.messagebox.showinfo(title="Save Game", message="Your game has been saved!")
         
@@ -434,8 +550,9 @@ Colours are bought using score""", background=self.bg_colour)
 
     def reset_file(self): # Definition for reseting the save file
         self.save_file = open("Game/save.txt", "w")
-        self.save_file.writelines("None\n0\n0\n0\nNo\nNo\nNo\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse")
+        self.save_file.writelines("None\n0\n0\n0\nNo\nNo\nNo\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse")
         self.bg_colour = "light gray"
+        self.text_colour = "black"
         self.window.config(bg=self.bg_colour)
         self.scorel.config(bg=self.bg_colour)
         self.savef.config(bg=self.bg_colour)
@@ -450,18 +567,18 @@ Colours are bought using score""", background=self.bg_colour)
 Score = {}
 Correct Answers = {}
 Incorrect Answers = {}
-Done Math questions = {}
-Done Geography questions = {}
-Done Trivia questions = {}
-*bg = Background : *bt = Button
-White = bg:{} bt:{} 
-Red = bg:{} : bt:{}
-Blue = bg:{} : bt:{}
-Green = bg:{} : bt:{} 
-Yellow = bg:{} : bt:{}
-Orange = bg:{} : bt:{}
-Purple = bg:{} : bt:{}
-Pink = bg:{} : bt:{}""".format(self.name, self.score, self.correct_answers, self.incorrect_answers, self.math_done, self.geograhpy_done, self.trivia_done, self.white_get, self.bt_white_get, self.red_get, self.bt_red_get, self.blue_get, self.bt_blue_get, self.green_get, self.bt_green_get, self.yellow_get, self.bt_yellow_get, self.orange_get, self.bt_orange_get, self.purple_get, self.bt_purple_get, self.pink_get, self.bt_pink_get))
+Done Math = {}
+Done Geography = {}
+Done Trivia = {}
+bg=Background bt=Button tx=Text
+White = bg:{} bt:{} tx:{}
+Red = bg:{} bt:{} tx:{}
+Blue = bg:{} bt:{} tx:{}
+Green = bg:{} bt:{} tx:{}
+Yellow = bg:{} bt:{} tx:{}
+Orange = bg:{} bt:{} tx:{}
+Purple = bg:{} bt:{} tx:{}
+Pink = bg:{} bt:{} tx:{}""".format(self.name, self.score, self.correct_answers, self.incorrect_answers, self.math_done, self.geograhpy_done, self.trivia_done, self.white_get, self.bt_white_get, self.text_white_get, self.red_get, self.bt_red_get, self.text_red_get, self.blue_get, self.bt_blue_get, self.text_blue_get, self.green_get, self.bt_green_get, self.text_green_get, self.yellow_get, self.bt_yellow_get, self.text_yellow_get, self.orange_get, self.bt_orange_get, self.text_orange_get, self.purple_get, self.bt_purple_get, self.text_purple_get, self.pink_get, self.bt_pink_get, self.text_pink_get))
     
     def exit(self): # used when exiting the progam
         if messagebox.askyesno(title="Exit", message="Are you sure?"):
@@ -474,15 +591,15 @@ Pink = bg:{} : bt:{}""".format(self.name, self.score, self.correct_answers, self
         self.menu.set("Empty")
         self.menu_things.destroy()
         self.setting_things = tk.Frame(self.window, background=self.bg_colour)
-        self.label = tk.Label(self.setting_things, text="Name: {}".format(self.name), background=self.bg_colour)
+        self.label = tk.Label(self.setting_things, text="Name: {}".format(self.name), background=self.bg_colour, foreground=self.text_colour)
         self.label.pack(pady=2)
-        button(self.setting_things, "Set your name", self.bt_bg_colour, self.set_name)
-        label(self.setting_things, "What are you going to play?", self.bg_colour)
+        button(self.setting_things, "Set your name", self.bt_bg_colour, self.text_colour, self.set_name)
+        label(self.setting_things, "What are you going to play?", self.bg_colour, self.text_colour)
         self.play_option = tk.OptionMenu(self.setting_things, self.menu, *option_menu)
-        self.play_option.config(background=self.bt_bg_colour)
+        self.play_option.config(background=self.bt_bg_colour, foreground=self.text_colour)
         self.play_option.pack(pady=2)
-        button(self.setting_things, "Continue", self.bt_bg_colour, self.next)
-        button(self.setting_things, "Back", self.bt_bg_colour, self.back_menu)
+        button(self.setting_things, "Continue", self.bt_bg_colour, self.text_colour, self.next)
+        button(self.setting_things, "Back", self.bt_bg_colour, self.text_colour, self.back_menu)
         self.setting_things.pack(pady=2)
 
     def next(self): # What happens when you pick something from the options menu
@@ -609,15 +726,15 @@ You have completed the Trivia questions.""".format(self.name)
         self.math_stuff = tk.Frame(self.window, background=self.bg_colour)
         
         if self.math_done == "No":
-            label(self.math_stuff, "You have NOT done the Math questions.", self.bg_colour)
+            label(self.math_stuff, "You have NOT done the Math questions.", self.bg_colour, self.text_colour)
         else:
-            label(self.math_stuff, "You have done the Math questions.", self.bg_colour)
+            label(self.math_stuff, "You have done the Math questions.", self.bg_colour, self.text_colour)
             
         label(self.math_stuff, """{}, This area of the game will test your knoledge
 on Mathmatics, starting with addition and subtraction
-then moving on to multiplication and divition.""".format(self.name), self.bg_colour)
-        button(self.math_stuff, "Continue", self.bt_bg_colour, self.math_questions)
-        button(self.math_stuff, "Back", self.bt_bg_colour, self.back)
+then moving on to multiplication and divition.""".format(self.name), self.bg_colour, self.text_colour)
+        button(self.math_stuff, "Continue", self.bt_bg_colour, self.text_colour, self.math_questions)
+        button(self.math_stuff, "Back", self.bt_bg_colour, self.text_colour, self.back)
         self.math_stuff.pack(pady=2)
 
     def done(self): # this is for when the player is done answering the questions
@@ -630,15 +747,15 @@ then moving on to multiplication and divition.""".format(self.name), self.bg_col
         self.geography_stuff = tk.Frame(self.window, background=self.bg_colour)
         
         if self.geography_done == "No":
-            label(self.geography_stuff, "You have NOT done the Geography questions.", self.bg_colour)
+            label(self.geography_stuff, "You have NOT done the Geography questions.", self.bg_colour, self.text_colour)
         else:
-            label(self.geography_stuff, "You have done the Geography questions.", self.bg_colour)
+            label(self.geography_stuff, "You have done the Geography questions.", self.bg_colour, self.text_colour)
             
         label(self.geography_stuff, """{}, This area of the game will test your knoledge
 on Geography, this will incluce naming the country
-based on its siluete as well as its flag.""".format(self.name), self.bg_colour)
-        button(self.geography_stuff, "Continue", self.bt_bg_colour, self.geography_questions)
-        button(self.geography_stuff, "Back", self.bt_bg_colour, self.back)
+based on its siluete as well as its flag.""".format(self.name), self.bg_colour, self.text_colour)
+        button(self.geography_stuff, "Continue", self.bt_bg_colour, self.text_colour, self.geography_questions)
+        button(self.geography_stuff, "Back", self.bt_bg_colour, self.text_colour, self.back)
         self.geography_stuff.pack(pady=2)
 
     def trivia(self): # This starts the trivia questions
@@ -646,47 +763,47 @@ based on its siluete as well as its flag.""".format(self.name), self.bg_colour)
         self.trivia_stuff = tk.Frame(self.window, background=self.bg_colour)
         
         if self.trivia_done == "No":
-            label(self.trivia_stuff, "You have NOT done the Trivia questions.", self.bg_colour)
+            label(self.trivia_stuff, "You have NOT done the Trivia questions.", self.bg_colour, self.text_colour)
         else:
-            label(self.trivia_stuff, "You have done the Trivia questions.", self.bg_colour)
+            label(self.trivia_stuff, "You have done the Trivia questions.", self.bg_colour, self.text_colour)
             
         label(self.trivia_stuff, """{}, This area of the game will test your knoledge
-on random Trivia, this will include questions on anything.""".format(self.name), self.bg_colour)
-        button(self.trivia_stuff, "Continue", self.bt_bg_colour, self.trivia_questions)
-        button(self.trivia_stuff, "Back", self.bt_bg_colour, self.back)
+on random Trivia, this will include questions on anything.""".format(self.name), self.bg_colour, self.text_colour)
+        button(self.trivia_stuff, "Continue", self.bt_bg_colour, self.text_colour, self.trivia_questions)
+        button(self.trivia_stuff, "Back", self.bt_bg_colour, self.text_colour, self.back)
         self.trivia_stuff.pack(pady=2)
         
     def math_questions(self): # This is the math questions
         if self.qnumber == 11:
             self.completef = tk.Frame(self.window, background=self.bg_colour)
-            label(self.completef, self.question, self.bg_colour)
+            label(self.completef, self.question, self.bg_colour, self.text_colour)
             label(self.completef, """Your score is {}.
 You have gotten {} correct answers,
-You have gotten {} incorrect answers.""".format(self.score, self.correct_answers, self.incorrect_answers), self.bg_colour)
+You have gotten {} incorrect answers.""".format(self.score, self.correct_answers, self.incorrect_answers), self.bg_colour, self.text_colour)
             self.math_done = "Yes"
-            button(self.completef, "Continue", self.bt_bg_colour, self.done)
+            button(self.completef, "Continue", self.bt_bg_colour, self.text_colour, self.done)
             self.completef.pack(pady=2)
         else:
             self.math_stuff.destroy()
             self.math_qf = tk.Frame(self.window, background=self.bg_colour)
             self.setting_question()
             label(self.math_qf, """Question {}:
-{}""".format(self.qnumber, self.question), self.bg_colour)
+{}""".format(self.qnumber, self.question), self.bg_colour, self.text_colour)
             self.aentry = tk.Entry(self.math_qf)
             self.aentry.pack()
-            button(self.math_qf, "Submit", self.bt_bg_colour, self.submit)
+            button(self.math_qf, "Submit", self.bt_bg_colour, self.text_colour, self.submit)
             key_press(self.aentry, self.submit)
             self.math_qf.pack(pady=2)
                 
     def geography_questions(self): # this sets the geography questions 
         if self.qnumber == 11:
             self.completef = tk.Frame(self.window, background=self.bg_colour)
-            label(self.completef, self.question, self.bg_colour)
+            label(self.completef, self.question, self.bg_colour, self.text_colour)
             label(self.completef, """Your score is {}.
 You have gotten {} correct answers,
-You have gotten {} incorrect answers.""".format(self.score, self.correct_answers, self.incorrect_answers), self.bg_colour)
+You have gotten {} incorrect answers.""".format(self.score, self.correct_answers, self.incorrect_answers), self.bg_colour, self.text_colour)
             self.geography_done = "Yes"
-            button(self.completef, "Continue", self.bt_bg_colour, self.done)
+            button(self.completef, "Continue", self.bt_bg_colour, self.text_colour, self.done)
             self.completef.pack(pady=2)
         else:
             self.geography_stuff.destroy()
@@ -694,7 +811,7 @@ You have gotten {} incorrect answers.""".format(self.score, self.correct_answers
             self.geography_qf.pack(pady=2)
             self.setting_question()
             label(self.geography_qf, """Question {}:
-{}""".format(self.qnumber, self.question), self.bg_colour)
+{}""".format(self.qnumber, self.question), self.bg_colour, self.text_colour)
             self.geo_choices()
 
     def geo_choices(self): # Sets the choices for the geography questions
@@ -710,13 +827,13 @@ You have gotten {} incorrect answers.""".format(self.score, self.correct_answers
 
         self.button_frame1 = tk.Frame(self.geography_qf, background=self.bg_colour)
         self.button_frame2 = tk.Frame(self.geography_qf, background=self.bg_colour)
-        self.choice_1 = tk.Button(self.button_frame1, text=self.rc_list[self.ln[0]], command=self.c1, background=self.bt_bg_colour)
+        self.choice_1 = tk.Button(self.button_frame1, text=self.rc_list[self.ln[0]], command=self.c1, bg=self.bt_bg_colour, fg=self.text_colour)
         self.choice_1.pack(side="left")
-        self.choice_2 = tk.Button(self.button_frame1, text=self.rc_list[self.ln[1]], command=self.c2, background=self.bt_bg_colour)
+        self.choice_2 = tk.Button(self.button_frame1, text=self.rc_list[self.ln[1]], command=self.c2, bg=self.bt_bg_colour, fg=self.text_colour)
         self.choice_2.pack(side="right")
-        self.choice_3 = tk.Button(self.button_frame2, text=self.rc_list[self.ln[2]], command=self.c3, background=self.bt_bg_colour)
+        self.choice_3 = tk.Button(self.button_frame2, text=self.rc_list[self.ln[2]], command=self.c3, bg=self.bt_bg_colour, fg=self.text_colour)
         self.choice_3.pack(side="left")
-        self.choice_4 = tk.Button(self.button_frame2, text=self.rc_list[self.ln[3]], command=self.c4, background=self.bt_bg_colour)
+        self.choice_4 = tk.Button(self.button_frame2, text=self.rc_list[self.ln[3]], command=self.c4, bg=self.bt_bg_colour, fg=self.text_colour)
         self.choice_4.pack(side="right")
         self.button_frame1.pack(pady=2)
         self.button_frame2.pack(pady=2)
@@ -728,13 +845,13 @@ You have gotten {} incorrect answers.""".format(self.score, self.correct_answers
         
         self.button_frame1 = tk.Frame(self.trivia_qf, background=self.bg_colour)
         self.button_frame2 = tk.Frame(self.trivia_qf, background=self.bg_colour)
-        self.choice_1 = tk.Button(self.button_frame1, text=self.rc_list[self.ln[0]], command=self.c1, background=self.bt_bg_colour)
+        self.choice_1 = tk.Button(self.button_frame1, text=self.rc_list[self.ln[0]], command=self.c1, bg=self.bt_bg_colour, fg=self.text_colour)
         self.choice_1.pack(side="left")
-        self.choice_2 = tk.Button(self.button_frame1, text=self.rc_list[self.ln[1]], command=self.c2, background=self.bt_bg_colour)
+        self.choice_2 = tk.Button(self.button_frame1, text=self.rc_list[self.ln[1]], command=self.c2, bg=self.bt_bg_colour, fg=self.text_colour)
         self.choice_2.pack(side="right")
-        self.choice_3 = tk.Button(self.button_frame2, text=self.rc_list[self.ln[2]], command=self.c3, background=self.bt_bg_colour)
+        self.choice_3 = tk.Button(self.button_frame2, text=self.rc_list[self.ln[2]], command=self.c3, bg=self.bt_bg_colour, fg=self.text_colour)
         self.choice_3.pack(side="left")
-        self.choice_4 = tk.Button(self.button_frame2, text=self.rc_list[self.ln[3]], command=self.c4, background=self.bt_bg_colour)
+        self.choice_4 = tk.Button(self.button_frame2, text=self.rc_list[self.ln[3]], command=self.c4, bg=self.bt_bg_colour, fg=self.text_colour)
         self.choice_4.pack(side="right")
         self.button_frame1.pack(pady=10)
         self.button_frame2.pack()
@@ -759,12 +876,12 @@ You have gotten {} incorrect answers.""".format(self.score, self.correct_answers
     def trivia_questions(self): # setting the trivia question
         if self.qnumber == 11:
             self.completef = tk.Frame(self.window, background=self.bg_colour)
-            label(self.completef, self.question, self.bg_colour)
+            label(self.completef, self.question, self.bg_colour, self.text_colour)
             label(self.completef, """Your score is {}.
 You have gotten {} correct answers,
-You have gotten {} incorrect answers.""".format(self.score, self.correct_answers, self.incorrect_answers), self.bg_colour)
+You have gotten {} incorrect answers.""".format(self.score, self.correct_answers, self.incorrect_answers), self.bg_colour, self.text_colour)
             self.trivia_done = "Yes"
-            button(self.completef, "Continue", self.bt_bg_colour, self.done)
+            button(self.completef, "Continue", self.bt_bg_colour, self.text_colour, self.done)
             self.completef.pack(pady=2)
         else:
             self.trivia_stuff.destroy()
@@ -772,7 +889,7 @@ You have gotten {} incorrect answers.""".format(self.score, self.correct_answers
             self.trivia_qf.pack(pady=2)
             self.setting_question()
             label(self.trivia_qf, """Question {}:
-{}""".format(self.qnumber, self.question), self.bg_colour)
+{}""".format(self.qnumber, self.question), self.bg_colour, self.text_colour)
             self.trivia_choices()
             
     def submit(self, event): # This is so that the player has to input an intiger when answering the math questions.
@@ -797,8 +914,8 @@ You have gotten {} incorrect answers.""".format(self.score, self.correct_answers
                 self.math_qf.destroy()
                 self.correct = tk.Frame(self.window, background=self.bg_colour)
                 self.correct_answers = str(int(self.correct_answers) + 1)
-                label(self.correct, "Well done {} was the correct answer!".format(self.answer), self.bg_colour)
-                button(self.correct, "Next question", self.bt_bg_colour, self.math_intermission)
+                label(self.correct, "Well done {} was the correct answer!".format(self.answer), self.bg_colour, self.text_colour)
+                button(self.correct, "Next question", self.bt_bg_colour, self.text_colour, self.math_intermission)
                 key_press(self.window, self.math_intermission)
                 self.correct.pack(pady=2)
                 self.score = self.score + 1
@@ -809,8 +926,8 @@ You have gotten {} incorrect answers.""".format(self.score, self.correct_answers
                 self.incorrect = tk.Frame(self.window, background=self.bg_colour)
                 self.incorrect_answers = str(int(self.incorrect_answers) + 1)
                 label(self.incorrect, """Im sorry but {} was not the correct answer.
-The correct answer was {}.""".format(self.player_answer, self.answer), self.bg_colour)
-                button(self.incorrect, "Next question", self.bt_bg_colour, self.math_intermission)
+The correct answer was {}.""".format(self.player_answer, self.answer), self.bg_colour, self.text_colour)
+                button(self.incorrect, "Next question", self.bt_bg_colour, self.text_colour, self.math_intermission)
                 key_press(self.window, self.math_intermission)
                 self.incorrect.pack(pady=2)
                 self.score = self.score - 1
@@ -822,8 +939,8 @@ The correct answer was {}.""".format(self.player_answer, self.answer), self.bg_c
                 self.geography_qf.destroy()
                 self.correct = tk.Frame(self.window, background=self.bg_colour)
                 self.correct_answers = str(int(self.correct_answers) + 1)
-                label(self.correct, "Well done {} was the correct answer!".format(self.answer), self.bg_colour)
-                button(self.correct, "Next question", self.bt_bg_colour, self.intermission)
+                label(self.correct, "Well done {} was the correct answer!".format(self.answer), self.bg_colour, self.text_colour)
+                button(self.correct, "Next question", self.bt_bg_colour, self.text_colour, self.intermission)
                 self.correct.pack(pady=2)
                 self.score = self.score + 1
                 self.scorel.config(text="Score: {}".format(self.score))
@@ -833,8 +950,8 @@ The correct answer was {}.""".format(self.player_answer, self.answer), self.bg_c
                 self.incorrect = tk.Frame(self.window, background=self.bg_colour)
                 self.incorrect_answers = str(int(self.incorrect_answers) + 1)
                 label(self.incorrect, """Im sorry but {} was not the correct answer.
-The correct answer was {}.""".format(self.player_answer, self.answer), self.bg_colour)
-                button(self.incorrect, "Next question", self.bt_bg_colour, self.intermission)
+The correct answer was {}.""".format(self.player_answer, self.answer), self.bg_colour, self.text_colour)
+                button(self.incorrect, "Next question", self.bt_bg_colour, self.text_colour, self.intermission)
                 self.incorrect.pack(pady=2)
                 self.score = self.score - 1
                 self.scorel.config(text="Score: {}".format(self.score))
@@ -844,8 +961,8 @@ The correct answer was {}.""".format(self.player_answer, self.answer), self.bg_c
                 self.trivia_qf.destroy()
                 self.correct = tk.Frame(self.window, background=self.bg_colour)
                 self.correct_answers = str(int(self.correct_answers) + 1)
-                label(self.correct, "Well done {} was the correct answer!".format(self.answer), self.bg_colour)
-                button(self.correct, "Next question", self.bt_bg_colour, self.intermission)
+                label(self.correct, "Well done {} was the correct answer!".format(self.answer), self.bg_colour, self.text_colour)
+                button(self.correct, "Next question", self.bt_bg_colour, self.text_colour, self.intermission)
                 self.correct.pack(pady=2)
                 self.score = self.score + 1
                 self.scorel.config(text="Score: {}".format(self.score))
@@ -855,8 +972,8 @@ The correct answer was {}.""".format(self.player_answer, self.answer), self.bg_c
                 self.incorrect = tk.Frame(self.window, background=self.bg_colour)
                 self.incorrect_answers = str(int(self.incorrect_answers) + 1)
                 label(self.incorrect, """Im sorry but {} was not the correct answer.
-The correct answer was {}.""".format(self.player_answer, self.answer), self.bg_colour)
-                button(self.incorrect, "Next question", self.bt_bg_colour, self.intermission)
+The correct answer was {}.""".format(self.player_answer, self.answer), self.bg_colour, self.text_colour)
+                button(self.incorrect, "Next question", self.bt_bg_colour, self.text_colour, self.intermission)
                 self.incorrect.pack(pady=2)
                 self.score = self.score - 1
                 self.scorel.config(text="Score: {}".format(self.score))
