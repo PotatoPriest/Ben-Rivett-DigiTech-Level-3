@@ -4,7 +4,7 @@ from tkinter import simpledialog
 from tkinter import StringVar
 import random
 from PIL import ImageTk, Image
-option_menu = ["Empty", "Math", "Geography", "Trivia"] # list for options in the options menu
+option_menu = ["Select", "Math", "Geography", "Trivia"] # list for options in the options menu
 flag_dict = {"Game/Images/Flag_Argentina.png" : "Argentina", "Game/Images/Flag_Australia.png" : "Australia", "Game/Images/Flag_Austria.png" : "Austria", "Game/Images/Flag_Belgium.png" : "Belgium", "Game/Images/Flag_Brazil.png" : "Brazil", "Game/Images/Flag_Bulgaria.png" : "Bulgaria", "Game/Images/Flag_Canada.png" : "Canada", "Game/Images/Flag_China.png" : "China", "Game/Images/Flag_Croatia.png" : "Croatia", "Game/Images/Flag_Denmark.png" : "Denmark", "Game/Images/Flag_Dominican_Republic.png" : "Dominican Republic", "Game/Images/Flag_Egypt.png" : "Egypt", "Game/Images/Flag_France.png" : "France", "Game/Images/Flag_Germany.png" : "Germany", "Game/Images/Flag_Greece.png" : "Greece", "Game/Images/Flag_Hong_Kong.png" : "Hong Kong", "Game/Images/Flag_Hungary.png" : "Hungary", "Game/Images/Flag_Iceland.png" : "Iceland", "Game/Images/Flag_India.png" : "India", "Game/Images/Flag_Indonesia.png" : "Indonesia", "Game/Images/Flag_Ireland.png" : "Ireland", "Game/Images/Flag_Italy.png" : "Italy", "Game/Images/Flag_Japan.png" : "Japan", "Game/Images/Flag_Jordan.png" : "Jordan", "Game/Images/Flag_Malaysia.png" : "Malaysia", "Game/Images/Flag_Mexico.png" : "Mexico", "Game/Images/Flag_Morocco.png" : "Morocco", "Game/Images/Flag_Netherlands.png" : "Netherlands", "Game/Images/Flag_North_Korea.png" : "North Korea", "Game/Images/Flag_Norway.png" : "Norway", "Game/Images/Flag_NZ.png" : "New Zealand", "Game/Images/Flag_Philippines.png" : "Philippines", "Game/Images/Flag_Poland.png" : "Poland", "Game/Images/Flag_Portugal.png" : "Portugal", "Game/Images/Flag_Russia.png" : "Russia", "Game/Images/Flag_Saudi_Arabia.png" : "Saudi Arabia", "Game/Images/Flag_Singapore.png" : "Singapore", "Game/Images/Flag_South_Africa.png" : "South Africa", "Game/Images/Flag_South_Korea.png" : "South Korea", "Game/Images/Flag_Spain.png" : "Spain", "Game/Images/Flag_Sweden.png" : "Sweden", "Game/Images/Flag_Switzerland.png" : "Switzerland", "Game/Images/Flag_Thailand.png" : "Thailand", "Game/Images/Flag_Turkey.png" : "Turkey", "Game/Images/Flag_UAE.png" : "United Arab Emirates", "Game/Images/Flag_UK.png" : "United Kingdom", "Game/Images/Flag_Ukraine.png" : "Ukraine", "Game/Images/Flag_USA.png" : "United States of America", "Game/Images/Flag_Vietnam.png" : "Vietnam"} # Dictonairy of flag images
 
 trivia_dict = {"What is the world’s longest river called?" : ["The Nile", "The Amazon", "D River", "Flumen River"], "Where is the Great Barrier Reef located?" : ["Australia", "New Zealand", "Indonesia", "Japan"], """In Greek Mythology,
@@ -219,7 +219,7 @@ Colours are bought using score""""", background=self.bg_colour, foreground=self.
         self.bg_change_left = tk.Frame(self.bg_change, background=self.bg_colour)
         self.bg_change_right = tk.Frame(self.bg_change, background=self.bg_colour)
         self.cl = tk.Label(self.bg_change, text="""Choose a background colour for the buttons:
-Colours are bought using score""""", background=self.bg_colour, foreground=self.text_colour)
+Colours are bought using score""", background=self.bg_colour, foreground=self.text_colour)
         self.cl.pack(pady=2)
         button(self.bg_change, "Default", self.bt_bg_colour, self.text_colour, self.bt_default)
 
@@ -287,13 +287,14 @@ Colours are bought using score""", background=self.bg_colour, foreground=self.te
         simpledialog.messagebox._show("Success", "Background colour changed to the default colour")
 
     def bt_default(self): # Default background colour
-        self.bt_colour = "light gray"
+        self.bt_bg_colour = "light gray"
         self.back_menu()
         simpledialog.messagebox._show("Success", "Button Background colour changed to the default colour")
 
     def text_default(self):
         self.text_colour = "black"
         self.back_menu()
+        self.scorel.config(foreground=self.text_colour)
         simpledialog.messagebox._show("Success", "Text colour changed to the default colour")
         
     def colour(self, colour, colour_price, colour_get, bt): #Buying the colour or setting the colour
@@ -360,6 +361,7 @@ Colours are bought using score""", background=self.bg_colour, foreground=self.te
 
                     bt.config(text=colour.capitalize())
                     self.back_menu()
+                    self.scorel.config(text="Score: {}".format(self.score))
                     simpledialog.messagebox.showinfo("Success", "You have bought the {} button background colour".format(colour))
                 else:
                     self.back_menu()
@@ -396,10 +398,12 @@ Colours are bought using score""", background=self.bg_colour, foreground=self.te
                         
                     bt.config(text=colour.capitalize())
                     self.back_menu()
+                    self.scorel.config(text="Score: {}".format(self.score), foreground=self.text_colour)
                     simpledialog.messagebox.showinfo("Success", "You have bought the {} text colour".format(colour))
                     
                 else:
                     self.back_menu()
+                    self.scorel.config(foreground=self.text_colour)
                     simpledialog.messagebox.showinfo("Failure", "You don't have enough score for this item")
                     
             else:
@@ -588,7 +592,7 @@ Pink = bg:{} bt:{} tx:{}""".format(self.name, self.score, self.correct_answers, 
         self.state = 1
         self.secret_bt_show = False
         self.menu = StringVar()
-        self.menu.set("Empty")
+        self.menu.set("Select")
         self.menu_things.destroy()
         self.setting_things = tk.Frame(self.window, background=self.bg_colour)
         self.label = tk.Label(self.setting_things, text="Name: {}".format(self.name), background=self.bg_colour, foreground=self.text_colour)
@@ -604,7 +608,7 @@ Pink = bg:{} bt:{} tx:{}""".format(self.name, self.score, self.correct_answers, 
 
     def next(self): # What happens when you pick something from the options menu
         self.option = self.menu.get()
-        if self.option == "Empty":
+        if self.option == "Select":
             self.empty()
         elif self.option == "Math":
             self.math()
