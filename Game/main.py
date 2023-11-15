@@ -21,6 +21,12 @@ def button(master, text, background, text_colour, command): # definition for mak
     bt = tk.Button(master, text=text, command=command, background=background, foreground=text_colour)
     bt.pack(pady=2)
 
+def button_img(master, text, background, text_colour, command, path): # definition for making a button with an image attached
+    img = ImageTk.PhotoImage(Image.open(path).resize((20, 20)))
+    bt = tk.Button(master, text=text, command=command, background=background, foreground=text_colour, image=img, compound="right")
+    bt.image = img
+    bt.pack(pady=2)
+
 def label(master, text, background, text_colour): # definition for label
     la = tk.Label(master, text=text, background=background, foreground=text_colour)
     la.pack(pady=3)
@@ -52,7 +58,7 @@ class Window: # class for the main window
         self.incorrect_answers = 0
         self.question = "There is no question"
         self.qnumber = 1
-        self.score = 0
+        self.points = 0
         self.name = "None"
         self.bt_or_bg_or_text = "None"
         self.bg_colour = "light gray"
@@ -94,10 +100,10 @@ class Window: # class for the main window
         self.window.title("Game by: Benjamin Rivett")
         self.window.geometry("400x300")
         self.window.config(background=self.bg_colour)
-        self.scoref = tk.Frame(self.window, background=self.bg_colour)
-        self.scoref.pack(anchor="ne")
-        self.scorel = tk.Label(self.scoref, text="Score: {}".format(self.score), background=self.bg_colour, foreground=self.text_colour)
-        self.scorel.pack()
+        self.pointsf = tk.Frame(self.window, background=self.bg_colour)
+        self.pointsf.pack(anchor="ne")
+        self.pointsl = tk.Label(self.pointsf, text="Points: {}".format(self.points), background=self.bg_colour, foreground=self.text_colour)
+        self.pointsl.pack()
         self.main_menu()
 
     def secret_menu(self):
@@ -105,34 +111,34 @@ class Window: # class for the main window
         self.state = 4
         self.menu_things.destroy()
         self.secret_things = tk.Frame(self.window, background=self.bg_colour)
-        label(self.secret_things, """This is the secret menu where you can bet your score!
-There is a 50% chance to double or lose the score you bet.""", self.bg_colour, self.text_colour)
-        label(self.secret_things, "How much score would you like to bet?", self.bg_colour, self.text_colour)
+        label(self.secret_things, """This is the secret menu where you can bet your points!
+There is a 50% chance to double or lose the points you bet.""", self.bg_colour, self.text_colour)
+        label(self.secret_things, "How many points would you like to bet?", self.bg_colour, self.text_colour)
         self.sentry = tk.Entry(self.secret_things)
         self.sentry.pack(pady=2)
-        button(self.secret_things, "Bet", self.bt_bg_colour, self.text_colour, self.score_bet)
-        button(self.secret_things, "Back", self.bt_bg_colour, self.text_colour, self.back_menu)
+        button(self.secret_things, "Bet", self.bt_bg_colour, self.text_colour, self.points_bet)
+        button_img(self.secret_things, "Back", self.bt_bg_colour, self.text_colour, self.back_menu, "Game/Images/Buttons/Left_Arrow.png")
         self.secret_things.pack()
 
-    def score_bet(self):
+    def points_bet(self):
         try:
             self.bet_amount = int(self.sentry.get())
             self.won = random.randint(1, 2)
-            if int(self.bet_amount) > int(self.score):
-                tk.messagebox.showinfo("Score", "You don't have enough score to bet that much!")
+            if int(self.bet_amount) > int(self.points):
+                tk.messagebox.showinfo("Points", "You don't have enough points to bet that much!")
 
             elif int(self.bet_amount) == 0:
-                tk.messagebox.showinfo("Score", "You can't bet nothing!")
+                tk.messagebox.showinfo("Points", "You can't bet nothing!")
                 
             else:
                 if self.won == 2:
-                    self.score = int(self.score) + int(self.bet_amount)
-                    self.scorel.config(text="Score: {}".format(self.score))
-                    tk.messagebox.showinfo("Score", "You won! Your score is now {}".format(self.score))
+                    self.points = int(self.points) + int(self.bet_amount)
+                    self.pointsl.config(text="Points: {}".format(self.points))
+                    tk.messagebox.showinfo("Points", "You won! You now have {} points!".format(self.points))
                 else:
-                    self.score = int(self.score) - int(self.bet_amount)
-                    self.scorel.config(text="Score: {}".format(self.score))
-                    tk.messagebox.showinfo("Score", "You lost! Your score is now {}".format(self.score))
+                    self.points = int(self.points) - int(self.bet_amount)
+                    self.pointsl.config(text="Points: {}".format(self.points))
+                    tk.messagebox.showinfo("Points", "You lost! You now have {} points!".format(self.points))
                 
         except ValueError:
             tk.messagebox.showinfo("Wrong input", "Please input a number")
@@ -141,6 +147,7 @@ There is a 50% chance to double or lose the score you bet.""", self.bg_colour, s
         self.secret_bt_show = True
     
     def main_menu(self): # This is the main menu
+        self.backup_back_img = ImageTk.PhotoImage(Image.open("Game/Images/Buttons/Left_Arrow.png").resize((20, 20)))
         self.window.unbind("<Return>")
         self.menu_things = tk.Frame(self.window, background=self.bg_colour)
         label(self.menu_things, "Hello this is the title screen!", self.bg_colour, self.text_colour)
@@ -163,11 +170,11 @@ There is a 50% chance to double or lose the score you bet.""", self.bg_colour, s
         self.secret_bt_show = False
         self.menu_things.destroy()
         self.savef = tk.Frame(self.window, background=self.bg_colour)
-        button(self.savef, "Save Game", self.bt_bg_colour, self.text_colour, self.save_file_def)
-        button(self.savef, "Load Save", self.bt_bg_colour, self.text_colour, self.load_file)
-        button(self.savef, "Reset Save", self.bt_bg_colour, self.text_colour, self.reset_file)
+        button_img(self.savef, "Save Game", self.bt_bg_colour, self.text_colour, self.save_file_def, "Game/Images/Buttons/Save.png")
+        button_img(self.savef, "Load Save", self.bt_bg_colour, self.text_colour, self.load_file, "Game/Images/Buttons/Load_Save.png")
+        button_img(self.savef, "Reset Save", self.bt_bg_colour, self.text_colour, self.reset_file, "Game/Images/Buttons/Reset.png")
         button(self.savef, "Check Save", self.bt_bg_colour, self.text_colour, self.check_file)
-        button(self.savef, "Back", self.bt_bg_colour, self.text_colour, self.back_menu)
+        button_img(self.savef, "Back", self.bt_bg_colour, self.text_colour, self.back_menu, "Game/Images/Buttons/Left_Arrow.png")
         self.savef.pack(pady=2)
 
     def shop_menu(self): # A shop menu
@@ -178,7 +185,7 @@ There is a 50% chance to double or lose the score you bet.""", self.bg_colour, s
         button(self.shopf, "Text colour", self.bt_bg_colour, self.text_colour, self.text_colour_pick)
         button(self.shopf, "Backgrounds", self.bt_bg_colour, self.text_colour, self.background_colours)
         button(self.shopf, "Button Backgrounds", self.bt_bg_colour, self.text_colour, self.button_background_colours)
-        button(self.shopf, "Back", self.bt_bg_colour, self.text_colour, self.back_menu)
+        button_img(self.shopf, "Back", self.bt_bg_colour, self.text_colour, self.back_menu, "Game/Images/Buttons/Left_Arrow.png")
         self.shopf.pack(pady=2)
         key_press(self.window, self.secret)
 
@@ -191,7 +198,7 @@ There is a 50% chance to double or lose the score you bet.""", self.bg_colour, s
         self.bg_change_left = tk.Frame(self.bg_change, background=self.bg_colour)
         self.bg_change_right = tk.Frame(self.bg_change, background=self.bg_colour)
         self.cl = tk.Label(self.bg_change, text="""Choose a colour for the text:
-Colours are bought using score""""", background=self.bg_colour, foreground=self.text_colour)
+Colours are bought using points""""", background=self.bg_colour, foreground=self.text_colour)
         self.cl.pack(pady=2)
         button(self.bg_change, "Default", self.bt_bg_colour, self.text_colour, self.text_default)
 
@@ -204,7 +211,8 @@ Colours are bought using score""""", background=self.bg_colour, foreground=self.
         self.pb = self.colour_button("purple", self.text_purple_get, self.purple_price, self.bg_change_right, self.text_purple)
         self.pp = self.colour_button("pink", self.text_pink_get, self.pink_price, self.bg_change_right, self.text_pink)
         
-        self.bbt = tk.Button(self.bg_change, text="Back", command=self.back_menu, background = self.bt_bg_colour, foreground=self.text_colour)
+        self.bbt = tk.Button(self.bg_change, text="Back", command=self.back_menu, background=self.bt_bg_colour, foreground=self.text_colour, image = self.backup_back_img, compound = "right")
+        self.bbt.image = self.backup_back_img
         self.bbt.pack(pady=3, side="bottom")
         self.bg_change.pack(pady=2)
         self.bg_change_left.pack(side="left")
@@ -219,7 +227,7 @@ Colours are bought using score""""", background=self.bg_colour, foreground=self.
         self.bg_change_left = tk.Frame(self.bg_change, background=self.bg_colour)
         self.bg_change_right = tk.Frame(self.bg_change, background=self.bg_colour)
         self.cl = tk.Label(self.bg_change, text="""Choose a background colour for the buttons:
-Colours are bought using score""", background=self.bg_colour, foreground=self.text_colour)
+Colours are bought using points""", background=self.bg_colour, foreground=self.text_colour)
         self.cl.pack(pady=2)
         button(self.bg_change, "Default", self.bt_bg_colour, self.text_colour, self.bt_default)
 
@@ -233,7 +241,8 @@ Colours are bought using score""", background=self.bg_colour, foreground=self.te
         self.pp = self.colour_button("pink", self.bt_pink_get, self.pink_price, self.bg_change_right, self.bt_bg_pink)
 
 
-        self.bbt = tk.Button(self.bg_change, text="Back", command=self.back_menu, background = self.bt_bg_colour, foreground=self.text_colour)
+        self.bbt = tk.Button(self.bg_change, text="Back", command=self.back_menu, background=self.bt_bg_colour, foreground=self.text_colour, image = self.backup_back_img, compound = "right")
+        self.bbt.image = self.backup_back_img
         self.bbt.pack(pady=3, side="bottom")
         self.bg_change.pack(pady=2)
         self.bg_change_left.pack(side="left")
@@ -256,7 +265,7 @@ Colours are bought using score""", background=self.bg_colour, foreground=self.te
         self.bg_change_left = tk.Frame(self.bg_change, background=self.bg_colour)
         self.bg_change_right = tk.Frame(self.bg_change, background=self.bg_colour)
         self.cl = tk.Label(self.bg_change, text="""Choose a background colour
-Colours are bought using score""", background=self.bg_colour, foreground=self.text_colour)
+Colours are bought using points""", background=self.bg_colour, foreground=self.text_colour)
         self.cl.pack(pady=2)
         button(self.bg_change, "Default", self.bt_bg_colour, self.text_colour, self.bg_default)
         
@@ -270,7 +279,8 @@ Colours are bought using score""", background=self.bg_colour, foreground=self.te
         self.pp = self.colour_button("pink", self.pink_get, self.pink_price, self.bg_change_right, self.bg_pink)
         
             
-        self.bbt = tk.Button(self.bg_change, text="Back", command=self.back_menu, background=self.bt_bg_colour, foreground=self.text_colour)
+        self.bbt = tk.Button(self.bg_change, text="Back", command=self.back_menu, background=self.bt_bg_colour, foreground=self.text_colour, image = self.backup_back_img, compound = "right")
+        self.bbt.image = self.backup_back_img
         self.bbt.pack(pady=3, side="bottom")
         self.bg_change.pack(pady=2)
         self.bg_change_left.pack(side="left")
@@ -278,7 +288,7 @@ Colours are bought using score""", background=self.bg_colour, foreground=self.te
 
     def background_change(self): # changing the background
         self.window.config(background=self.bg_colour)
-        self.scorel.config(text="Score: {}".format(self.score), background=self.bg_colour)
+        self.pointsl.config(text="Points: {}".format(self.points), background=self.bg_colour)
 
     def bg_default(self): # Default background colour
         self.bg_colour = "light gray"
@@ -294,15 +304,15 @@ Colours are bought using score""", background=self.bg_colour, foreground=self.te
     def text_default(self):
         self.text_colour = "black"
         self.back_menu()
-        self.scorel.config(foreground=self.text_colour)
+        self.pointsl.config(foreground=self.text_colour)
         simpledialog.messagebox._show("Success", "Text colour changed to the default colour")
         
     def colour(self, colour, colour_price, colour_get, bt): #Buying the colour or setting the colour
         if self.bt_or_bg_or_text == "background":
             if colour_get == "False":
-                if int(self.score) >= colour_price:
+                if int(self.points) >= colour_price:
                     self.bg_colour = colour
-                    self.score = int(self.score) - colour_price
+                    self.points = int(self.points) - colour_price
                     if colour == "white":
                         self.white_get = "True"
                     elif colour == "red":
@@ -327,7 +337,7 @@ Colours are bought using score""", background=self.bg_colour, foreground=self.te
                     self.back_menu()
                     simpledialog.messagebox.showinfo("Success", "You have bought the {} background colour".format(colour))
                 else:
-                    simpledialog.messagebox.showinfo("Failure", "You don't have enough score for this item")
+                    simpledialog.messagebox.showinfo("Failure", "You don't have enough points for this item")
             elif colour_get == "True":
                 self.bg_colour = colour
                 self.background_change()
@@ -337,9 +347,9 @@ Colours are bought using score""", background=self.bg_colour, foreground=self.te
         
         elif self.bt_or_bg_or_text == "bt":
             if colour_get == "False":
-                if int(self.score) >= colour_price:
+                if int(self.points) >= colour_price:
                     self.bt_bg_colour = colour
-                    self.score = int(self.score) - colour_price
+                    self.points = int(self.points) - colour_price
                     if colour == "white":
                         self.bt_white_get = "True"
                     elif colour == "red":
@@ -361,11 +371,11 @@ Colours are bought using score""", background=self.bg_colour, foreground=self.te
 
                     bt.config(text=colour.capitalize())
                     self.back_menu()
-                    self.scorel.config(text="Score: {}".format(self.score))
+                    self.pointsl.config(text="Points: {}".format(self.points))
                     simpledialog.messagebox.showinfo("Success", "You have bought the {} button background colour".format(colour))
                 else:
                     self.back_menu()
-                    simpledialog.messagebox.showinfo("Failure", "You don't have enough score for this item")
+                    simpledialog.messagebox.showinfo("Failure", "You don't have enough points for this item")
 
             else:
                 self.bt_bg_colour = colour
@@ -374,9 +384,9 @@ Colours are bought using score""", background=self.bg_colour, foreground=self.te
 
         elif self.bt_or_bg_or_text == "text":
             if colour_get == "False":
-                if int(self.score) >= colour_price:
+                if int(self.points) >= colour_price:
                     self.text_colour = colour
-                    self.score = int(self.score) - colour_price
+                    self.points = int(self.points) - colour_price
                     if colour == "white":
                         self.text_white_get = "True"
                     elif colour == "red":
@@ -398,13 +408,13 @@ Colours are bought using score""", background=self.bg_colour, foreground=self.te
                         
                     bt.config(text=colour.capitalize())
                     self.back_menu()
-                    self.scorel.config(text="Score: {}".format(self.score), foreground=self.text_colour)
+                    self.pointsl.config(text="Points: {}".format(self.points), foreground=self.text_colour)
                     simpledialog.messagebox.showinfo("Success", "You have bought the {} text colour".format(colour))
                     
                 else:
                     self.back_menu()
-                    self.scorel.config(foreground=self.text_colour)
-                    simpledialog.messagebox.showinfo("Failure", "You don't have enough score for this item")
+                    self.pointsl.config(foreground=self.text_colour)
+                    simpledialog.messagebox.showinfo("Failure", "You don't have enough points for this item")
                     
             else:
                 self.text_colour = colour
@@ -509,7 +519,7 @@ Colours are bought using score""", background=self.bg_colour, foreground=self.te
     def read_file(self): # Definition for reading the save file
         self.save_file = open("Game/save.txt", "r")
         self.name = self.save_file.readline().strip()
-        self.score = self.save_file.readline().strip()
+        self.points = self.save_file.readline().strip()
         self.correct_answers = self.save_file.readline().strip()
         self.incorrect_answers = self.save_file.readline().strip()
         self.math_done = self.save_file.readline().strip()
@@ -543,13 +553,13 @@ Colours are bought using score""", background=self.bg_colour, foreground=self.te
     
     def save_file_def(self): # Saves the players progress !!!For some reason doesn't work sometimes
         self.save_file = open("Game/save.txt", "w")
-        self.save_file.writelines("{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}".format(self.name, self.score, self.correct_answers, self.incorrect_answers, self.math_done, self.geography_done, self.trivia_done, self.white_get, self.red_get, self.blue_get, self.green_get, self.yellow_get, self.orange_get, self.purple_get, self.pink_get, self.bt_white_get, self.bt_red_get, self.bt_blue_get, self.bt_green_get, self.bt_yellow_get, self.bt_orange_get, self.bt_purple_get, self.bt_pink_get, self.text_white_get, self.text_red_get, self.text_blue_get, self.text_green_get, self.text_yellow_get, self.text_orange_get, self.text_purple_get, self.text_pink_get))
+        self.save_file.writelines("{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}".format(self.name, self.points, self.correct_answers, self.incorrect_answers, self.math_done, self.geography_done, self.trivia_done, self.white_get, self.red_get, self.blue_get, self.green_get, self.yellow_get, self.orange_get, self.purple_get, self.pink_get, self.bt_white_get, self.bt_red_get, self.bt_blue_get, self.bt_green_get, self.bt_yellow_get, self.bt_orange_get, self.bt_purple_get, self.bt_pink_get, self.text_white_get, self.text_red_get, self.text_blue_get, self.text_green_get, self.text_yellow_get, self.text_orange_get, self.text_purple_get, self.text_pink_get))
         self.save_file.close()
         tk.messagebox.showinfo(title="Save Game", message="Your game has been saved!")
         
     def load_file(self): # loads the players progress
         self.read_file()
-        self.scorel.config(text="Score: {}".format(self.score))
+        self.pointsl.config(text="Points: {}".format(self.points))
         tk.messagebox.showinfo(title="Load Save", message="Your save has been loaded")
 
     def reset_file(self): # Definition for reseting the save file
@@ -557,18 +567,18 @@ Colours are bought using score""", background=self.bg_colour, foreground=self.te
         self.save_file.writelines("None\n0\n0\n0\nNo\nNo\nNo\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse\nFalse")
         self.bg_colour = "light gray"
         self.text_colour = "black"
+        self.bt_bg_colour = "light gray"
         self.window.config(bg=self.bg_colour)
-        self.scorel.config(bg=self.bg_colour)
-        self.savef.config(bg=self.bg_colour)
         self.save_file.close()
         self.read_file()
-        self.scorel.config(text="Score: {}".format(self.score))
+        self.pointsl.config(text="Points: {}".format(self.points), bg=self.bg_colour, fg=self.text_colour)
+        self.back_menu()
         tk.messagebox.showinfo(title="Reset Save", message="Your save has been reset!")
 
     def check_file(self): # Definition for cheaking the save file
         self.read_file()
         tk.messagebox.showinfo(title="Check Save", message="""Name = {}
-Score = {}
+Points = {}
 Correct Answers = {}
 Incorrect Answers = {}
 Done Math = {}
@@ -582,7 +592,7 @@ Green = bg:{} bt:{} tx:{}
 Yellow = bg:{} bt:{} tx:{}
 Orange = bg:{} bt:{} tx:{}
 Purple = bg:{} bt:{} tx:{}
-Pink = bg:{} bt:{} tx:{}""".format(self.name, self.score, self.correct_answers, self.incorrect_answers, self.math_done, self.geograhpy_done, self.trivia_done, self.white_get, self.bt_white_get, self.text_white_get, self.red_get, self.bt_red_get, self.text_red_get, self.blue_get, self.bt_blue_get, self.text_blue_get, self.green_get, self.bt_green_get, self.text_green_get, self.yellow_get, self.bt_yellow_get, self.text_yellow_get, self.orange_get, self.bt_orange_get, self.text_orange_get, self.purple_get, self.bt_purple_get, self.text_purple_get, self.pink_get, self.bt_pink_get, self.text_pink_get))
+Pink = bg:{} bt:{} tx:{}""".format(self.name, self.points, self.correct_answers, self.incorrect_answers, self.math_done, self.geograhpy_done, self.trivia_done, self.white_get, self.bt_white_get, self.text_white_get, self.red_get, self.bt_red_get, self.text_red_get, self.blue_get, self.bt_blue_get, self.text_blue_get, self.green_get, self.bt_green_get, self.text_green_get, self.yellow_get, self.bt_yellow_get, self.text_yellow_get, self.orange_get, self.bt_orange_get, self.text_orange_get, self.purple_get, self.bt_purple_get, self.text_purple_get, self.pink_get, self.bt_pink_get, self.text_pink_get))
     
     def exit(self): # used when exiting the progam
         if messagebox.askyesno(title="Exit", message="Are you sure?"):
@@ -603,7 +613,7 @@ Pink = bg:{} bt:{} tx:{}""".format(self.name, self.score, self.correct_answers, 
         self.play_option.config(background=self.bt_bg_colour, foreground=self.text_colour)
         self.play_option.pack(pady=2)
         button(self.setting_things, "Continue", self.bt_bg_colour, self.text_colour, self.next)
-        button(self.setting_things, "Back", self.bt_bg_colour, self.text_colour, self.back_menu)
+        button_img(self.setting_things, "Back", self.bt_bg_colour, self.text_colour, self.back_menu, "Game/Images/Buttons/Left_Arrow.png")
         self.setting_things.pack(pady=2)
 
     def next(self): # What happens when you pick something from the options menu
@@ -738,7 +748,7 @@ You have completed the Trivia questions.""".format(self.name)
 on Mathmatics, starting with addition and subtraction
 then moving on to multiplication and divition.""".format(self.name), self.bg_colour, self.text_colour)
         button(self.math_stuff, "Continue", self.bt_bg_colour, self.text_colour, self.math_questions)
-        button(self.math_stuff, "Back", self.bt_bg_colour, self.text_colour, self.back)
+        button_img(self.math_stuff, "Back", self.bt_bg_colour, self.text_colour, self.back, "Game/Images/Buttons/Left_Arrow.png")
         self.math_stuff.pack(pady=2)
 
     def done(self): # this is for when the player is done answering the questions
@@ -759,7 +769,7 @@ then moving on to multiplication and divition.""".format(self.name), self.bg_col
 on Geography, this will incluce naming the country
 based on its siluete as well as its flag.""".format(self.name), self.bg_colour, self.text_colour)
         button(self.geography_stuff, "Continue", self.bt_bg_colour, self.text_colour, self.geography_questions)
-        button(self.geography_stuff, "Back", self.bt_bg_colour, self.text_colour, self.back)
+        button_img(self.geography_stuff, "Back", self.bt_bg_colour, self.text_colour, self.back, "Game/Images/Buttons/Left_Arrow.png")
         self.geography_stuff.pack(pady=2)
 
     def trivia(self): # This starts the trivia questions
@@ -774,16 +784,16 @@ based on its siluete as well as its flag.""".format(self.name), self.bg_colour, 
         label(self.trivia_stuff, """{}, This area of the game will test your knoledge
 on random Trivia, this will include questions on anything.""".format(self.name), self.bg_colour, self.text_colour)
         button(self.trivia_stuff, "Continue", self.bt_bg_colour, self.text_colour, self.trivia_questions)
-        button(self.trivia_stuff, "Back", self.bt_bg_colour, self.text_colour, self.back)
+        button_img(self.trivia_stuff, "Back", self.bt_bg_colour, self.text_colour, self.back, "Game/Images/Buttons/Left_Arrow.png")
         self.trivia_stuff.pack(pady=2)
         
     def math_questions(self): # This is the math questions
         if self.qnumber == 11:
             self.completef = tk.Frame(self.window, background=self.bg_colour)
             label(self.completef, self.question, self.bg_colour, self.text_colour)
-            label(self.completef, """Your score is {}.
+            label(self.completef, """You have {} Points.
 You have gotten {} correct answers,
-You have gotten {} incorrect answers.""".format(self.score, self.correct_answers, self.incorrect_answers), self.bg_colour, self.text_colour)
+You have gotten {} incorrect answers.""".format(self.points, self.correct_answers, self.incorrect_answers), self.bg_colour, self.text_colour)
             self.math_done = "Yes"
             button(self.completef, "Continue", self.bt_bg_colour, self.text_colour, self.done)
             self.completef.pack(pady=2)
@@ -803,9 +813,9 @@ You have gotten {} incorrect answers.""".format(self.score, self.correct_answers
         if self.qnumber == 11:
             self.completef = tk.Frame(self.window, background=self.bg_colour)
             label(self.completef, self.question, self.bg_colour, self.text_colour)
-            label(self.completef, """Your score is {}.
+            label(self.completef, """You have {} Points.
 You have gotten {} correct answers,
-You have gotten {} incorrect answers.""".format(self.score, self.correct_answers, self.incorrect_answers), self.bg_colour, self.text_colour)
+You have gotten {} incorrect answers.""".format(self.points, self.correct_answers, self.incorrect_answers), self.bg_colour, self.text_colour)
             self.geography_done = "Yes"
             button(self.completef, "Continue", self.bt_bg_colour, self.text_colour, self.done)
             self.completef.pack(pady=2)
@@ -881,9 +891,9 @@ You have gotten {} incorrect answers.""".format(self.score, self.correct_answers
         if self.qnumber == 11:
             self.completef = tk.Frame(self.window, background=self.bg_colour)
             label(self.completef, self.question, self.bg_colour, self.text_colour)
-            label(self.completef, """Your score is {}.
+            label(self.completef, """You have {} Points.
 You have gotten {} correct answers,
-You have gotten {} incorrect answers.""".format(self.score, self.correct_answers, self.incorrect_answers), self.bg_colour, self.text_colour)
+You have gotten {} incorrect answers.""".format(self.points, self.correct_answers, self.incorrect_answers), self.bg_colour, self.text_colour)
             self.trivia_done = "Yes"
             button(self.completef, "Continue", self.bt_bg_colour, self.text_colour, self.done)
             self.completef.pack(pady=2)
@@ -922,8 +932,8 @@ You have gotten {} incorrect answers.""".format(self.score, self.correct_answers
                 button(self.correct, "Next question", self.bt_bg_colour, self.text_colour, self.math_intermission)
                 key_press(self.window, self.math_intermission)
                 self.correct.pack(pady=2)
-                self.score = self.score + 1
-                self.scorel.config(text="Score: {}".format(self.score))
+                self.points = self.points + 1
+                self.pointsl.config(text="Points: {}".format(self.points))
                 
             else:
                 self.math_qf.destroy()
@@ -934,8 +944,6 @@ The correct answer was {}.""".format(self.player_answer, self.answer), self.bg_c
                 button(self.incorrect, "Next question", self.bt_bg_colour, self.text_colour, self.math_intermission)
                 key_press(self.window, self.math_intermission)
                 self.incorrect.pack(pady=2)
-                self.score = self.score - 1
-                self.scorel.config(text="Score: {}".format(self.score))
                 
                 
         elif self.option == "Geography":
@@ -946,8 +954,8 @@ The correct answer was {}.""".format(self.player_answer, self.answer), self.bg_c
                 label(self.correct, "Well done {} was the correct answer!".format(self.answer), self.bg_colour, self.text_colour)
                 button(self.correct, "Next question", self.bt_bg_colour, self.text_colour, self.intermission)
                 self.correct.pack(pady=2)
-                self.score = self.score + 1
-                self.scorel.config(text="Score: {}".format(self.score))
+                self.points = self.points + 1
+                self.pointsl.config(text="Points: {}".format(self.points))
 
             else:
                 self.geography_qf.destroy()
@@ -957,8 +965,6 @@ The correct answer was {}.""".format(self.player_answer, self.answer), self.bg_c
 The correct answer was {}.""".format(self.player_answer, self.answer), self.bg_colour, self.text_colour)
                 button(self.incorrect, "Next question", self.bt_bg_colour, self.text_colour, self.intermission)
                 self.incorrect.pack(pady=2)
-                self.score = self.score - 1
-                self.scorel.config(text="Score: {}".format(self.score))
                 
         elif self.option == "Trivia":
             if self.player_answer == self.answer:
@@ -968,8 +974,8 @@ The correct answer was {}.""".format(self.player_answer, self.answer), self.bg_c
                 label(self.correct, "Well done {} was the correct answer!".format(self.answer), self.bg_colour, self.text_colour)
                 button(self.correct, "Next question", self.bt_bg_colour, self.text_colour, self.intermission)
                 self.correct.pack(pady=2)
-                self.score = self.score + 1
-                self.scorel.config(text="Score: {}".format(self.score))
+                self.points = self.points + 1
+                self.pointsl.config(text="Points: {}".format(self.points))
 
             else:
                 self.trivia_qf.destroy()
@@ -979,8 +985,6 @@ The correct answer was {}.""".format(self.player_answer, self.answer), self.bg_c
 The correct answer was {}.""".format(self.player_answer, self.answer), self.bg_colour, self.text_colour)
                 button(self.incorrect, "Next question", self.bt_bg_colour, self.text_colour, self.intermission)
                 self.incorrect.pack(pady=2)
-                self.score = self.score - 1
-                self.scorel.config(text="Score: {}".format(self.score))
 
         else:
             Error()
