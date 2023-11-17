@@ -21,8 +21,8 @@ def button(master, text, background, text_colour, command): # definition for mak
     bt = tk.Button(master, text=text, command=command, background=background, foreground=text_colour)
     bt.pack(pady=2)
 
-def button_img(master, text, background, text_colour, command, path, side): # definition for making a button with an image attached
-    img = ImageTk.PhotoImage(Image.open(path).resize((20, 20)))
+def button_img(master, text, background, text_colour, command, path, side, x, y): # definition for making a button with an image attached
+    img = ImageTk.PhotoImage(Image.open(path).resize((x, y)))
     bt = tk.Button(master, text=text, command=command, background=background, foreground=text_colour, image=img, compound=side)
     bt.image = img
     bt.pack(pady=2)
@@ -117,7 +117,7 @@ There is a 50% chance to double or lose the points you bet.""", self.bg_colour, 
         self.sentry = tk.Entry(self.secret_things)
         self.sentry.pack(pady=2)
         button(self.secret_things, "Bet", self.bt_bg_colour, self.text_colour, self.points_bet)
-        button_img(self.secret_things, "Back", self.bt_bg_colour, self.text_colour, self.back_menu, "Game/Images/Buttons/Left_Arrow.png", "left")
+        button_img(self.secret_things, "Back", self.bt_bg_colour, self.text_colour, self.back_menu, "Game/Images/Buttons/Left_Arrow.png", "left", 30, 20)
         self.secret_things.pack()
 
     def points_bet(self):
@@ -153,9 +153,9 @@ There is a 50% chance to double or lose the points you bet.""", self.bg_colour, 
         label(self.menu_things, "Hello this is the title screen!", self.bg_colour, self.text_colour)
         self.secret_bt = tk.Button(self.menu_things, text="Secret Menu", background="gold", foreground="black", command=self.secret_menu)
         button(self.menu_things, "Play", self.bt_bg_colour, self.text_colour, self.start)
-        button(self.menu_things, "Save Menu", self.bt_bg_colour, self.text_colour, self.save_menu)
-        button_img(self.menu_things, "Shop", self.bt_bg_colour, self.text_colour, self.shop_menu, "Game/Images/Buttons/Money.png", "right")
-        button(self.menu_things, "Exit", self.bt_bg_colour, self.text_colour, self.exit)
+        button_img(self.menu_things, "Save Menu", self.bt_bg_colour, self.text_colour, self.save_menu, "Game/Images/Buttons/Save_Game.png", "right", 20, 20)
+        button_img(self.menu_things, "Shop", self.bt_bg_colour, self.text_colour, self.shop_menu, "Game/Images/Buttons/Money.png", "right", 20, 20)
+        button_img(self.menu_things, "Exit", self.bt_bg_colour, self.text_colour, self.exit, "Game/Images/Buttons/Exit.png", "right", 20, 20)
         self.menu_things.pack(pady=2)
         if self.secret_bt_show == True:
             self.secret_bt.pack()
@@ -170,11 +170,11 @@ There is a 50% chance to double or lose the points you bet.""", self.bg_colour, 
         self.secret_bt_show = False
         self.menu_things.destroy()
         self.savef = tk.Frame(self.window, background=self.bg_colour)
-        button_img(self.savef, "Save Game", self.bt_bg_colour, self.text_colour, self.save_file_def, "Game/Images/Buttons/Save_Game.png", "right")
-        button_img(self.savef, "Load Save", self.bt_bg_colour, self.text_colour, self.load_file, "Game/Images/Buttons/Load_Save.png", "right")
-        button_img(self.savef, "Reset Save", self.bt_bg_colour, self.text_colour, self.reset_file, "Game/Images/Buttons/Reset_Save.png", "right")
-        button(self.savef, "Check Save", self.bt_bg_colour, self.text_colour, self.check_file)
-        button_img(self.savef, "Back", self.bt_bg_colour, self.text_colour, self.back_menu, "Game/Images/Buttons/Left_Arrow.png", "left")
+        button_img(self.savef, "Save Game", self.bt_bg_colour, self.text_colour, self.save_file_def, "Game/Images/Buttons/Save_Game.png", "right", 20, 20)
+        button_img(self.savef, "Load Save", self.bt_bg_colour, self.text_colour, self.load_file, "Game/Images/Buttons/Load_Save.png", "right", 20, 20)
+        button_img(self.savef, "Reset Save", self.bt_bg_colour, self.text_colour, self.reset_file, "Game/Images/Buttons/Reset_Save.png", "right", 20, 20)
+        button_img(self.savef, "Check Save", self.bt_bg_colour, self.text_colour, self.check_file, "Game/Images/Buttons/Check_Save.png", "right", 20, 20)
+        button_img(self.savef, "Back", self.bt_bg_colour, self.text_colour, self.back_menu, "Game/Images/Buttons/Left_Arrow.png", "left", 30, 20)
         self.savef.pack(pady=2)
 
     def shop_menu(self): # A shop menu
@@ -182,10 +182,10 @@ There is a 50% chance to double or lose the points you bet.""", self.bg_colour, 
         self.secret_bt_show = False
         self.menu_things.destroy()
         self.shopf = tk.Frame(self.window, background=self.bg_colour)
-        button(self.shopf, "Text colour", self.bt_bg_colour, self.text_colour, self.text_colour_pick)
-        button(self.shopf, "Backgrounds", self.bt_bg_colour, self.text_colour, self.background_colours)
-        button(self.shopf, "Button Backgrounds", self.bt_bg_colour, self.text_colour, self.button_background_colours)
-        button_img(self.shopf, "Back", self.bt_bg_colour, self.text_colour, self.back_menu, "Game/Images/Buttons/Left_Arrow.png", "left")
+        button_img(self.shopf, "Text colour", self.bt_bg_colour, self.text_colour, self.text_colour_pick, "Game/Images/Buttons/A.png", "right", 15, 20)
+        button_img(self.shopf, "Backgrounds", self.bt_bg_colour, self.text_colour, self.background_colours, "Game/Images/Buttons/Orange_Square.png", "right", 20, 20)
+        button_img(self.shopf, "Button Backgrounds", self.bt_bg_colour, self.text_colour, self.button_background_colours, "Game/Images/Buttons/Button_Colour.png", "right", 30, 20)
+        button_img(self.shopf, "Back", self.bt_bg_colour, self.text_colour, self.back_menu, "Game/Images/Buttons/Left_Arrow.png", "left", 30, 20)
         self.shopf.pack(pady=2)
         key_press(self.window, self.secret)
 
@@ -200,7 +200,7 @@ There is a 50% chance to double or lose the points you bet.""", self.bg_colour, 
         self.cl = tk.Label(self.bg_change, text="""Choose a colour for the text:
 Colours are bought using points""""", background=self.bg_colour, foreground=self.text_colour)
         self.cl.pack(pady=2)
-        button(self.bg_change, "Default", self.bt_bg_colour, self.text_colour, self.text_default)
+        button_img(self.bg_change, "Default", self.bt_bg_colour, self.text_colour, self.text_default, "Game/Images/Buttons/Text_Default.png", "right", 20, 20)
 
         self.wb = self.colour_button("white", self.text_white_get, self.white_price, self.bg_change_left, self.text_white, "Game/Images/Buttons/White_Square.png")
         self.rb = self.colour_button("red", self.text_red_get, self.red_price, self.bg_change_left, self.text_red, "Game/Images/Buttons/Red_Square.png")
@@ -229,7 +229,7 @@ Colours are bought using points""""", background=self.bg_colour, foreground=self
         self.cl = tk.Label(self.bg_change, text="""Choose a background colour for the buttons:
 Colours are bought using points""", background=self.bg_colour, foreground=self.text_colour)
         self.cl.pack(pady=2)
-        button(self.bg_change, "Default", self.bt_bg_colour, self.text_colour, self.bt_default)
+        button_img(self.bg_change, "Default", self.bt_bg_colour, self.text_colour, self.bt_default, "Game/Images/Buttons/BG_Default.png", "right", 20, 20)
 
         self.wb = self.colour_button("white", self.bt_white_get, self.white_price, self.bg_change_left, self.bt_bg_white, "Game/Images/Buttons/White_Square.png")
         self.rb = self.colour_button("red", self.bt_red_get, self.red_price, self.bg_change_left, self.bt_bg_red, "Game/Images/Buttons/Red_Square.png")
@@ -270,7 +270,7 @@ Colours are bought using points""", background=self.bg_colour, foreground=self.t
         self.cl = tk.Label(self.bg_change, text="""Choose a background colour
 Colours are bought using points""", background=self.bg_colour, foreground=self.text_colour)
         self.cl.pack(pady=2)
-        button(self.bg_change, "Default", self.bt_bg_colour, self.text_colour, self.bg_default)
+        button_img(self.bg_change, "Default", self.bt_bg_colour, self.text_colour, self.bg_default, "Game/Images/Buttons/BG_Default.png", "right", 20, 20)
         
         self.wb = self.colour_button("white", self.white_get, self.white_price, self.bg_change_left, self.bg_white, "Game/Images/Buttons/White_Square.png")
         self.rb = self.colour_button("red", self.red_get, self.red_price, self.bg_change_left, self.bg_red, "Game/Images/Buttons/Red_Square.png")
@@ -615,8 +615,8 @@ Pink = bg:{} bt:{} tx:{}""".format(self.name, self.points, self.correct_answers,
         self.play_option = tk.OptionMenu(self.setting_things, self.menu, *option_menu)
         self.play_option.config(background=self.bt_bg_colour, foreground=self.text_colour)
         self.play_option.pack(pady=2)
-        button(self.setting_things, "Continue", self.bt_bg_colour, self.text_colour, self.next)
-        button_img(self.setting_things, "Back", self.bt_bg_colour, self.text_colour, self.back_menu, "Game/Images/Buttons/Left_Arrow.png", "left")
+        button_img(self.setting_things, "Continue", self.bt_bg_colour, self.text_colour, self.next, "Game/Images/Buttons/Right_Arrow.png", "right", 30, 20)
+        button_img(self.setting_things, "Back", self.bt_bg_colour, self.text_colour, self.back_menu, "Game/Images/Buttons/Left_Arrow.png", "left", 30, 20)
         self.setting_things.pack(pady=2)
 
     def next(self): # What happens when you pick something from the options menu
@@ -750,8 +750,8 @@ You have completed the Trivia questions.""".format(self.name)
         label(self.math_stuff, """{}, This area of the game will test your knoledge
 on Mathmatics, starting with addition and subtraction
 then moving on to multiplication and divition.""".format(self.name), self.bg_colour, self.text_colour)
-        button(self.math_stuff, "Continue", self.bt_bg_colour, self.text_colour, self.math_questions)
-        button_img(self.math_stuff, "Back", self.bt_bg_colour, self.text_colour, self.back, "Game/Images/Buttons/Left_Arrow.png", "left")
+        button_img(self.math_stuff, "Continue", self.bt_bg_colour, self.text_colour, self.math_questions, "Game/Images/Buttons/Right_Arrow.png", "right", 30, 20)
+        button_img(self.math_stuff, "Back", self.bt_bg_colour, self.text_colour, self.back, "Game/Images/Buttons/Left_Arrow.png", "left", 30, 20)
         self.math_stuff.pack(pady=2)
 
     def done(self): # this is for when the player is done answering the questions
@@ -771,8 +771,8 @@ then moving on to multiplication and divition.""".format(self.name), self.bg_col
         label(self.geography_stuff, """{}, This area of the game will test your knoledge
 on Geography, this will incluce naming the country
 based on its siluete as well as its flag.""".format(self.name), self.bg_colour, self.text_colour)
-        button(self.geography_stuff, "Continue", self.bt_bg_colour, self.text_colour, self.geography_questions)
-        button_img(self.geography_stuff, "Back", self.bt_bg_colour, self.text_colour, self.back, "Game/Images/Buttons/Left_Arrow.png", "left")
+        button_img(self.geography_stuff, "Continue", self.bt_bg_colour, self.text_colour, self.geography_questions, "Game/Images/Buttons/Right_Arrow.png", "right", 30, 20)
+        button_img(self.geography_stuff, "Back", self.bt_bg_colour, self.text_colour, self.back, "Game/Images/Buttons/Left_Arrow.png", "left", 30, 20)
         self.geography_stuff.pack(pady=2)
 
     def trivia(self): # This starts the trivia questions
@@ -786,8 +786,8 @@ based on its siluete as well as its flag.""".format(self.name), self.bg_colour, 
             
         label(self.trivia_stuff, """{}, This area of the game will test your knoledge
 on random Trivia, this will include questions on anything.""".format(self.name), self.bg_colour, self.text_colour)
-        button(self.trivia_stuff, "Continue", self.bt_bg_colour, self.text_colour, self.trivia_questions)
-        button_img(self.trivia_stuff, "Back", self.bt_bg_colour, self.text_colour, self.back, "Game/Images/Buttons/Left_Arrow.png", "left")
+        button_img(self.trivia_stuff, "Continue", self.bt_bg_colour, self.text_colour, self.trivia_questions, "Game/Images/Buttons/Right_Arrow.png", "right", 30, 20)
+        button_img(self.trivia_stuff, "Back", self.bt_bg_colour, self.text_colour, self.back, "Game/Images/Buttons/Left_Arrow.png", "left", 30, 20)
         self.trivia_stuff.pack(pady=2)
         
     def math_questions(self): # This is the math questions
@@ -798,7 +798,7 @@ on random Trivia, this will include questions on anything.""".format(self.name),
 You have gotten {} correct answers,
 You have gotten {} incorrect answers.""".format(self.points, self.correct_answers, self.incorrect_answers), self.bg_colour, self.text_colour)
             self.math_done = "Yes"
-            button(self.completef, "Continue", self.bt_bg_colour, self.text_colour, self.done)
+            button_img(self.completef, "Continue", self.bt_bg_colour, self.text_colour, self.done, "Game/Images/Buttons/Right_Arrow.png", "right", 30, 20)
             self.completef.pack(pady=2)
         else:
             self.math_stuff.destroy()
@@ -820,7 +820,7 @@ You have gotten {} incorrect answers.""".format(self.points, self.correct_answer
 You have gotten {} correct answers,
 You have gotten {} incorrect answers.""".format(self.points, self.correct_answers, self.incorrect_answers), self.bg_colour, self.text_colour)
             self.geography_done = "Yes"
-            button(self.completef, "Continue", self.bt_bg_colour, self.text_colour, self.done)
+            button_img(self.completef, "Continue", self.bt_bg_colour, self.text_colour, self.done, "Game/Images/Buttons/Right_Arrow.png", "right", 30, 20)
             self.completef.pack(pady=2)
         else:
             self.geography_stuff.destroy()
@@ -898,7 +898,7 @@ You have gotten {} incorrect answers.""".format(self.points, self.correct_answer
 You have gotten {} correct answers,
 You have gotten {} incorrect answers.""".format(self.points, self.correct_answers, self.incorrect_answers), self.bg_colour, self.text_colour)
             self.trivia_done = "Yes"
-            button(self.completef, "Continue", self.bt_bg_colour, self.text_colour, self.done)
+            button_img(self.completef, "Continue", self.bt_bg_colour, self.text_colour, self.done, "Game/Images/Buttons/Right_Arrow.png", "right", 30, 20)
             self.completef.pack(pady=2)
         else:
             self.trivia_stuff.destroy()
