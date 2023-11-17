@@ -49,6 +49,7 @@ class Error: # This class is for error catching, will probobly change it alot la
 class Window: # class for the main window
     def __init__(self): # This happens when the class is initilised
         self.secret_bt_show = False
+        self.already_showed = []
         self.img_path = "No path"
         self.state = 0
         self.math_done = "No"
@@ -173,7 +174,7 @@ There is a 50% chance to double or lose the points you bet.""", self.bg_colour, 
         button_img(self.savef, "Save Game", self.bt_bg_colour, self.text_colour, self.save_file_def, "Game/Images/Buttons/Save_Game.png", "right", 20, 20)
         button_img(self.savef, "Load Save", self.bt_bg_colour, self.text_colour, self.load_file, "Game/Images/Buttons/Load_Save.png", "right", 20, 20)
         button_img(self.savef, "Reset Save", self.bt_bg_colour, self.text_colour, self.reset_file, "Game/Images/Buttons/Reset_Save.png", "right", 20, 20)
-        button_img(self.savef, "Check Save", self.bt_bg_colour, self.text_colour, self.check_file, "Game/Images/Buttons/Check_Save.png", "right", 20, 20)
+        button_img(self.savef, "Check Save", self.bt_bg_colour, self.text_colour, self.check_file, "Game/Images/Buttons/Check_Save.png", "right", 17, 20)
         button_img(self.savef, "Back", self.bt_bg_colour, self.text_colour, self.back_menu, "Game/Images/Buttons/Left_Arrow.png", "left", 30, 20)
         self.savef.pack(pady=2)
 
@@ -718,6 +719,9 @@ You have completed the Math questions.""".format(self.name)
         elif self.option == "Geography":
             if self.qnumber < 11:
                 self.img_path, self.answer = random.choice(list(flag_dict.items()))
+                while self.answer in self.already_showed:
+                    self.img_path, self.answer = random.choice(list(flag_dict.items()))
+                self.already_showed.append(self.answer)
                 image(self.geography_qf, self.img_path, 180, 100)
                 self.question = "What country does this flag belong too?"
                 
@@ -728,8 +732,9 @@ You have completed the Geography questions.""".format(self.name)
         elif self.option == "Trivia":
             if self.qnumber < 11:
                 self.question, self.rc_list = random.choice(list(trivia_dict.items()))
-                
-                
+                while self.question in self.already_showed:
+                    self.question, self.rc_list = random.choice(list(trivia_dict.items()))
+                self.already_showed.append(self.question)
                 
             else:
                 self.question = """Well done {}!
@@ -758,6 +763,7 @@ then moving on to multiplication and divition.""".format(self.name), self.bg_col
         self.completef.destroy()
         self.start()
         self.qnumber = 1
+        self.already_showed = []
             
     def geography(self): # This starts the geography questions
         self.setting_things.destroy()
@@ -840,7 +846,6 @@ You have gotten {} incorrect answers.""".format(self.points, self.correct_answer
             while len(self.rc_list) !=4:
                 random.shuffle(self.ln)
                 self.rc_list.append(random.choice(list(flag_dict.values())))
-                                
 
         self.button_frame1 = tk.Frame(self.geography_qf, background=self.bg_colour)
         self.button_frame2 = tk.Frame(self.geography_qf, background=self.bg_colour)
