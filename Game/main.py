@@ -8,7 +8,7 @@ option_menu = ["Select", "Math", "Geography", "Trivia"] # list for options in th
 flag_dict = {"Game/Images/Flag_Argentina.png" : "Argentina", "Game/Images/Flag_Australia.png" : "Australia", "Game/Images/Flag_Austria.png" : "Austria", "Game/Images/Flag_Belgium.png" : "Belgium", "Game/Images/Flag_Brazil.png" : "Brazil", "Game/Images/Flag_Bulgaria.png" : "Bulgaria", "Game/Images/Flag_Canada.png" : "Canada", "Game/Images/Flag_China.png" : "China", "Game/Images/Flag_Croatia.png" : "Croatia", "Game/Images/Flag_Denmark.png" : "Denmark", "Game/Images/Flag_Dominican_Republic.png" : "Dominican Republic", "Game/Images/Flag_Egypt.png" : "Egypt", "Game/Images/Flag_France.png" : "France", "Game/Images/Flag_Germany.png" : "Germany", "Game/Images/Flag_Greece.png" : "Greece", "Game/Images/Flag_Hong_Kong.png" : "Hong Kong", "Game/Images/Flag_Hungary.png" : "Hungary", "Game/Images/Flag_Iceland.png" : "Iceland", "Game/Images/Flag_India.png" : "India", "Game/Images/Flag_Indonesia.png" : "Indonesia", "Game/Images/Flag_Ireland.png" : "Ireland", "Game/Images/Flag_Italy.png" : "Italy", "Game/Images/Flag_Japan.png" : "Japan", "Game/Images/Flag_Jordan.png" : "Jordan", "Game/Images/Flag_Malaysia.png" : "Malaysia", "Game/Images/Flag_Mexico.png" : "Mexico", "Game/Images/Flag_Morocco.png" : "Morocco", "Game/Images/Flag_Netherlands.png" : "Netherlands", "Game/Images/Flag_North_Korea.png" : "North Korea", "Game/Images/Flag_Norway.png" : "Norway", "Game/Images/Flag_NZ.png" : "New Zealand", "Game/Images/Flag_Philippines.png" : "Philippines", "Game/Images/Flag_Poland.png" : "Poland", "Game/Images/Flag_Portugal.png" : "Portugal", "Game/Images/Flag_Russia.png" : "Russia", "Game/Images/Flag_Saudi_Arabia.png" : "Saudi Arabia", "Game/Images/Flag_Singapore.png" : "Singapore", "Game/Images/Flag_South_Africa.png" : "South Africa", "Game/Images/Flag_South_Korea.png" : "South Korea", "Game/Images/Flag_Spain.png" : "Spain", "Game/Images/Flag_Sweden.png" : "Sweden", "Game/Images/Flag_Switzerland.png" : "Switzerland", "Game/Images/Flag_Thailand.png" : "Thailand", "Game/Images/Flag_Turkey.png" : "Turkey", "Game/Images/Flag_UAE.png" : "United Arab Emirates", "Game/Images/Flag_UK.png" : "United Kingdom", "Game/Images/Flag_Ukraine.png" : "Ukraine", "Game/Images/Flag_USA.png" : "United States of America", "Game/Images/Flag_Vietnam.png" : "Vietnam"} # Dictonairy of flag images
 
 trivia_dict = {"What is the world’s longest river called?" : ["The Nile", "The Amazon", "D River", "Flumen River"], "Where is the Great Barrier Reef located?" : ["Australia", "New Zealand", "Indonesia", "Japan"], """In Greek Mythology,
-who is the Queen of the Underworld and wife of Hades?""" : ["Persephone", "Aphrodite", "Athena", "Demeter"], "Which house was Harry Potter ALMOST sorted into?" : ["Slytherin", "Grythindor", "Hufflpuf", "Ravenclaw"], "Which country gifted the Statue of Liberty to the US?" : ["France", "England", "Spain", "Germany"], """What was the name of the Robin Williams
+who is the Queen of the Underworld and wife of Hades?""" : ["Persephone", "Aphrodite", "Athena", "Demeter"], "Which house was Harry Potter ALMOST sorted into?" : ["Slytherin", "Grythindor", "Hufflpuff", "Ravenclaw"], "Which country gifted the Statue of Liberty to the US?" : ["France", "England", "Spain", "Germany"], """What was the name of the Robin Williams
 film where he dresses up as an elderly British nanny?""" : ["Mrs. Doubtfire", "Jumanji", "Dead Poets Society", "What Dreams May Come"], "What is the rarest blood type?" : ["AB-Negative", "AB-Positive", "O-Negative", "A-Positive"], "How many bones are there in the human body?" : ["206", "207", "179", "267"], """What is the name of the longest river in
 South America?""" : ["The Amazon River", "Orinoco", "pilcomayo", "Yellow River"], "What does Na stand for on the periodic table?" : ["Sodium", "Iron", "Gold", "Lithium"], "In which Disney movie is the villain Clayton from?" : ["Tarzan", "Aladin", "The Hunchback of Notre dame", "Brave"], "In which ocean is the Bermuda Triangle located?" : ["Atlantic Ocean", "Pasific Ocean", "Indian Ocean", "Arctic Ocean"], "What is the French name for Santa Claus?" : ["Pere Noel", "Pierre", "Louis", "Amélie"], "Which fictional city is the home of Batman?" : ["Gotham City", "New York City", "Springfield", "Emerald City"], "Which planet is closest to Earth?" : ["Venus", "Mars", "Jupiter", "Mercuary"], "What is the largest planet in the solar system?" : ["Jupiter", "Uranus", "Mercuary", "The Sun"], "What is Sodium Chloride referred to as?" : ["Salt", "Pepper", "Chilli", "Cinnamon"], "What is the capital of Australia?" : ["Canberra", "Sydney", "Melbourne", "Brisbane"], "Which fast food restaurant is known for its Big Macs?" : ["McDonalds", "Wendys", "Chick-fil-A", "Burger King"], "What are the 3 primary colors?" : ["Red, Yellow, Blue", "Green, Yellow, Blue", "Red, Yellow, Orange", "Red, Green, Blue"], """Who was the first American
 astronaut to step foot on the moon?""" : ["Neil Armstrong", "Buzz Aldrin", "Edwin E. Aldrin", "Michael Collins"], "Where is the world’s largest active volcano located?" : ["Hawaii", "California", "Japan", "Spain"], "What is the capital of France?" : ["Paris", "Berlin", "Madrid", "Rome"], "Who founded Microsoft?" : ["Bill Gates", "Mark Zuckerberg", "Steve Jobs", "Larry Page"], """In Greek mythology, who had snakes for hair
@@ -809,7 +809,7 @@ You have gotten {} incorrect answers.""".format(self.points, self.correct_answer
             self.aentry = tk.Entry(self.math_qf)
             self.aentry.pack()
             button(self.math_qf, "Submit", self.bt_bg_colour, self.text_colour, self.submit)
-            key_press(self.aentry, self.submit)
+            key_press(self.aentry, self.submit_event)
             self.math_qf.pack(pady=2)
                 
     def geography_questions(self): # this sets the geography questions 
@@ -909,20 +909,20 @@ You have gotten {} incorrect answers.""".format(self.points, self.correct_answer
 {}""".format(self.qnumber, self.question), self.bg_colour, self.text_colour)
             self.trivia_choices()
             
-    def submit(self, event): # This is so that the player has to input an intiger when answering the math questions.
-        if self.option == "Math":
-            try:
-                self.player_answer = int(self.aentry.get())
-                self.answer_check()
-            except ValueError:
-                tk.messagebox.showinfo("No Input", "Please input a valid responce")
-        else:
-            self.player_answer = self.aentry.get()
-            if self.player_answer == "":
-                tk.messagebox.showinfo("No Input", "Please input a valid responce")
-            else:
-                self.answer_check()
-        
+    def submit_event(self, event): # This is so that the player has to input an intiger when answering the math questions.
+        try:
+            self.player_answer = int(self.aentry.get())
+            self.answer_check()
+        except ValueError:
+            tk.messagebox.showinfo("No Input", "Please input a valid responce")
+
+    def submit(self): # This is so that the player has to input an intiger when answering the math questions.
+        try:
+            self.player_answer = int(self.aentry.get())
+            self.answer_check()
+        except ValueError:
+            tk.messagebox.showinfo("No Input", "Please input a valid responce")
+                
     
     def answer_check(self):  # This checks the players answer            
         self.qnumber = self.qnumber + 1
@@ -932,8 +932,11 @@ You have gotten {} incorrect answers.""".format(self.points, self.correct_answer
                 self.correct = tk.Frame(self.window, background=self.bg_colour)
                 self.correct_answers = str(int(self.correct_answers) + 1)
                 label(self.correct, "Well done {} was the correct answer!".format(self.answer), self.bg_colour, self.text_colour)
-                button(self.correct, "Next question", self.bt_bg_colour, self.text_colour, self.math_intermission)
-                key_press(self.window, self.math_intermission)
+                if self.qnumber == 11:
+                    button(self.correct, "Finish", self.bt_bg_colour, self.text_colour, self.math_intermission)
+                else:
+                    button(self.correct, "Next question", self.bt_bg_colour, self.text_colour, self.math_intermission)
+                key_press(self.window, self.math_intermission_event)
                 self.correct.pack(pady=2)
                 self.points = self.points + 1
                 self.pointsl.config(text="Points: {}".format(self.points))
@@ -944,8 +947,11 @@ You have gotten {} incorrect answers.""".format(self.points, self.correct_answer
                 self.incorrect_answers = str(int(self.incorrect_answers) + 1)
                 label(self.incorrect, """Im sorry but {} was not the correct answer.
 The correct answer was {}.""".format(self.player_answer, self.answer), self.bg_colour, self.text_colour)
-                button(self.incorrect, "Next question", self.bt_bg_colour, self.text_colour, self.math_intermission)
-                key_press(self.window, self.math_intermission)
+                if self.qnumber == 11:
+                    button(self.incorrect, "Finish", self.bt_bg_colour, self.text_colour, self.math_intermission)
+                else:
+                    button(self.incorrect, "Next question", self.bt_bg_colour, self.text_colour, self.math_intermission)
+                key_press(self.window, self.math_intermission_event)
                 self.incorrect.pack(pady=2)
                 
                 
@@ -955,7 +961,10 @@ The correct answer was {}.""".format(self.player_answer, self.answer), self.bg_c
                 self.correct = tk.Frame(self.window, background=self.bg_colour)
                 self.correct_answers = str(int(self.correct_answers) + 1)
                 label(self.correct, "Well done {} was the correct answer!".format(self.answer), self.bg_colour, self.text_colour)
-                button(self.correct, "Next question", self.bt_bg_colour, self.text_colour, self.intermission)
+                if self.qnumber == 11:
+                    button(self.correct, "Finish", self.bt_bg_colour, self.text_colour, self.intermission)
+                else:
+                    button(self.correct, "Next question", self.bt_bg_colour, self.text_colour, self.intermission)
                 self.correct.pack(pady=2)
                 self.points = self.points + 1
                 self.pointsl.config(text="Points: {}".format(self.points))
@@ -966,7 +975,10 @@ The correct answer was {}.""".format(self.player_answer, self.answer), self.bg_c
                 self.incorrect_answers = str(int(self.incorrect_answers) + 1)
                 label(self.incorrect, """Im sorry but {} was not the correct answer.
 The correct answer was {}.""".format(self.player_answer, self.answer), self.bg_colour, self.text_colour)
-                button(self.incorrect, "Next question", self.bt_bg_colour, self.text_colour, self.intermission)
+                if self.qnumber == 11:
+                    button(self.incorrect, "Finish", self.bt_bg_colour, self.text_colour, self.intermission)
+                else:
+                    button(self.incorrect, "Next question", self.bt_bg_colour, self.text_colour, self.intermission)
                 self.incorrect.pack(pady=2)
                 
         elif self.option == "Trivia":
@@ -975,7 +987,10 @@ The correct answer was {}.""".format(self.player_answer, self.answer), self.bg_c
                 self.correct = tk.Frame(self.window, background=self.bg_colour)
                 self.correct_answers = str(int(self.correct_answers) + 1)
                 label(self.correct, "Well done {} was the correct answer!".format(self.answer), self.bg_colour, self.text_colour)
-                button(self.correct, "Next question", self.bt_bg_colour, self.text_colour, self.intermission)
+                if self.qnumber == 11:
+                    button(self.correct, "Finish", self.bt_bg_colour, self.text_colour, self.intermission)
+                else:
+                    button(self.correct, "Next question", self.bt_bg_colour, self.text_colour, self.intermission)
                 self.correct.pack(pady=2)
                 self.points = self.points + 1
                 self.pointsl.config(text="Points: {}".format(self.points))
@@ -986,13 +1001,28 @@ The correct answer was {}.""".format(self.player_answer, self.answer), self.bg_c
                 self.incorrect_answers = str(int(self.incorrect_answers) + 1)
                 label(self.incorrect, """Im sorry but {} was not the correct answer.
 The correct answer was {}.""".format(self.player_answer, self.answer), self.bg_colour, self.text_colour)
-                button(self.incorrect, "Next question", self.bt_bg_colour, self.text_colour, self.intermission)
+                if self.qnumber == 11:
+                    button(self.incorrect, "Finish", self.bt_bg_colour, self.text_colour, self.intermission)
+                else:
+                    button(self.incorrect, "Next question", self.bt_bg_colour, self.text_colour, self.intermission)
                 self.incorrect.pack(pady=2)
 
         else:
             Error()
 
-    def math_intermission(self, event): # This is for in between math questions
+    def math_intermission_event(self, event): # This is for in between math questions
+        if self.player_answer == self.answer:
+            self.correct.destroy()
+            self.setting_question()
+            self.math_questions()
+            self.window.unbind("<Return>")
+        else:
+            self.incorrect.destroy()
+            self.setting_question()
+            self.math_questions()
+            self.window.unbind("<Return>")
+
+    def math_intermission(self): # This is for in between math questions
         if self.player_answer == self.answer:
             self.correct.destroy()
             self.setting_question()
